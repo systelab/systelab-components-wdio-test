@@ -1,0 +1,21 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "sourceMap": false,
+        "target": "es5",
+        "module": "commonjs",
+        "removeComments": true,
+        "noImplicitAny": true,
+        "strictPropertyInitialization": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "types": [
+            "node",
+            "webdriverio/async"
+        ],
+        "outDir": "./lib"
+    },
+    "include": [
+        "src/**/*"
+    ],
+}
