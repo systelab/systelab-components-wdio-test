@@ -1,6 +1,6 @@
 {
   "name": "systelab-components-test-wdio",
-  "version": "2.2.4",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
   "keywords": [
@@ -25,13 +25,13 @@
   },
   "dependencies": {
     "core-js": "2.5.6",
-    "tslib": "^1.9.0",
+    "tslib": "2.1.0",
     "karma-jasmine": "4.0.1"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.42",
-    "@types/jasmine": "^3.10.1",
-    "@types/jasminewd2": "^2.0.10",
+    "@types/core-js": "0.9.42",
+    "@types/jasmine": "3.10.1",
+    "@types/jasminewd2": "2.0.10",
     "@types/node": "14.14.7",
     "@wdio/cli": "7.9.1",
     "@wdio/jasmine-framework": "7.9.1",
