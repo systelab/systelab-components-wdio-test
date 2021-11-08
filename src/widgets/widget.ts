@@ -1,7 +1,5 @@
-import { ChainablePromiseElement } from "webdriverio";
+import { WebDriverIOElement } from "../types/wdio-element-type"
 
-
-type WebDriverIOElement = WebdriverIO.Element | ChainablePromiseElement<Promise<WebdriverIO.Element>>;
 
 export class Widget {
 
@@ -42,8 +40,6 @@ export class Widget {
 	}
 
 	public async waitToBePresent(): Promise<void> {
-		await browser.waitUntil(
-			async () => (await this.elem).isDisplayed()
-		);
+		await (await this.elem).waitForExist();
 	}
 }
