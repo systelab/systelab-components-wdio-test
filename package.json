@@ -1,5 +1,5 @@
 {
-  "name": "systelab-components-test-wdio",
+  "name": "systelab-components-wdio-test",
   "version": "1.0.0",
   "license": "MIT",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
