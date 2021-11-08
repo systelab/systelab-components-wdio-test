@@ -1,0 +1,1 @@
+export * from './wdio-element-type';
