@@ -15,10 +15,10 @@ export class Spinner extends Widget {
 	}
 
 	public async increase(): Promise<void> {
-		await this.elem.$('input-group-append').click();
+		await (await this.byClassName('input-group-append')).click();
 	}
 
 	public async decrease(): Promise<void> {
-		await this.elem.$('input-group-prepend').click();
+		await (await this.byClassName('input-group-prepend')).click();
 	}
 }

@@ -39,6 +39,14 @@ export class Widget {
 		return this.elem.$(cssExpression);
 	}
 
+	public byButtonText(buttonExpression: string, text: string): WebDriverIOElement {
+		return this.elem.$(`${buttonExpression}*=${text}`);
+	}
+
+	public byClassName(classNameExpression: string): WebDriverIOElement {
+		return this.elem.$(`${classNameExpression}`);
+	}
+
 	public allById(id: string): WebDriverIOElementArray {
         return this.elem.$$(`#${id}`);
     }
@@ -50,6 +58,10 @@ export class Widget {
     public allByCSS(cssExpression: string): WebDriverIOElementArray {
         return this.elem.$$(cssExpression);
     }
+
+	public allByClassName(classNameExpression: string): WebDriverIOElementArray {
+		return this.elem.$$(`${classNameExpression}`);
+	}
 
 	public async waitToBePresent(): Promise<void> {
 		await (await this.elem).waitForExist();
