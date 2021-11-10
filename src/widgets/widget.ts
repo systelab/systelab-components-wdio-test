@@ -1,4 +1,4 @@
-import { WebDriverIOElement } from "../types/wdio-element-type"
+import { WebDriverIOElement, WebDriverIOElementArray } from "../types/wdio-element-type";
 
 
 export class Widget {
@@ -38,6 +38,18 @@ export class Widget {
 	public byCSS(cssExpression: string): WebDriverIOElement {
 		return this.elem.$(cssExpression);
 	}
+
+	public allById(id: string): WebDriverIOElementArray {
+        return this.elem.$$(`#${id}`);
+    }
+
+    public allByTagName(tagName: string): WebDriverIOElementArray {
+        return this.elem.$$(`<${tagName}>`);
+    }
+
+    public allByCSS(cssExpression: string): WebDriverIOElementArray {
+        return this.elem.$$(cssExpression);
+    }
 
 	public async waitToBePresent(): Promise<void> {
 		await (await this.elem).waitForExist();
