@@ -1,6 +1,5 @@
 
-/// <reference types="jasmine" />
-/// <reference types="jasminewd2" />
+import jasmine from 'jasmine'; // or add 'jasmine' to types line in tsconfig.json
 declare const allure: any;
 
 class MyExpectation {
