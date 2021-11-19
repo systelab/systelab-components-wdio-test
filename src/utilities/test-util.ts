@@ -10,8 +10,8 @@ export class TestUtil {
 		allure.addLabel('feature', feature);
 		let capabilities = browser.driver.getCapabilities()
 			.then((caps) => {
-				browser.capabilities.browserName = caps.get('browserName');
-				allure.addLabel('browser', browser.capabilities.browserName);
+				browser.browserName = caps.get('browserName');
+				allure.addLabel('browser', browser.browserName);
 			});
 		if (version) {
 			allure.addLabel('appVersion', version);
