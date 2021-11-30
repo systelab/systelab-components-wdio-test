@@ -1,0 +1,116 @@
+const WDIOReporter = require("@wdio/reporter").default
+const colors = require("colors");
+
+
+const jasmineTestCaseReporter =
+{
+    specStarted: (result) =>
+    {
+        browser.config.currentJasmineSpec = result;
+    },
+
+    specDone: (result) =>
+    {
+        browser.config.currentJasmineSpec = null;
+    },
+}
+
+class TestCaseReporter extends WDIOReporter
+{
+    indents = 0;
+    startTime;
+    failedExpectationsLogged = 0;
+
+    constructor(options)
+    {
+        super(options)
+        options = Object.assign(options, { stdout: true });
+    }
+
+    onRunnerStart(runnerStats)
+    {
+        jasmine.getEnv().addReporter(jasmineTestCaseReporter);
+        browser.config.testCaseReporter = this
+        console.log("");
+    }
+
+    onSuiteStart(suiteStats)
+    {
+        this.indents++;
+        console.log(colors.blue(`${this.indent()}${suiteStats.fullTitle}`));
+    }
+
+    onTestStart(testStats)
+    {
+        this.indents++;
+        this.startTime = new Date().getTime();
+        this.failedExpectationsLogged = 0;
+        console.log(`${this.indent()}${testStats.title}`);
+    }
+
+    onAssertStart(description)
+    {
+        this.logLatestErrors();
+    }
+
+    onAssertEnd(description, exception = false)
+    {
+        const nFailedExpectations =  browser.config.currentJasmineSpec.failedExpectations.length;
+        if (!exception && this.failedExpectationsLogged >= nFailedExpectations)
+        {
+            console.log(colors.green(`${" ".repeat(6)}✓ ${description}`));
+        }
+        else
+        {
+            console.log(colors.red(`${" ".repeat(6)}✖ ${description}`));
+        }
+
+        this.logLatestErrors();
+    }
+
+    onTestEnd(testStats)
+    {
+        this.logLatestErrors();
+
+        this.indents++;
+        const endTime = new Date().getTime();
+        const duration = endTime - this.startTime;
+        console.log(colors.gray(`${this.indent()}Time: ${duration} ms`));
+        this.indents--;
+        this.indents--;
+    }
+
+    onSuiteEnd(suiteStats)
+    {
+        this.indents--;
+        ConsoleUtility.log("");
+    }
+
+    indent()
+    {
+        return "  ".repeat(this.indents);
+    }
+
+    logLatestErrors()
+    {
+        const nFailedExpectations =  browser.config.currentJasmineSpec.failedExpectations.length;
+        for (let i = this.failedExpectationsLogged; i < nFailedExpectations; i++)
+        {
+            const failedExpectation = browser.config.currentJasmineSpec.failedExpectations[i];
+            console.log(colors.red(`${" ".repeat(8)}- ${failedExpectation.message}`));
+
+            let stackMessage = "";
+            const stackLines = failedExpectation.stack.split(/\n/).splice(1);
+            for (const line of stackLines)
+            {
+                stackMessage += (stackMessage.length > 0) ? "\n" : "";
+                stackMessage += `${" ".repeat(8)}${line}`;
+            }
+            console.log(stackMessage);
+        }
+
+        this.failedExpectationsLogged = nFailedExpectations;
+    }
+}
+
+exports.default = TestCaseReporter
