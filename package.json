@@ -13,7 +13,8 @@
   "typings": "./lib/index.d.ts",
   "private": false,
   "files": [
-    "lib"
+    "lib",
+    "src/reporters/test-case.reporter.js"
   ],
   "scripts": {
     "build": "tsc",
@@ -39,6 +40,7 @@
     "@wdio/spec-reporter": "7.16.9",
     "@wdio/types": "7.16.3",
     "chromedriver": "96.0.0",
+    "colors": "1.4.0",
     "ts-node": "10.4.0",
     "typescript": "4.5.2",
     "wdio-chromedriver-service": "7.2.2"
