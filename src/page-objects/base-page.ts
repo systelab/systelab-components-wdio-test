@@ -29,7 +29,7 @@ export class BasePage {
         return this.current.$(`${buttonExpression}*=${text}`);
 	}
 
-	public byClassName(classNameExpression: string): WebDriverIOElement {
+    public byClassName(classNameExpression: string): WebDriverIOElement {
         return this.current.$(`${classNameExpression}`);
 	}
 
