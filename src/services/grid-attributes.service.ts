@@ -1,5 +1,4 @@
 import { Grid } from '../widgets/grid';
-import jasmine from 'jasmine'; // or add 'jasmine' to types line in tsconfig.json
 
 export class GridAttributesService {
 

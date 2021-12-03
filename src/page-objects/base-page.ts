@@ -26,11 +26,11 @@ export class BasePage {
     }
 
     public byButtonText(buttonExpression: string, text: string): WebDriverIOElement {
-		return this.current.$(`${buttonExpression}*=${text}`);
+        return this.current.$(`${buttonExpression}*=${text}`);
 	}
 
 	public byClassName(classNameExpression: string): WebDriverIOElement {
-		return this.current.$(`${classNameExpression}`);
+        return this.current.$(`${classNameExpression}`);
 	}
 
     public allById(id: string): WebDriverIOElementArray {
@@ -46,7 +46,7 @@ export class BasePage {
     }
 
     public allByClassName(classNameExpression: string): WebDriverIOElementArray {
-		return this.current.$$(`${classNameExpression}`);
+        return this.current.$$(`${classNameExpression}`);
 	}
 
     public async waitToBePresent(): Promise<void> {
