@@ -7,7 +7,7 @@ export class Grid extends Widget {
 		return this.byCSS('.ag-center-cols-container').$$('div[role=row]').length
 	}
 
-	public async getValuesInRow(row: number): Promise<Array<string>> {
+	public async getValuesInRow(row: number): Promise<string[]> {
 		const content: string[] = [];
 		const cols:WebDriverIOElementArray = this.allByCSS(`div[row-index="${row}"] div.ag-cell-value`);
 		const numberOfRows: number = await cols.length;
@@ -56,7 +56,7 @@ export class Grid extends Widget {
 		await (await this.allByCSS(`div[row-index="${row}"] div[col-id="selectCol"] input`))[0].click();
 	}
 
-	public async getHeaderCaptions(): Promise<Array<string>> {
+	public async getHeaderCaptions(): Promise<string[]> {
 		let content: string[] = [];
 		const cols: WebDriverIOElementArray = this.allByClassName('ag-header-cell');
 		const numberOfFields: number = await cols.length;
@@ -67,7 +67,7 @@ export class Grid extends Widget {
 		return content;
 	}
 
-	public async getHeaderCells(): Promise<Array<WebDriverIOElement>> {
+	public async getHeaderCells(): Promise<WebDriverIOElement[]> {
 		let content: WebDriverIOElement[] = [];
 		const cols: WebDriverIOElementArray = this.allByClassName('ag-header-cell');
 		const numberOfFields: number = await cols.length;
@@ -77,7 +77,7 @@ export class Grid extends Widget {
 		return content;
 	}
 
-	public async getGridHeader(): Promise<Array<string>> {
+	public async getGridHeader(): Promise<string[]> {
 		// See if this applies https://github.com/angular/protractor/issues/3818
 		const cols: any = this.allByCSS('.ag-header-row .ag-header-cell-label');
 		return cols.getText();

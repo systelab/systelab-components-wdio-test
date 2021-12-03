@@ -6,7 +6,7 @@ export class MultipleComboBox extends Widget {
 		await (await this.elem).click();
 	}
 
-	public async getOptions(): Promise<Array<string>> {
+	public async getOptions(): Promise<string[]> {
 		let content: string[] = [];
 		let rows = await (await this.elem).$$('.ag-cell-value');
 		let numberOfItems: number = rows.length;

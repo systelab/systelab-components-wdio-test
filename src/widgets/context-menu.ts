@@ -3,7 +3,7 @@ import { WebDriverIOElementArray } from '../types';
 
 export class ContextMenu extends Widget {
 
-	public async getOptions(): Promise<Array<string>> {
+	public async getOptions(): Promise<string[]> {
 		let content: string[] = [];
 		let rows: WebDriverIOElementArray = this.allByTagName('systelab-context-menu-item');
 		let numberOfItems: number = await rows.length;
