@@ -14,7 +14,7 @@ export class Datepicker extends Widget {
 	public async setValue(value: string): Promise<void> {
 		await this.clear(await this.getInputElement());
 		await (await this.getInputElement()).setValue(value);
-		// send keys tab - set focus off...
+		await browser.keys(['Tab']);
 	}
 
 	private getInputElement(): WebDriverIOElement {
