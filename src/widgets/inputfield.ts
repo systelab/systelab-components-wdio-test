@@ -11,7 +11,7 @@ export class InputField extends Widget {
 	}
 
 	public async getText(): Promise<string> {
-		return (await this.elem).getAttribute('value');
+		return (await this.elem).getValue();
 	}
 
 	public async isEnabled(): Promise<boolean> {
