@@ -44,7 +44,7 @@ export class Widget {
 	}
 
 	public byClassName(classNameExpression: string): WebDriverIOElement {
-		return this.elem.$(`${classNameExpression}`);
+		return this.elem.$(`.${classNameExpression}`);
 	}
 
 	public allById(id: string): WebDriverIOElementArray {
@@ -60,7 +60,7 @@ export class Widget {
     }
 
 	public allByClassName(classNameExpression: string): WebDriverIOElementArray {
-		return this.elem.$$(`${classNameExpression}`);
+		return this.elem.$$(`.${classNameExpression}`);
 	}
 
 	public async waitToBePresent(): Promise<void> {
