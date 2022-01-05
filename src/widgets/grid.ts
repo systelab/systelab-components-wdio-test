@@ -26,6 +26,7 @@ export class Grid extends Widget {
 
 	public async clickOnRowMenu(row: number): Promise<void> {
 		await this.clickOnLeftPinnedCell(row, 'contextMenu');
+		await (await this.byTagName('systelab-grid-context-menu')).waitForDisplayed();
 	}
 
 	public async clickOnRow(row: number, column: string): Promise<void> {
@@ -84,6 +85,6 @@ export class Grid extends Widget {
 	}
 
 	public getMenu(): ContextMenu {
-		return new ContextMenu(this.byTagName('systelab-grid-content-menu'));
+		return new ContextMenu(this.byTagName('systelab-grid-context-menu'));
 	}
 }
