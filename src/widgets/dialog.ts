@@ -17,6 +17,7 @@ export class Dialog extends Widget {
 	}
 
 	public async close(): Promise<void> {
+		await browser.waitUntil(() => this.getButtonClose().isClickable())
 		await this.getButtonClose().click();
 	}
 
