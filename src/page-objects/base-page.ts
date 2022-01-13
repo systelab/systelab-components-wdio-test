@@ -25,8 +25,12 @@ export class BasePage {
         return this.current.$(cssExpression);
     }
 
-    public byButtonText(buttonExpression: string, text: string): WebDriverIOElement {
-        return this.current.$(`${buttonExpression}*=${text}`);
+    public byButtonText(text: string): WebDriverIOElement {
+        return this.byElementText('button', text);
+    }
+
+    public byElementText(tagName: string, text: string): WebDriverIOElement {
+        return this.current.$(`${tagName}*=${text}`);
 	}
 
     public byClassName(classNameExpression: string): WebDriverIOElement {
