@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/systelab/systelab-components-wdio-test.svg?branch=master)](https://travis-ci.org/systelab/systelab-components-wdio-test)
+[![Build Status](https://travis-ci.com/systelab/systelab-components-wdio-test.svg?branch=master)](https://travis-ci.com/systelab/systelab-components-wdio-test)
 [![npm version](https://badge.fury.io/js/systelab-components-wdio-test.svg)](https://badge.fury.io/js/systelab-components-wdio-test)
 [![Known Vulnerabilities](https://snyk.io/test/github/systelab/systelab-components-wdio-test/badge.svg?targetFile=package.json)](https://snyk.io/test/github/systelab/systelab-components-wdio-test?targetFile=package.json)
 
