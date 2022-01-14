@@ -31,11 +31,11 @@ export class BasePage {
 
     public byElementText(tagName: string, text: string): WebDriverIOElement {
         return this.current.$(`${tagName}*=${text}`);
-	}
+    }
 
     public byClassName(classNameExpression: string): WebDriverIOElement {
         return this.current.$(`${classNameExpression}`);
-	}
+    }
 
     public allById(id: string): WebDriverIOElementArray {
         return this.current.$$(`#${id}`);
@@ -51,7 +51,7 @@ export class BasePage {
 
     public allByClassName(classNameExpression: string): WebDriverIOElementArray {
         return this.current.$$(`${classNameExpression}`);
-	}
+    }
 
     public async waitToBePresent(): Promise<void> {
         await (await this.current).waitForExist();
