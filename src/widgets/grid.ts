@@ -1,10 +1,11 @@
-import { Widget } from './widget';
 import { WebDriverIOElement, WebDriverIOElementArray } from '../types';
 import { ContextMenu } from './context-menu';
+import { Widget } from './widget';
 
 export class Grid extends Widget {
 	public async getNumberOfRows(): Promise<number> {
-		return this.byCSS('.ag-center-cols-container').$$('div[role=row]').length
+		const container = await this.byCSS('.ag-center-cols-container');
+		return (await this.allByTagNameInsideElement(container,'div[role=row]')).length
 	}
 
 	public async getValuesInRow(row: number): Promise<string[]> {
@@ -20,7 +21,7 @@ export class Grid extends Widget {
 
 	public async getValueInCell(row: number, columnName: string): Promise<string> {
 		const cellSelector = `[role='gridcell'][col-id='` + columnName + `']`;
-		const gridCell = (await $$(cellSelector))[row];
+		const gridCell = (await this.allByCSS(cellSelector))[row];
 		return gridCell.getText();
 	}
 
@@ -35,7 +36,10 @@ export class Grid extends Widget {
 
 	public async clickOnHeader(): Promise<void> {
 		// I click explicitly on the first element of the array, unlike in original.
-		await (await this.byClassName('ag-header-container').$('.ag-header-row').$$('ag-header-cell'))[0].click();
+		const container = await this.byClassName('ag-header-container');
+		const headerRow = await this.byCSSInsideElement(container,'.ag-header-row');
+		const headerCell = await this.allByCSSInsideElement(headerRow,'ag-header-cell');
+		await (headerCell)[0].click();
 	}
 
 	public async clickOnHeaderCell(columnIndex: number): Promise<void> {
@@ -44,12 +48,14 @@ export class Grid extends Widget {
 
 	public async clickOnCell(row: number, column: string): Promise<void> {
 		// I click explicitly on the first element of the array, unlike in original.
-		await (await this.byClassName('ag-center-cols-container').$(`div[row-index="${row}"]`).$$(`div[col-id="${column}"`))[0].click();
+		const headerCell = await this.getCell(await this.byClassName('ag-center-cols-container'),row,column);
+		await (headerCell)[0].click();
 	}
 
 	public async clickOnLeftPinnedCell(row: number, column: string): Promise<void> {
 		// I click explicitly on the first element of the array, unlike in original.
-		await (await this.byClassName('ag-pinned-left-cols-container').$(`div[row-index="${row}"]`).$$(`div[col-id="${column}"]`))[0].click();
+		const headerCell = await this.getCell(await this.byClassName('ag-pinned-left-cols-container'),row,column);
+		await (headerCell)[0].click();
 	}
 
 	public async selectRow(row: number): Promise<void> {
@@ -86,5 +92,10 @@ export class Grid extends Widget {
 
 	public getMenu(): ContextMenu {
 		return new ContextMenu(this.byTagName('systelab-grid-context-menu'));
+	}
+
+	private async getCell(container:WebDriverIOElement,row: number, column: string): Promise<WebDriverIOElementArray> {
+		const headerRow = await this.byCSSInsideElement(container,`div[row-index="${row}"]`);
+		return await this.allByCSSInsideElement(headerRow,`div[col-id="${column}"]`);
 	}
 }

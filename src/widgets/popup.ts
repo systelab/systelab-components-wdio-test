@@ -8,7 +8,7 @@ export class Popup extends Widget {
 	}
 
 	private async getButton(text: string): Promise<Button> {
-		return new Button(await this.byTagName('systelab-dialog-bottom')
-        .$(`button*=${text}`));
+		const dialog = await this.byTagName('systelab-dialog-bottom');
+		return new Button(this.byCSSInsideElement(dialog,`button*=${text}`));
 	}
 }

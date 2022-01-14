@@ -1,15 +1,18 @@
-import { Widget } from './widget';
+import { WebDriverIOElement } from './../types/wdio-element-type';
 import { Button } from './button';
 import { MessagePopup } from './message-popup';
+import { Widget } from './widget';
 
 export class Dialog extends Widget {
 
 	public async getNumberOfButtons(): Promise<number> {
-		return (await this.byTagName('systelab-dialog-bottom')).$$('<button>').length
+		const dialog: WebDriverIOElement = await this.byTagName('systelab-dialog-bottom');
+		return this.allByTagNameInsideElement(dialog,'<button>').length;
 	}
 
 	public async getTitle(): Promise<string> {
-		return this.byTagName('systelab-dialog-header').$('.slab-dialog-header').getText();
+		const dialog = this.byTagName('systelab-dialog-header');
+		return (await this.byClassNameInsideElement(dialog, '.slab-dialog-header')).getText();
 	}
 
 	public getButtonClose(): Button {
@@ -22,7 +25,7 @@ export class Dialog extends Widget {
 	}
 
 	public getButtonByName(name: string): Button {
-		return new Button((this.elem).$(`button*=${name}`))
+		return new Button(this.byCSS(`button*=${name}`));
 	}
 
 	public getMessagePopup(): MessagePopup {

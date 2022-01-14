@@ -1,5 +1,5 @@
-import { Widget } from './widget';
 import { Button } from './button';
+import { Widget } from './widget';
 
 export class MessagePopup extends Widget {
 	constructor() {
@@ -27,6 +27,8 @@ export class MessagePopup extends Widget {
 	}
 
 	private getButton(text: string): Button {
-		return new Button(this.elem.$("<systelab-dialog-bottom>").$(`button=${text}`));
+		const dialog = this.byTagName("<systelab-dialog-bottom>");
+		const button = this.byCSSInsideElement(dialog, `button=${text}`);
+		return new Button(button);
 	}
 }

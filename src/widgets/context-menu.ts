@@ -1,5 +1,5 @@
+import { WebDriverIOElement, WebDriverIOElementArray } from '../types';
 import { Widget } from './widget';
-import { WebDriverIOElementArray } from '../types';
 
 export class ContextMenu extends Widget {
 
@@ -8,7 +8,7 @@ export class ContextMenu extends Widget {
 		let rows: WebDriverIOElementArray = this.allByTagName('systelab-context-menu-item');
 		let numberOfItems: number = await rows.length;
 		for (let i = 0; i < numberOfItems; i++) {
-			let text: string = await (await rows)[i].$('<a>').getText();
+			let text: string = await (await this.byTagNameInsideElement(await rows[i] as WebDriverIOElement, '<a>')).getText()
 			content.push(text);
 		}
 		return content;
@@ -19,6 +19,6 @@ export class ContextMenu extends Widget {
 	}
 
 	public async selectOptionByText(text: string): Promise<void> {
-		await (await this.elem.$(`a*=${text}`)).click()
+		await (await this.byCSS(`a*=${text}`)).click()
 	}
 }

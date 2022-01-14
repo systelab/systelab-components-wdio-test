@@ -1,4 +1,4 @@
-import { WebDriverIOElement, WebDriverIOElementArray } from "../types/wdio-element-type"
+import { WebDriverIOElement, WebDriverIOElementArray } from "../types/wdio-element-type";
 
 
 export class BasePage {
