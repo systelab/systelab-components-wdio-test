@@ -19,6 +19,6 @@ export class ContextMenu extends Widget {
 	}
 
 	public async selectOptionByText(text: string): Promise<void> {
-		await (await this.byCSS(`a*=${text}`)).click()
+		await (await this.byText(`a*=${text}`)).click()
 	}
 }

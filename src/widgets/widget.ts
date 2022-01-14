@@ -67,6 +67,14 @@ export class Widget {
 		return element.$(`.${classNameExpression}`);
 	}
 
+	public byText(text: string): WebDriverIOElement {
+		return this.elem.$(text);
+	}
+
+	public byTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElement {
+		return element.$(text);
+	}
+
 	public allById(id: string): WebDriverIOElementArray {
         return this.elem.$$(`#${id}`);
     }
@@ -97,6 +105,14 @@ export class Widget {
 
 	public allByClassNameInsideElement(element: WebDriverIOElement, classNameExpression: string): WebDriverIOElementArray {
 		return element.$$(`.${classNameExpression}`);
+	}
+
+	public allByText(text: string): WebDriverIOElementArray {
+		return this.elem.$$(text);
+	}
+
+	public allByTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElementArray {
+		return element.$$(text);
 	}
 
 	public async waitToBePresent(): Promise<void> {
