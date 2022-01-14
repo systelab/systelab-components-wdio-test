@@ -51,14 +51,6 @@ export class Widget {
         return element.$(cssExpression);
     }
 
-    public byButtonText(buttonExpression: string, text: string): WebDriverIOElement {
-        return this.elem.$(`${buttonExpression}*=${text}`);
-    }
-
-    public byButtonTextInsideElement(element: WebDriverIOElement, buttonExpression: string, text: string): WebDriverIOElement {
-        return element.$(`${buttonExpression}*=${text}`);
-    }
-
     public byClassName(classNameExpression: string): WebDriverIOElement {
         return this.elem.$(`.${classNameExpression}`);
     }
@@ -67,12 +59,20 @@ export class Widget {
         return element.$(`.${classNameExpression}`);
     }
 
-    public byText(text: string): WebDriverIOElement {
-        return this.elem.$(text);
+    public byButtonText(text: string): WebDriverIOElement {
+        return this.byElementText("button", text);
     }
 
-    public byTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElement {
-        return element.$(text);
+    public byButtonTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElement {
+        return this.byElementTextInsideElement(element, "button", text);
+    }
+
+    public byElementText(tagName: string, text: string): WebDriverIOElement {
+        return this.elem.$(`${tagName}*=${text}`);
+    }
+
+    public byElementTextInsideElement(element: WebDriverIOElement, tagName: string, text: string): WebDriverIOElement {
+        return element.$(`${tagName}*=${text}`);
     }
 
     public allById(id: string): WebDriverIOElementArray {
@@ -107,12 +107,20 @@ export class Widget {
         return element.$$(`.${classNameExpression}`);
     }
 
-    public allByText(text: string): WebDriverIOElementArray {
-        return this.elem.$$(text);
+    public allByButtonText(text: string): WebDriverIOElementArray {
+        return this.allByElementText("button", text);
     }
 
-    public allByTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElementArray {
-        return element.$$(text);
+    public allByButtonTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElementArray {
+        return this.allByElementTextInsideElement(element, "button", text);
+    }
+
+    public allByElementText(tagName: string, text: string): WebDriverIOElementArray {
+        return this.elem.$$(`${tagName}*=${text}`);
+    }
+
+    public allByElementTextInsideElement(element: WebDriverIOElement, tagName: string, text: string): WebDriverIOElementArray {
+        return element.$$(`${tagName}*=${text}`);
     }
 
     public async waitToBePresent(): Promise<void> {

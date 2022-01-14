@@ -27,8 +27,8 @@ export class MessagePopup extends Widget {
     }
 
     private getButton(text: string): Button {
-        const dialog = this.byTagName("<systelab-dialog-bottom>");
-        const button = this.byCSSInsideElement(dialog, `button=${text}`);
+        const dialog = this.byTagName("systelab-dialog-bottom");
+        const button = this.byButtonTextInsideElement(dialog, text);
         return new Button(button);
     }
 }

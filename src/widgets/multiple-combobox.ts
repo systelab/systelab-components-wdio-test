@@ -9,7 +9,7 @@ export class MultipleComboBox extends Widget {
 
     public async getOptions(): Promise<string[]> {
         let content: string[] = [];
-        let rows: WebDriverIOElementArray = await this.allByTagName('.ag-cell-value');
+        let rows: WebDriverIOElementArray = await this.allByCSS('.ag-cell-value');
         let numberOfItems: number = rows.length;
         for (let i = 0; i < numberOfItems; i++) {
             let text: string = await rows[i].getText();
@@ -27,7 +27,7 @@ export class MultipleComboBox extends Widget {
 
     public async selectOptionByText(text: string): Promise<void> {
         let index = -1;
-        let rows: WebDriverIOElementArray = await this.allByTagName('.ag-cell-value');
+        let rows: WebDriverIOElementArray = await this.allByCSS('.ag-cell-value');
         const numberOfItems =  rows.length;
         for (let i = 0; i < numberOfItems; i++) {
             const cellText = await rows[i].getText();

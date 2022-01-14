@@ -12,7 +12,7 @@ export class Dialog extends Widget {
 
     public async getTitle(): Promise<string> {
         const dialog = this.byTagName('systelab-dialog-header');
-        return (await this.byClassNameInsideElement(dialog, '.slab-dialog-header')).getText();
+        return (await this.byClassNameInsideElement(dialog, 'slab-dialog-header')).getText();
     }
 
     public getButtonClose(): Button {

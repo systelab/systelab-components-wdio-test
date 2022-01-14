@@ -38,7 +38,7 @@ export class Grid extends Widget {
         // I click explicitly on the first element of the array, unlike in original.
         const container = await this.byClassName('ag-header-container');
         const headerRow = await this.byCSSInsideElement(container,'.ag-header-row');
-        const headerCell = await this.allByCSSInsideElement(headerRow,'ag-header-cell');
+        const headerCell = await this.allByCSSInsideElement(headerRow,'.ag-header-cell');
         await (headerCell)[0].click();
     }
 
