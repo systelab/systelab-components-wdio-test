@@ -1,4 +1,4 @@
-import { WebDriverIOElement, WebDriverIOElementArray } from "../types/wdio-element-type"
+import { WebDriverIOElement, WebDriverIOElementArray } from "../types/wdio-element-type";
 
 
 export class BasePage {
@@ -25,6 +25,18 @@ export class BasePage {
         return this.current.$(cssExpression);
     }
 
+    public byButtonText(text: string): WebDriverIOElement {
+        return this.byElementText('button', text);
+    }
+
+    public byElementText(tagName: string, text: string): WebDriverIOElement {
+        return this.current.$(`${tagName}*=${text}`);
+    }
+
+    public byClassName(classNameExpression: string): WebDriverIOElement {
+        return this.current.$(`${classNameExpression}`);
+    }
+
     public allById(id: string): WebDriverIOElementArray {
         return this.current.$$(`#${id}`);
     }
@@ -35,6 +47,10 @@ export class BasePage {
 
     public allByCSS(cssExpression: string): WebDriverIOElementArray {
         return this.current.$$(cssExpression);
+    }
+
+    public allByClassName(classNameExpression: string): WebDriverIOElementArray {
+        return this.current.$$(`${classNameExpression}`);
     }
 
     public async waitToBePresent(): Promise<void> {
