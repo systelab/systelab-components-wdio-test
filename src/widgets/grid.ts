@@ -26,7 +26,7 @@ export class Grid extends Widget {
 
     public async clickOnRowMenu(row: number): Promise<void> {
         await this.clickOnLeftPinnedCell(row, 'contextMenu');
-        await this.byTagName('systelab-grid-context-menu').waitToBeDisplayed();
+        await this.byTagName('systelab-grid-context-menu').waitToBePresent();
     }
 
     public async clickOnRow(row: number, column: string): Promise<void> {
