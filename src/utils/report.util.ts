@@ -1,30 +1,24 @@
 import allureReporter from '@wdio/allure-reporter'
 
 
-export class ReportUtility
-{
-    public static setDescription(description: string): void
-    {
+export class ReportUtility {
+
+    public static setDescription(description: string): void {
         allureReporter.addDescription(description, "text");
     }
 
-    public static setFeature(feature: string): void
-    {
+    public static setFeature(feature: string): void {
         allureReporter.addFeature(feature);
     }
 
-    public static addLabel(label: string, value: string): void
-    {
+    public static addLabel(label: string, value: string): void {
         allureReporter.addLabel(label, value);
    }
 
-    public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void>
-    {
+    public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
         const testCaseReporter = ((browser.config as any).testCaseReporter);
-        try
-        {
-            if (testCaseReporter)
-            {
+        try {
+            if (testCaseReporter) {
                 testCaseReporter.onAssertStart(description);
             }
 
@@ -32,16 +26,13 @@ export class ReportUtility
             await expectationFunction();
             allureReporter.endStep('passed');
 
-            if (testCaseReporter)
-            {
+            if (testCaseReporter) {
                 testCaseReporter.onAssertEnd(description);
             }
         }
-        catch (error)
-        {
+        catch (error) {
             allureReporter.endStep('failed');
-            if (testCaseReporter)
-            {
+            if (testCaseReporter) {
                 testCaseReporter.onAssertEnd(description, true);
             }
 

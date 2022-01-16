@@ -1,37 +1,37 @@
-import { WebDriverIOElementArray } from '../types';
 import { Widget } from './widget';
+import { ElementArrayFinder } from "../wdio";
 
 export class MultipleComboBox extends Widget {
 
     public async click(): Promise<void> {
-        await (await this.elem).click();
+        return this.elem.click();
     }
 
     public async getOptions(): Promise<string[]> {
         let content: string[] = [];
-        let rows: WebDriverIOElementArray = await this.allByCSS('.ag-cell-value');
-        let numberOfItems: number = rows.length;
+        let rows: ElementArrayFinder = this.allByCSS('.ag-cell-value');
+        let numberOfItems: number = await rows.count();
         for (let i = 0; i < numberOfItems; i++) {
-            let text: string = await rows[i].getText();
-            content.push(text);
+            content.push(await rows.get(i).getText());
         }
         return content;
     }
 
     public async selectOptionByNumber(i: number): Promise<void> {
-        await (await this.allByCSS('.ag-selection-checkbox'))[i].click();
+        return this.allByCSS('.ag-selection-checkbox').get(i).click();
     }
+
     public async selectTab(i: number): Promise<void> {
-        await (await this.allByTagName('li'))[i].click();
+        return this.allByTagName('li').get(i).click();
     }
 
     public async selectOptionByText(text: string): Promise<void> {
         let index = -1;
-        let rows: WebDriverIOElementArray = await this.allByCSS('.ag-cell-value');
-        const numberOfItems =  rows.length;
+        let rows: ElementArrayFinder = this.allByCSS('.ag-cell-value');
+        const numberOfItems = await rows.count();
         for (let i = 0; i < numberOfItems; i++) {
-            const cellText = await rows[i].getText();
-            if  ( cellText === text )  {
+            const cellText = await rows.get(i).getText();
+            if ( cellText === text )  {
                 index = i;
             }
         }

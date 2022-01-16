@@ -1,129 +1,68 @@
-import { WebDriverIOElement, WebDriverIOElementArray } from "../types/wdio-element-type";
+import { ElementArrayFinder, ElementFinder } from "../wdio";
 
 
 export class Widget {
 
-    constructor(protected elem: WebDriverIOElement) {
+    constructor(protected elem: ElementFinder) {
     }
 
-    public getElement(): WebDriverIOElement {
+    public getElement(): ElementFinder {
         return this.elem;
     }
 
     public async isPresent(): Promise<boolean> {
-        return (await this.elem).isExisting();
+        return this.elem.isPresent();
     }
 
     public async isDisplayed(): Promise<boolean> {
-        return (await this.elem).isDisplayed();
+        return this.elem.isDisplayed();
     }
 
     public async isEnabled(): Promise<boolean> {
-        return (await this.elem).isEnabled();
+        return this.elem.isEnabled();
     }
 
     public async isDisabled(): Promise<boolean> {
-        return (await this.elem).isEnabled()
-            .then(enabled => !enabled);
+        return !(await this.elem.isEnabled());
     }
 
-    public byId(id: string): WebDriverIOElement {
-        return this.elem.$(`#${id}`);
+    public byId(id: string): ElementFinder {
+        return this.elem.byId(id);
     }
 
-    public byIdInsideElement(element: WebDriverIOElement, id: string): WebDriverIOElement {
-        return element.$(`#${id}`);
+    public byTagName(tagName: string): ElementFinder {
+        return this.elem.byTagName(tagName);
     }
 
-    public byTagName(tagName: string): WebDriverIOElement {
-        return this.elem.$(`<${tagName}>`);
+    public byClassName(className: string): ElementFinder {
+        return this.elem.byClassName(className);
     }
 
-    public byTagNameInsideElement(element: WebDriverIOElement, tagName: string): WebDriverIOElement {
-        return element.$(`<${tagName}>`);
+    public byCSS(cssExpression: string): ElementFinder {
+        return this.elem.byCSS(cssExpression);
     }
 
-    public byCSS(cssExpression: string): WebDriverIOElement {
-        return this.elem.$(cssExpression);
+    public byButtonText(text: string): ElementFinder {
+        return this.elem.byButtonText(text);
     }
 
-    public byCSSInsideElement(element: WebDriverIOElement, cssExpression: string): WebDriverIOElement {
-        return element.$(cssExpression);
+    public byElementText(tagName: string, text: string): ElementFinder {
+        return this.elem.byElementText(tagName, text);
     }
 
-    public byClassName(classNameExpression: string): WebDriverIOElement {
-        return this.elem.$(`.${classNameExpression}`);
+    public allByTagName(tagName: string): ElementArrayFinder {
+        return this.elem.allByTagName(tagName);
     }
 
-    public byClassNameInsideElement(element: WebDriverIOElement, classNameExpression: string): WebDriverIOElement {
-        return element.$(`.${classNameExpression}`);
+    public allByClassName(className: string): ElementArrayFinder {
+        return this.elem.allByClassName(className);
     }
 
-    public byButtonText(text: string): WebDriverIOElement {
-        return this.byElementText("button", text);
+    public allByCSS(cssExpression: string): ElementArrayFinder {
+        return this.elem.allByCSS(cssExpression);
     }
 
-    public byButtonTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElement {
-        return this.byElementTextInsideElement(element, "button", text);
-    }
-
-    public byElementText(tagName: string, text: string): WebDriverIOElement {
-        return this.elem.$(`${tagName}*=${text}`);
-    }
-
-    public byElementTextInsideElement(element: WebDriverIOElement, tagName: string, text: string): WebDriverIOElement {
-        return element.$(`${tagName}*=${text}`);
-    }
-
-    public allById(id: string): WebDriverIOElementArray {
-        return this.elem.$$(`#${id}`);
-    }
-
-    public allByIdInsideElement(element: WebDriverIOElement, id: string): WebDriverIOElementArray {
-        return element.$$(`#${id}`);
-    }
-
-    public allByTagName(tagName: string): WebDriverIOElementArray {
-        return this.elem.$$(`<${tagName}>`);
-    }
-
-    public allByTagNameInsideElement(element: WebDriverIOElement, tagName: string): WebDriverIOElementArray {
-        return element.$$(`<${tagName}>`);
-    }
-
-    public allByCSS(cssExpression: string): WebDriverIOElementArray {
-        return this.elem.$$(cssExpression);
-    }
-
-    public allByCSSInsideElement(element: WebDriverIOElement, cssExpression: string): WebDriverIOElementArray {
-        return element.$$(cssExpression);
-    }
-
-    public allByClassName(classNameExpression: string): WebDriverIOElementArray {
-        return this.elem.$$(`.${classNameExpression}`);
-    }
-
-    public allByClassNameInsideElement(element: WebDriverIOElement, classNameExpression: string): WebDriverIOElementArray {
-        return element.$$(`.${classNameExpression}`);
-    }
-
-    public allByButtonText(text: string): WebDriverIOElementArray {
-        return this.allByElementText("button", text);
-    }
-
-    public allByButtonTextInsideElement(element: WebDriverIOElement, text: string): WebDriverIOElementArray {
-        return this.allByElementTextInsideElement(element, "button", text);
-    }
-
-    public allByElementText(tagName: string, text: string): WebDriverIOElementArray {
-        return this.elem.$$(`${tagName}*=${text}`);
-    }
-
-    public allByElementTextInsideElement(element: WebDriverIOElement, tagName: string, text: string): WebDriverIOElementArray {
-        return element.$$(`${tagName}*=${text}`);
-    }
-
-    public async waitToBePresent(): Promise<void> {
-        await (await this.elem).waitForExist();
+    public async waitToBePresent(timeout: number = 500): Promise<void> {
+        return this.elem.waitToBePresent(timeout);
     }
 }
