@@ -65,4 +65,12 @@ export class Widget {
     public async waitToBePresent(timeout: number = 500): Promise<void> {
         return this.elem.waitToBePresent(timeout);
     }
+
+    public async waitToBeNotPresent(timeout: number = 500): Promise<void> {
+        return this.elem.waitUntil(async () => !(await this.isPresent()), timeout);
+    }
+
+    public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
+        return this.elem.waitUntil(condition, timeout);
+    }
 }
