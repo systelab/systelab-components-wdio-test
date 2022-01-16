@@ -1,18 +1,14 @@
-import { ElementArray } from "webdriverio";
-import { Locator, LocatorType } from "./locator";
+import {ElementArray} from "webdriverio";
+import {Locator, LocatorType} from "./locator";
 
-
-export enum ElementFinderType {
-    Element = "Element",
-    ElementArray = "ElementArray"
-}
 
 export class ElementFinder {
-    public type: ElementFinderType = ElementFinderType.Element;
-
     constructor(protected locator: Locator, protected parent: ElementFinder | ElementArrayFinder | null = null) {
     }
 
+    public getLocator(): Locator {
+        return this.locator;
+    }
 
     // Search single element
     public byId(id: string): ElementFinder {
@@ -139,13 +135,13 @@ export class ElementFinder {
     // Auxiliary methods
     public async findElement(): Promise<WebdriverIO.Element> {
         if (this.parent) {
-            if (this.parent.type == ElementFinderType.Element) {
+            if (this.parent.getLocator().type == LocatorType.ElementSelector) {
                 return await (await (this.parent as ElementFinder).findElement()).$(this.locator.selector as string);
             }
-            else if (this.parent.type == ElementFinderType.ElementArray) {
+            else if (this.parent.getLocator().type == LocatorType.ArraySelector) {
                 return (await (this.parent as ElementArrayFinder).findElements())[this.locator.index as number];
             } else {
-                throw "Unknown type for parent element finder: " + this.parent.type;
+                throw "Unsupported locator type for parent item: " + this.parent.getLocator().type;
             }
         } else {
             return $(this.locator.selector as string);
@@ -155,9 +151,11 @@ export class ElementFinder {
 }
 
 export class ElementArrayFinder {
-    public type: ElementFinderType = ElementFinderType.ElementArray;
-
     constructor(protected locator: Locator, protected parent: ElementFinder | null = null) {
+    }
+
+    public getLocator(): Locator {
+        return this.locator;
     }
 
     public get(index: number): ElementFinder {
