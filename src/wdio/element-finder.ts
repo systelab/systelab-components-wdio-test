@@ -135,19 +135,20 @@ export class ElementFinder {
     // Auxiliary methods
     public async findElement(): Promise<WebdriverIO.Element> {
         if (this.parent) {
-            if (this.parent.getLocator().type == LocatorType.ElementSelector) {
+            if (this.parent.getLocator().type == LocatorType.ElementSelector ||
+                this.parent.getLocator().type == LocatorType.ArrayItem) {
                 return await (await (this.parent as ElementFinder).findElement()).$(this.locator.selector as string);
             }
             else if (this.parent.getLocator().type == LocatorType.ArraySelector) {
                 return (await (this.parent as ElementArrayFinder).findElements())[this.locator.index as number];
-            } else {
+            }
+            else {
                 throw "Unsupported locator type for parent item: " + this.parent.getLocator().type;
             }
         } else {
             return $(this.locator.selector as string);
         }
     }
-
 }
 
 export class ElementArrayFinder {
