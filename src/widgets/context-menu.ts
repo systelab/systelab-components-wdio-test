@@ -1,24 +1,29 @@
-import { WebDriverIOElement, WebDriverIOElementArray } from '../types';
 import { Widget } from './widget';
+import {Browser, ElementArrayFinder, ElementFinder} from "../wdio";
+
 
 export class ContextMenu extends Widget {
 
     public async getOptions(): Promise<string[]> {
         let content: string[] = [];
-        let rows: WebDriverIOElementArray = this.allByTagName('systelab-context-menu-item');
-        let numberOfItems: number = await rows.length;
+        let rows: ElementArrayFinder = this.allByTagName('systelab-context-menu-item');
+        let numberOfItems: number = await rows.count();
         for (let i = 0; i < numberOfItems; i++) {
-            let text: string = await (await this.byTagNameInsideElement(await rows[i] as WebDriverIOElement, '<a>')).getText()
-            content.push(text);
+            content.push(await rows.get(i).byTagName('a').getText());
         }
         return content;
     }
 
     public async selectOptionByNumber(i: number): Promise<void> {
-        await (await this.allByTagName('systelab-context-menu-item'))[i].click();
+        await Browser.waitUntil(async () => (await this.allByTagName('systelab-context-menu-item').count()) > i);
+        await this.allByTagName('systelab-context-menu-item').get(i).click();
     }
 
     public async selectOptionByText(text: string): Promise<void> {
-        await (await this.byElementText('a', text)).click()
+        return this.byElementText('a', text).click();
+    }
+
+    public async waitToBeNotPresent(timeout: number = 500): Promise<void> {
+        return this.elem.waitUntil(async () => (await this.allByTagName('systelab-context-menu-item').count()) == 0, timeout);
     }
 }

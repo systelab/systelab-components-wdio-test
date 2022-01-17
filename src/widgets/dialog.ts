@@ -1,31 +1,29 @@
-import { WebDriverIOElement } from './../types/wdio-element-type';
 import { Button } from './button';
 import { MessagePopup } from './message-popup';
 import { Widget } from './widget';
+import { Browser } from "../wdio";
 
 export class Dialog extends Widget {
 
     public async getNumberOfButtons(): Promise<number> {
-        const dialog: WebDriverIOElement = await this.byTagName('systelab-dialog-bottom');
-        return this.allByTagNameInsideElement(dialog,'<button>').length;
+        return this.byTagName('systelab-dialog-bottom').allByTagName('button').count();
     }
 
     public async getTitle(): Promise<string> {
-        const dialog = this.byTagName('systelab-dialog-header');
-        return (await this.byClassNameInsideElement(dialog, 'slab-dialog-header')).getText();
+        return this.byTagName('systelab-dialog-header').byClassName('slab-dialog-header').getText();
     }
 
     public getButtonClose(): Button {
-        return new Button((this.byCSS('.slab-dialog-close')));
+        return new Button(this.byCSS('.slab-dialog-close'));
     }
 
     public async close(): Promise<void> {
-        await browser.waitUntil(() => this.getButtonClose().isClickable())
+        await this.getButtonClose().waitUntilClickable();
         await this.getButtonClose().click();
     }
 
     public getButtonByName(name: string): Button {
-        return new Button(this.byCSS(`button*=${name}`));
+        return new Button(this.byButtonText('name'));
     }
 
     public getMessagePopup(): MessagePopup {

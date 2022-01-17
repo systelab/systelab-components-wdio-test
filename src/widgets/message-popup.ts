@@ -1,13 +1,15 @@
 import { Button } from './button';
 import { Widget } from './widget';
+import { Browser } from "../wdio";
+
 
 export class MessagePopup extends Widget {
     constructor() {
-        super(browser.$('<dialog-view>'));
+        super(Browser.byTagName('dialog-view'));
     }
 
     public async getTextMessage(): Promise<string> {
-        return (await this.byId('popup-message')).getText();
+        return this.byId('popup-message').getText();
     }
 
     public getButtonYes(): Button {
@@ -27,8 +29,6 @@ export class MessagePopup extends Widget {
     }
 
     private getButton(text: string): Button {
-        const dialog = this.byTagName("systelab-dialog-bottom");
-        const button = this.byButtonTextInsideElement(dialog, text);
-        return new Button(button);
+        return new Button(this.byTagName("systelab-dialog-bottom").byButtonText(text));
     }
 }

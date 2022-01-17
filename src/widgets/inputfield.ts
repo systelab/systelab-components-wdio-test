@@ -3,19 +3,18 @@ import { Widget } from './widget';
 export class InputField extends Widget {
 
     public async clear(): Promise<void> {
-        await (await this.elem).clearValue();
+        return this.elem.clear();
     }
 
     public async setText(text: string): Promise<void> {
-        await (await this.elem).setValue(text);
+        return this.elem.write(text);
     }
 
     public async getText(): Promise<string> {
-        return (await this.elem).getValue();
+        return this.elem.getValue();
     }
 
     public async isEnabled(): Promise<boolean> {
-        return (await this.elem).isEnabled();
+        return this.elem.isEnabled();
     }
-
 }
