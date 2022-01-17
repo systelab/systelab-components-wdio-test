@@ -18,7 +18,7 @@ export class Datepicker extends Widget {
     }
 
     private getInputElement(): ElementFinder {
-        return this.byCSS('input');
+        return this.byTagName('input');
     }
 
 }
