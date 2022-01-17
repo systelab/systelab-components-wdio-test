@@ -24,6 +24,8 @@ export class ComboBox extends Widget {
     }
 
     public async selectOptionByText(text: string): Promise<void> {
-        return this.byElementText("ag-cell-value", text).click();
+        const options = await this.getOptions();
+        const optionIndex = options.findIndex((option) => option === text);
+        return this.selectOptionByNumber(optionIndex);
     }
 }
