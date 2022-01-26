@@ -47,7 +47,7 @@ export class Browser {
     }
 
     public static allByClassName(className: string): ElementArrayFinder {
-        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `${className}`});
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `.${className}`});
     }
 
     public static allByCSS(cssExpression: string): ElementArrayFinder {
