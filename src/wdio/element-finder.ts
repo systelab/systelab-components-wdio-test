@@ -42,7 +42,7 @@ export class ElementFinder {
     }
 
     public allByClassName(className: string): ElementArrayFinder {
-        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `${className}`}, this);
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `.${className}`}, this);
     }
 
     public allByCSS(cssExpression: string): ElementArrayFinder {
