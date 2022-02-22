@@ -22,6 +22,14 @@ export class AssertionUtility {
         expect(toTest).toContain(expectedSubstring);
     }
 
+    public static expectStartsWith(toTest: string, expectedPrefix: string): void {
+        expect(toTest).toMatch('^' + expectedPrefix);
+    }
+
+    public static expectEndsWith(toTest: string, expectedSuffix: string): void {
+        expect(toTest).toMatch(expectedSuffix + '$');
+    }
+
     public static expectToMatch(toTest: string, expectedRegExp: RegExp): void {
         expect(toTest).toMatch(expectedRegExp);
     }
