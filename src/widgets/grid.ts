@@ -4,9 +4,9 @@ import { Widget } from './widget';
 
 
 export class Grid extends Widget {
-    public async waitUntilLoaded(cssTag: string = ".ag-overlay-loading-wrapper", timeout: number = 5000) {
+    public async waitUntilLoaded(loadingCSSSelector: string = ".ag-overlay-loading-wrapper", timeout: number = 5000) {
         return this.elem.waitUntil(async () => {
-            return !this.byCSS(cssTag).isDisplayed();
+            return !this.byCSS(loadingCSSSelector).isDisplayed();
         }, timeout);
     }
 
