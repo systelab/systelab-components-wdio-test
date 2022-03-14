@@ -1,7 +1,7 @@
 import { Widget } from './widget';
 
 export class Checkbox extends Widget {
-    public async click(): Promise<void> {
+    public async toggle(): Promise<void> {
         return this.elem.click();
     }
 
