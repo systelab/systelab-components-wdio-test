@@ -1,9 +1,15 @@
+import { ElementArrayFinder, ElementFinder } from "../wdio";
 import { ContextMenu } from './context-menu';
 import { Widget } from './widget';
-import { ElementArrayFinder, ElementFinder } from "../wdio";
 
 
 export class Grid extends Widget {
+    public async waitUntilLoaded(cssTag: string , timeout: number = 5000) {
+        return this.elem.waitUntil(async () => {
+            return !this.byCSS(cssTag).isDisplayed();
+        }, timeout);
+    }
+
     public async getNumberOfRows(): Promise<number> {
         return this.byCSS('.ag-center-cols-container').allByCSS('div[role=row]').count();
     }
