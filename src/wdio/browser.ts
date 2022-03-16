@@ -55,7 +55,11 @@ export class Browser {
     }
 
 
-    // Condition waits
+    // Flow control
+    public static async sleep(duration: number): Promise<void> {
+        await browser.pause(duration);
+    }
+
     public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
         await browser.waitUntil(condition, {timeout});
     }
