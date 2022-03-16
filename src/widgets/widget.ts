@@ -27,7 +27,7 @@ export class Widget {
     }
 
     public async isDisabled(): Promise<boolean> {
-        return !(await this.elem.isEnabled());
+        return !this.isEnabled();
     }
 
     public byId(id: string): ElementFinder {
@@ -67,7 +67,7 @@ export class Widget {
     }
 
     public async waitToBePresent(timeout: number = 500): Promise<void> {
-        return this.elem.waitToBePresent(timeout);
+        return this.elem.waitUntil(async () => await this.isPresent(), timeout);
     }
 
     public async waitToBeNotPresent(timeout: number = 500): Promise<void> {
@@ -75,7 +75,7 @@ export class Widget {
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-        return this.elem.waitToBeDisplayed(timeout);
+        return this.elem.waitUntil(async () => await this.isDisplayed(), timeout);
     }
 
     public async waitToBeNotDisplayed(timeout: number = 500): Promise<void> {
@@ -83,7 +83,7 @@ export class Widget {
     }
 
     public async waitToBeClickable(timeout: number = 500): Promise<void> {
-        return this.elem.waitToBeClickable(timeout);
+        return this.elem.waitUntil(async () => await this.isClickable(), timeout);
     }
 
     public async waitToBeNotClickable(timeout: number = 500): Promise<void> {
@@ -91,11 +91,11 @@ export class Widget {
     }
 
     public async waitToBeEnabled(timeout: number = 500): Promise<void> {
-        return this.elem.waitToBeEnabled(timeout);
+        return this.elem.waitUntil(async () => await this.isEnabled(), timeout);
     }
 
     public async waitToBeDisabled(timeout: number = 500): Promise<void> {
-        return this.elem.waitUntil(async () => !(await this.isEnabled()), timeout);
+        return this.elem.waitUntil(async () => await this.isDisabled(), timeout);
     }
 
     public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
