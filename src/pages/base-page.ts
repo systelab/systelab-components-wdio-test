@@ -13,6 +13,14 @@ export class BasePage {
         return this.current;
     }
 
+    public async isPresent(): Promise<boolean> {
+        return this.current.isPresent();
+    }
+
+    public async isDisplayed(): Promise<boolean> {
+        return this.current.isDisplayed();
+    }
+
     public byId(id: string): ElementFinder {
         return this.current.byId(id);
     }
@@ -50,6 +58,18 @@ export class BasePage {
     }
 
     public async waitToBePresent(timeout: number = 5000): Promise<void> {
-        return this.current.waitToBePresent(timeout);
+        return this.current.waitUntil(async () => await this.isPresent(), timeout);
+    }
+
+    public async waitToBeNotPresent(timeout: number = 5000): Promise<void> {
+        return this.current.waitUntil(async () => !(await this.isPresent()), timeout);
+    }
+
+    public async waitToBeDisplayed(timeout: number = 5000): Promise<void> {
+        return this.current.waitUntil(async () => await this.isDisplayed(), timeout);
+    }
+
+    public async waitToBeNotDisplayed(timeout: number = 5000): Promise<void> {
+        return this.current.waitUntil(async () => !(await this.isDisplayed()), timeout);
     }
 }
