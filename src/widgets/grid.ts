@@ -1,15 +1,9 @@
-import { ElementArrayFinder, ElementFinder } from "../wdio";
+import { DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
 import { ContextMenu } from './context-menu';
 import { Widget } from './widget';
 
 
 export class Grid extends Widget {
-    public async waitUntilLoaded(loadingCSSSelector: string = ".ag-overlay-loading-wrapper", timeout: number = 5000) {
-        return this.elem.waitUntil(async () => {
-            return !this.byCSS(loadingCSSSelector).isDisplayed();
-        }, timeout);
-    }
-
     public async getNumberOfRows(): Promise<number> {
         return this.byCSS('.ag-center-cols-container').allByCSS('div[role=row]').count();
     }
@@ -86,6 +80,10 @@ export class Grid extends Widget {
 
     public getMenu(): ContextMenu {
         return new ContextMenu(this.byTagName('systelab-grid-context-menu'));
+    }
+
+    public async waitToBeLoaded({loadingOverlayCSSSelector= '.ag-overlay-loading-wrapper', timeout = DefaultTimeout.SLOW_WAIT}) {
+        return this.elem.waitUntil(async () => !(await this.byCSS(loadingOverlayCSSSelector).isDisplayed()), timeout);
     }
 
     private getCells(container: ElementFinder, row: number, column: string): ElementArrayFinder {
