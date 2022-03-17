@@ -1,5 +1,7 @@
 import { LocatorType } from "./locator";
 import { ElementFinder, ElementArrayFinder } from "./element-finder";
+import { DefaultTimeout } from "./default-timeout";
+
 
 export class Browser {
 
@@ -60,7 +62,7 @@ export class Browser {
         await browser.pause(duration);
     }
 
-    public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
+    public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         await browser.waitUntil(condition, {timeout});
     }
 }

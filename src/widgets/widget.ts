@@ -1,4 +1,4 @@
-import { ElementArrayFinder, ElementFinder } from "../wdio";
+import { ElementArrayFinder, ElementFinder, DefaultTimeout } from "../wdio";
 
 
 export class Widget {
@@ -66,39 +66,39 @@ export class Widget {
         return this.elem.allByCSS(cssExpression);
     }
 
-    public async waitToBePresent(timeout: number = 500): Promise<void> {
+    public async waitToBePresent(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => await this.isPresent(), timeout);
     }
 
-    public async waitToBeNotPresent(timeout: number = 500): Promise<void> {
+    public async waitToBeNotPresent(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => !(await this.isPresent()), timeout);
     }
 
-    public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
+    public async waitToBeDisplayed(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => await this.isDisplayed(), timeout);
     }
 
-    public async waitToBeNotDisplayed(timeout: number = 500): Promise<void> {
+    public async waitToBeNotDisplayed(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => !(await this.isDisplayed()), timeout);
     }
 
-    public async waitToBeClickable(timeout: number = 500): Promise<void> {
+    public async waitToBeClickable(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => await this.isClickable(), timeout);
     }
 
-    public async waitToBeNotClickable(timeout: number = 500): Promise<void> {
+    public async waitToBeNotClickable(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => !(await this.isClickable()), timeout);
     }
 
-    public async waitToBeEnabled(timeout: number = 500): Promise<void> {
+    public async waitToBeEnabled(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => await this.isEnabled(), timeout);
     }
 
-    public async waitToBeDisabled(timeout: number = 500): Promise<void> {
+    public async waitToBeDisabled(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => await this.isDisabled(), timeout);
     }
 
-    public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
+    public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         return this.elem.waitUntil(condition, timeout);
     }
 }
