@@ -1,4 +1,4 @@
-import { Browser, ElementArrayFinder, ElementFinder } from "../wdio";
+import { Browser, DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
 
 
 export class BasePage {
@@ -11,6 +11,14 @@ export class BasePage {
 
     public getElementFinder(): ElementFinder {
         return this.current;
+    }
+
+    public async isPresent(): Promise<boolean> {
+        return this.current.isPresent();
+    }
+
+    public async isDisplayed(): Promise<boolean> {
+        return this.current.isDisplayed();
     }
 
     public byId(id: string): ElementFinder {
@@ -49,7 +57,19 @@ export class BasePage {
         return this.current.allByCSS(cssExpression);
     }
 
-    public async waitToBePresent(timeout: number = 5000): Promise<void> {
-        return this.current.waitToBePresent(timeout);
+    public async waitToBePresent(timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
+        return this.current.waitUntil(async () => await this.isPresent(), timeout);
+    }
+
+    public async waitToBeNotPresent(timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
+        return this.current.waitUntil(async () => !(await this.isPresent()), timeout);
+    }
+
+    public async waitToBeDisplayed(timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
+        return this.current.waitUntil(async () => await this.isDisplayed(), timeout);
+    }
+
+    public async waitToBeNotDisplayed(timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
+        return this.current.waitUntil(async () => !(await this.isDisplayed()), timeout);
     }
 }
