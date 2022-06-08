@@ -27,7 +27,7 @@ export class Widget {
     }
 
     public async isDisabled(): Promise<boolean> {
-        return !this.isEnabled();
+        return !(await this.isEnabled());
     }
 
     public byId(id: string): ElementFinder {
