@@ -15,16 +15,20 @@ export class Browser {
     public static async pressEsc(): Promise<void> {
         return browser.keys(['Escape']);
     }
+
     public static async pressTab(): Promise<void> {
         return browser.keys(['Tab']);
     }
+
     public static async pressBackspace(): Promise<void> {
         return browser.keys(['Backspace']);
     }
+
     public static async pressEnter(): Promise<void> {
         return browser.keys(['Enter']);
     }
-    public static async pressSupr(): Promise<void> {
+
+    public static async pressDelete(): Promise<void> {
         return browser.keys(['Delete']);
     }
 
