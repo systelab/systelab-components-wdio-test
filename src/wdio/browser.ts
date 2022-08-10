@@ -11,13 +11,11 @@ export class Browser {
     }
 
 
-    // Keyboard special keys
+    // Keyboard
     public static async pressTab(): Promise<void> {
         return browser.keys(['Tab']);
     }
 
-
-    //Keyboard Control
     public static async writeText(stringToWrite: string): Promise<void> {
         await browser.keys(stringToWrite.split(''));
     }
