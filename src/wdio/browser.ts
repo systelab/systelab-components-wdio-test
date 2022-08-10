@@ -66,6 +66,7 @@ export class Browser {
         await browser.waitUntil(condition, {timeout});
     }
 
+
     //Keyboard functions
     public static async write(stringToWrite: string): Promise<void> {
         await browser.keys(stringToWrite.split(''));
