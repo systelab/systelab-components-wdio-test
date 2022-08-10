@@ -17,6 +17,12 @@ export class Browser {
     }
 
 
+    //Keyboard Control
+    public static async writeText(stringToWrite: string): Promise<void> {
+        await browser.keys(stringToWrite.split(''));
+    }
+
+
     // Search single element
     public static byId(id: string): ElementFinder {
         return new ElementFinder({type: LocatorType.ElementSelector, selector: `#${id}`});
@@ -64,10 +70,5 @@ export class Browser {
 
     public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         await browser.waitUntil(condition, {timeout});
-    }
-
-    //Keyboard functions
-    public static async write(stringToWrite: string): Promise<void> {
-        await browser.keys(stringToWrite.split(''));
     }
 }
