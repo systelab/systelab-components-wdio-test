@@ -11,7 +11,7 @@ export class Browser {
     }
 
 
-    // Keyboard special keys
+    // Keyboard
     public static async pressEsc(): Promise<void> {
         return browser.keys(['Escape']);
     }
@@ -31,7 +31,11 @@ export class Browser {
     public static async pressDelete(): Promise<void> {
         return browser.keys(['Delete']);
     }
-
+    
+    public static async writeText(stringToWrite: string): Promise<void> {
+        await browser.keys(stringToWrite.split(''));
+    }
+    
 
     // Search single element
     public static byId(id: string): ElementFinder {
