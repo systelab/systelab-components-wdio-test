@@ -91,6 +91,10 @@ export class ElementFinder {
         return (await (await this.findElement()).getCSSProperty(name)).value as string;
     }
 
+    public async getProperty(name: string): Promise<any> {
+        return (await this.findElement()).getProperty(name);
+    }
+
 
     // Actions
     public async click(): Promise<void> {
