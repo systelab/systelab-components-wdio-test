@@ -10,6 +10,8 @@ export class Widget {
         return this.elem;
     }
 
+
+    // Queries
     public async isPresent(): Promise<boolean> {
         return this.elem.isPresent();
     }
@@ -30,6 +32,8 @@ export class Widget {
         return !(await this.isEnabled());
     }
 
+
+    // Search single element
     public byId(id: string): ElementFinder {
         return this.elem.byId(id);
     }
@@ -54,6 +58,8 @@ export class Widget {
         return this.elem.byElementText(tagName, text);
     }
 
+
+    // Search list of elements
     public allByTagName(tagName: string): ElementArrayFinder {
         return this.elem.allByTagName(tagName);
     }
@@ -66,6 +72,8 @@ export class Widget {
         return this.elem.allByCSS(cssExpression);
     }
 
+
+    // Flow control
     public async waitToBePresent(timeout: number = DefaultTimeout.FAST_WAIT): Promise<void> {
         return this.elem.waitUntil(async () => await this.isPresent(), timeout);
     }
@@ -100,5 +108,15 @@ export class Widget {
 
     public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         return this.elem.waitUntil(condition, timeout);
+    }
+
+
+    // Screenshots
+    public async takeScreenshot(): Promise<string> {
+        return this.elem.takeScreenshot();
+    }
+
+    public async saveScreenshot(filepath: string): Promise<void> {
+        return this.elem.saveScreenshot(filepath);
     }
 }

@@ -1,3 +1,7 @@
+import * as os from "os";
+import * as tmp from "tmp";
+import * as fs from "fs";
+
 import { LocatorType } from "./locator";
 import { ElementFinder, ElementArrayFinder } from "./element-finder";
 import { DefaultTimeout } from "./default-timeout";
@@ -84,5 +88,18 @@ export class Browser {
 
     public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         await browser.waitUntil(condition, {timeout});
+    }
+
+
+    // Screenshots
+    public static async takeScreenshot(): Promise<string> {
+        const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
+        const screenshotBuffer: Buffer = await browser.saveScreenshot(tempFilepath);
+        fs.unlinkSync(tempFilepath);
+        return screenshotBuffer.toString('base64');
+    }
+
+    public static async saveScreenshot(filepath: string): Promise<void> {
+        await browser.saveScreenshot(filepath);
     }
 }
