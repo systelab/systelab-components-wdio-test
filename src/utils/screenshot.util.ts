@@ -1,5 +1,6 @@
-import {readPngFileSync, writePngFileSync} from 'node-libpng';
-import {diffImages, DiffResult} from 'native-image-diff';
+import {PNG, PNGWithMetadata} from 'pngjs';
+import * as fs from 'fs';
+import Pixelmatch from 'pixelmatch';
 
 import {ElementFinder} from "../wdio";
 import {ReportUtility} from "./report.util";
@@ -14,7 +15,7 @@ export class ScreenshotUtility {
         this.basePath = basePath;
     }
 
-    public static setPixelTolerance(pixelTolerance: number): void {
+    public static setPixelThreshold(pixelTolerance: number): void {
         this.pixelTolerance = pixelTolerance;
     }
 
@@ -31,14 +32,15 @@ export class ScreenshotUtility {
     }
 
     private static compareImageFiles(expectedImageFilepath: string, actualImageFilepath: string, diffImageFilepath: string): number {
-        const expectedImage = readPngFileSync(expectedImageFilepath);
-        const actualImage = readPngFileSync(actualImageFilepath);
+        const expectedImage: PNGWithMetadata = PNG.sync.read(fs.readFileSync(expectedImageFilepath));
+        const actualImage: PNGWithMetadata = PNG.sync.read(fs.readFileSync(actualImageFilepath));
 
-        const result: DiffResult = diffImages(expectedImage, actualImage);
-        if (result.image) {
-            writePngFileSync(diffImageFilepath, result.image.data, { width: result.image.width, height: result.image.height });
-        }
+        const { width, height } = expectedImage;
+        const diffImage = new PNG({width, height});
+        const numDiffPixels = Pixelmatch(expectedImage.data, actualImage.data, diffImage.data, width, height, {threshold: 0.1});
 
-        return result.pixels;
+        fs.writeFileSync(diffImageFilepath, PNG.sync.write(diffImage));
+
+        return numDiffPixels;
     }
 }
