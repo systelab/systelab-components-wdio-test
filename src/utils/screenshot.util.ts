@@ -19,12 +19,12 @@ export class ScreenshotUtility {
     }
 
     public static async expectScreenshot(element: ElementFinder, fileName: string, elementDescriptiveName: string): Promise<void> {
-        const actualImageFilepath = `${this.basePath}/${fileName}-actual.png`;
+        const actualImageFilepath = `${this.basePath}/${fileName}.actual.png`;
         await element.saveScreenshot(actualImageFilepath);
 
-        const expectedImageFilepath = `${this.basePath}/${fileName}-expected.png`;
-        await ReportUtility.addExpectedResult(`'${elementDescriptiveName}' is equal to screenshot of '${fileName}-expected.png' file`, async () => {
-            const diffImageFilepath = `${this.basePath}/${fileName}-diff.png`;
+        const expectedImageFilepath = `${this.basePath}/${fileName}.expected.png`;
+        await ReportUtility.addExpectedResult(`'${elementDescriptiveName}' is equal to screenshot of '${fileName}.expected.png' file`, async () => {
+            const diffImageFilepath = `${this.basePath}/${fileName}.diff.png`;
             const diffPixels = this.compareImageFiles(expectedImageFilepath, actualImageFilepath, diffImageFilepath);
             AssertionUtility.expectLowerOrEqual(diffPixels, this.pixelTolerance);
         });
