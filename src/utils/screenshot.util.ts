@@ -5,6 +5,8 @@ import Pixelmatch from 'pixelmatch';
 import {ElementFinder} from "../wdio";
 import {ReportUtility} from "./report.util";
 import {AssertionUtility} from "./assertion.util";
+import {Widget} from "../widgets";
+import {BasePage} from "../pages";
 
 
 export class ScreenshotUtility {
@@ -17,6 +19,14 @@ export class ScreenshotUtility {
 
     public static setPixelThreshold(pixelTolerance: number): void {
         this.pixelTolerance = pixelTolerance;
+    }
+
+    public static async expectPageScreenshot(page: BasePage, fileName: string, pageDescriptiveName: string): Promise<void> {
+        return this.expectScreenshot(page.getElementFinder(), fileName, pageDescriptiveName);
+    }
+
+    public static async expectWidgetScreenshot(widget: Widget, fileName: string, widgetDescriptiveName: string): Promise<void> {
+        return this.expectScreenshot(widget.getElement(), fileName, widgetDescriptiveName);
     }
 
     public static async expectScreenshot(element: ElementFinder, fileName: string, elementDescriptiveName: string): Promise<void> {
