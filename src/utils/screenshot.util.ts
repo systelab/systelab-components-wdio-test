@@ -12,13 +12,18 @@ import {BasePage} from "../pages";
 export class ScreenshotUtility {
     private static basePath = './screenshots';
     private static pixelTolerance = 0;
+    private static imageMatchingThreshold = 0.1;
 
     public static setBasePath(basePath: string): void {
         this.basePath = basePath;
     }
 
-    public static setPixelThreshold(pixelTolerance: number): void {
+    public static setPixelTolerance(pixelTolerance: number): void {
         this.pixelTolerance = pixelTolerance;
+    }
+
+    public static setImageMatchingThreshold(imageMatchingThreshold: number): void {
+        this.imageMatchingThreshold = imageMatchingThreshold;
     }
 
     public static async expectPageScreenshot(page: BasePage, fileName: string, pageDescriptiveName: string): Promise<void> {
@@ -47,7 +52,7 @@ export class ScreenshotUtility {
 
         const { width, height } = expectedImage;
         const diffImage = new PNG({width, height});
-        const numDiffPixels = Pixelmatch(expectedImage.data, actualImage.data, diffImage.data, width, height, {threshold: 0.1});
+        const numDiffPixels = Pixelmatch(expectedImage.data, actualImage.data, diffImage.data, width, height, {threshold: this.imageMatchingThreshold});
 
         fs.writeFileSync(diffImageFilepath, PNG.sync.write(diffImage));
 
