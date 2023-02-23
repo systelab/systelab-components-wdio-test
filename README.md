@@ -120,3 +120,6 @@ await ReportUtility.addExpectedResult("Invalid username or password message is d
 });
 ```
 
+### Screenshots
+
+See [screenshots](SCREENSHOTS.md) page for details on utilities for screenshot-based testing techniques.

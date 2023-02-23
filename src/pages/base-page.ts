@@ -13,6 +13,8 @@ export class BasePage {
         return this.current;
     }
 
+
+    // Queries
     public async isPresent(): Promise<boolean> {
         return this.current.isPresent();
     }
@@ -21,6 +23,8 @@ export class BasePage {
         return this.current.isDisplayed();
     }
 
+
+    // Search by single element
     public byId(id: string): ElementFinder {
         return this.current.byId(id);
     }
@@ -45,6 +49,8 @@ export class BasePage {
         return this.current.byElementText(tagName, text);
     }
 
+
+    // Search list of elements
     public allByTagName(tagName: string): ElementArrayFinder {
         return this.current.allByTagName(tagName);
     }
@@ -57,6 +63,8 @@ export class BasePage {
         return this.current.allByCSS(cssExpression);
     }
 
+
+    // Flow control
     public async waitToBePresent(timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         return this.current.waitUntil(async () => await this.isPresent(), timeout);
     }
@@ -71,5 +79,15 @@ export class BasePage {
 
     public async waitToBeNotDisplayed(timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
         return this.current.waitUntil(async () => !(await this.isDisplayed()), timeout);
+    }
+
+
+    // Screenshots
+    public async takeScreenshot(): Promise<string> {
+        return this.current.takeScreenshot();
+    }
+
+    public async saveScreenshot(filepath: string): Promise<void> {
+        return this.current.saveScreenshot(filepath);
     }
 }

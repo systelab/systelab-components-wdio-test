@@ -1,5 +1,7 @@
 import {ElementArray} from "webdriverio";
 import {Locator, LocatorType} from "./locator";
+import * as tmp from "tmp";
+import fs from "fs";
 
 
 export class ElementFinder {
@@ -133,6 +135,19 @@ export class ElementFinder {
 
     public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
         await (await this.findElement()).waitUntil(condition, {timeout});
+    }
+
+
+    // Screenshots
+    public async takeScreenshot(): Promise<string> {
+        const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
+        const screenshotBuffer: Buffer = await (await this.findElement()).saveScreenshot(tempFilepath);
+        fs.unlinkSync(tempFilepath);
+        return screenshotBuffer.toString('base64');
+    }
+
+    public async saveScreenshot(filepath: string): Promise<void> {
+        await (await this.findElement()).saveScreenshot(filepath);
     }
 
 
