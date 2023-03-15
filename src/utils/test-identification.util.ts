@@ -19,10 +19,10 @@ export class TestIdentification
     }
 
     public static captureEnvironment(): void {
-        ReportUtility.addLabel("OS", "TODO");
+        ReportUtility.addLabel("OS", (browser.capabilities as any).platformName);
         ReportUtility.addLabel("testExecutionDateTime", new Date().toLocaleString());
         ReportUtility.addLabel("browser", (browser.capabilities as any).browserName);
-        ReportUtility.addLabel("browserVersion", "TODO");
+        ReportUtility.addLabel("browserVersion", (browser.capabilities as any).browserVersion);
         ReportUtility.addLabel("appVersion", this.appVersion);
     }
 }
