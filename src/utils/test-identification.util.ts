@@ -1,5 +1,5 @@
 import { ReportUtility } from "./report.util";
-
+import { Browser } from "../wdio";
 
 export class TestIdentification
 {
@@ -19,10 +19,10 @@ export class TestIdentification
     }
 
     public static captureEnvironment(): void {
-        ReportUtility.addLabel("OS", (browser.capabilities as any).platformName);
+        ReportUtility.addLabel("OS", Browser.getOperatingSystem());
         ReportUtility.addLabel("testExecutionDateTime", new Date().toLocaleString());
-        ReportUtility.addLabel("browser", (browser.capabilities as any).browserName);
-        ReportUtility.addLabel("browserVersion", (browser.capabilities as any).browserVersion);
+        ReportUtility.addLabel("browser", Browser.getName());
+        ReportUtility.addLabel("browserVersion", Browser.getVersion());
         ReportUtility.addLabel("appVersion", this.appVersion);
     }
 }
