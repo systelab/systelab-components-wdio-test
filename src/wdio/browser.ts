@@ -101,4 +101,20 @@ export class Browser {
     public static async saveScreenshot(filepath: string): Promise<void> {
         await browser.saveScreenshot(filepath);
     }
+
+    // Capabilities and Status
+    public static getName(): string {
+        const caps = browser.capabilities as any;
+        return caps.browserName;
+    }
+
+    public static getVersion(): string {
+        const caps = browser.capabilities as any;
+        return caps.browserVersion;
+    }
+
+    public static getOperatingSystem(): string {
+        const caps = browser.capabilities as any;
+        return caps.platformName;
+    }
 }
