@@ -1,5 +1,6 @@
 const WDIOReporter = require("@wdio/reporter").default
 const colors = require("colors");
+const {TraceabilityUtility} = require("../../lib/utils/traceability.util");
 
 
 const jasmineTestCaseReporter =
@@ -38,6 +39,12 @@ class TestCaseReporter extends WDIOReporter
     {
         this.indents++;
         console.log(colors.blue(`${this.indent()}${suiteStats.fullTitle}`));
+
+        if (TraceabilityUtility.hasCoveredSpecs()) {
+            this.indents++;
+            console.log(colors.gray(`${this.indent()}Covered Specs: ${TraceabilityUtility.getCoveredSpecsPrettyString()}`));
+            this.indents--;
+        }
     }
 
     onTestStart(testStats)
