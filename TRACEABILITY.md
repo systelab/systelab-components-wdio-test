@@ -1,6 +1,6 @@
 # Traceability utility
 
-This utility provides several methods to facilitate traceability of specs against test cases. 
+This utility provides several methods to facilitate traceability of specs with test cases. 
 
 ## Trace of specifications
 
@@ -29,7 +29,7 @@ describe('WDIO-TC-AT-SPECIFIC_TEST', () => {
 ```
 ### Tracing specs at "describe" (suite) level
 
-With this approach, specs are directly set only at suite level, and they should be specified there with the `registerCovered()` method:
+With this approach, specs are directly set only at suite level, and they should be specified there with the `registerCoveredSpecs()` method:
 
 ```typescript
 describe('WDIO-TC-AT-SPECIFIC_TEST', () => {

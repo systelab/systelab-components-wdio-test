@@ -121,7 +121,7 @@ await ReportUtility.addExpectedResult("Invalid username or password message is d
 ```
 #### Traceability
 
-See [traceability](TRACEABILITY.md) page for details on how to add into Allure Reporting traceability of specs against test cases.
+See [traceability](TRACEABILITY.md) page for details on how to add into Allure Reporting traceability of specs with test cases.
 
 ### Screenshots
 
