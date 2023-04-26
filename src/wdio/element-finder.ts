@@ -2,6 +2,7 @@ import {ElementArray} from "webdriverio";
 import {Locator, LocatorType} from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
+import {Test} from './test';
 
 
 export class ElementFinder {
@@ -13,6 +14,10 @@ export class ElementFinder {
     }
 
     // Search single element
+    public bySystelabTestId(dataTestId: string): ElementFinder {
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
+    }
+
     public byId(id: string): ElementFinder {
         return new ElementFinder({type: LocatorType.ElementSelector, selector: `#${id}`}, this);
     }
@@ -39,6 +44,10 @@ export class ElementFinder {
 
 
     // Search list of elements
+    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
+    }
+
     public allByTagName(tagName: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `<${tagName}>`}, this);
     }

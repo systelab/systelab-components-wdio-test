@@ -1,4 +1,5 @@
-import { Browser, DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
+import {Browser, DefaultTimeout, ElementArrayFinder, ElementFinder, LocatorType} from '../wdio';
+import {Test} from '../wdio/test';
 
 
 export class BasePage {
@@ -25,6 +26,10 @@ export class BasePage {
 
 
     // Search by single element
+    public bySystelabTestId(id: string): ElementFinder {
+        return this.current.byId(id);
+    }
+
     public byId(id: string): ElementFinder {
         return this.current.byId(id);
     }
@@ -51,6 +56,10 @@ export class BasePage {
 
 
     // Search list of elements
+    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
+        return this.current.allByCSS(`[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`);
+    }
+
     public allByTagName(tagName: string): ElementArrayFinder {
         return this.current.allByTagName(tagName);
     }
