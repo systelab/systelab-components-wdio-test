@@ -26,8 +26,8 @@ export class BasePage {
 
 
     // Search by single element
-    public bySystelabTestId(id: string): ElementFinder {
-        return this.current.byId(id);
+    public bySystelabTestId(dataTestId: string): ElementFinder {
+        return this.current.bySystelabTestId(dataTestId);
     }
 
     public byId(id: string): ElementFinder {
@@ -57,7 +57,7 @@ export class BasePage {
 
     // Search list of elements
     public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return this.current.allByCSS(`[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`);
+        return this.current.allBySystelabTestId(dataTestId);
     }
 
     public allByTagName(tagName: string): ElementArrayFinder {

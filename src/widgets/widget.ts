@@ -36,7 +36,7 @@ export class Widget {
 
     // Search single element
     public bySystelabTestId(dataTestId: string): ElementFinder {
-        return this.elem.byCSS(`[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`);
+        return this.elem.bySystelabTestId(dataTestId);
     }
 
     public byId(id: string): ElementFinder {
@@ -66,7 +66,7 @@ export class Widget {
 
     // Search list of elements
     public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return this.elem.allByCSS(`[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`);
+        return this.elem.allBySystelabTestId(dataTestId);
     }
 
     public allByTagName(tagName: string): ElementArrayFinder {
