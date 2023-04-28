@@ -2,9 +2,9 @@ import * as tmp from "tmp";
 import * as fs from "fs";
 
 import { LocatorType } from "./locator";
-import { ElementFinder, ElementArrayFinder } from "./element-finder";
+import { ElementArrayFinder, ElementFinder } from "./element-finder";
 import { DefaultTimeout } from "./default-timeout";
-import { Constants } from '../constants';
+import { Constants } from "../constants";
 
 
 export class Browser {

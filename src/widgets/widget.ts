@@ -1,4 +1,4 @@
-import { ElementArrayFinder, ElementFinder, DefaultTimeout } from '../wdio';
+import { DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
 
 
 export class Widget {

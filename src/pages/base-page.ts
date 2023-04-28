@@ -1,4 +1,4 @@
-import { Browser, DefaultTimeout, ElementArrayFinder, ElementFinder } from '../wdio';
+import { Browser, DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
 
 
 export class BasePage {
