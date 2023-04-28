@@ -58,8 +58,8 @@ export class Widget {
         return this.elem.byElementText(tagName, text);
     }
 
-    public bySystelabTestId(dataTestId: string): ElementFinder {
-        return this.elem.bySystelabTestId(dataTestId);
+    public bySystelabTestId(systelabTestId: string): ElementFinder {
+        return this.elem.bySystelabTestId(systelabTestId);
     }
 
 
@@ -77,8 +77,8 @@ export class Widget {
         return this.elem.allByCSS(cssExpression);
     }
 
-    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return this.elem.allBySystelabTestId(dataTestId);
+    public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return this.elem.allBySystelabTestId(systelabTestId);
     }
 
 

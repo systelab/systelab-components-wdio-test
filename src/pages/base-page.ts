@@ -49,8 +49,8 @@ export class BasePage {
         return this.current.byElementText(tagName, text);
     }
 
-    public bySystelabTestId(dataTestId: string): ElementFinder {
-        return this.current.bySystelabTestId(dataTestId);
+    public bySystelabTestId(systelabTestId: string): ElementFinder {
+        return this.current.bySystelabTestId(systelabTestId);
     }
 
 
@@ -68,8 +68,8 @@ export class BasePage {
         return this.current.allByCSS(cssExpression);
     }
 
-    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return this.current.allBySystelabTestId(dataTestId);
+    public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return this.current.allBySystelabTestId(systelabTestId);
     }
 
 

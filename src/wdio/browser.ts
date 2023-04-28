@@ -66,8 +66,8 @@ export class Browser {
         return new ElementFinder( {type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`});
     }
 
-    public static bySystelabTestId(dataTestId: string): ElementFinder {
-        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`});
+    public static bySystelabTestId(systelabTestId: string): ElementFinder {
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${systelabTestId}"]`});
     }
 
 
@@ -85,8 +85,8 @@ export class Browser {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression});
     }
 
-    public static allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`});
+    public static allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${systelabTestId}"]`});
     }
 
 

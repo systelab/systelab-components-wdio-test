@@ -38,8 +38,8 @@ export class ElementFinder {
         return new ElementFinder( {type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`}, this);
     }
 
-    public bySystelabTestId(dataTestId: string): ElementFinder {
-        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
+    public bySystelabTestId(systelabTestId: string): ElementFinder {
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${systelabTestId}"]`}, this);
     }
 
 
@@ -56,8 +56,8 @@ export class ElementFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression}, this);
     }
 
-    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
+    public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${systelabTestId}"]`}, this);
     }
 
 
