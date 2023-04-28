@@ -1,4 +1,4 @@
-import { ElementArrayFinder, ElementFinder, DefaultTimeout } from "../wdio";
+import { DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
 
 
 export class Widget {
@@ -58,6 +58,11 @@ export class Widget {
         return this.elem.byElementText(tagName, text);
     }
 
+    public bySystelabTestId(systelabTestId: string): ElementFinder {
+        return this.elem.bySystelabTestId(systelabTestId);
+    }
+
+
 
     // Search list of elements
     public allByTagName(tagName: string): ElementArrayFinder {
@@ -70,6 +75,10 @@ export class Widget {
 
     public allByCSS(cssExpression: string): ElementArrayFinder {
         return this.elem.allByCSS(cssExpression);
+    }
+
+    public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return this.elem.allBySystelabTestId(systelabTestId);
     }
 
 

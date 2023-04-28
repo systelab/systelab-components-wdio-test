@@ -49,6 +49,11 @@ export class BasePage {
         return this.current.byElementText(tagName, text);
     }
 
+    public bySystelabTestId(systelabTestId: string): ElementFinder {
+        return this.current.bySystelabTestId(systelabTestId);
+    }
+
+
 
     // Search list of elements
     public allByTagName(tagName: string): ElementArrayFinder {
@@ -61,6 +66,10 @@ export class BasePage {
 
     public allByCSS(cssExpression: string): ElementArrayFinder {
         return this.current.allByCSS(cssExpression);
+    }
+
+    public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return this.current.allBySystelabTestId(systelabTestId);
     }
 
 

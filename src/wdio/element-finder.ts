@@ -1,7 +1,8 @@
-import {ElementArray} from "webdriverio";
-import {Locator, LocatorType} from "./locator";
+import { ElementArray } from "webdriverio";
+import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
+import { Constants } from "../constants";
 
 
 export class ElementFinder {
@@ -34,7 +35,14 @@ export class ElementFinder {
     }
 
     public byElementText(tagName: string, text: string): ElementFinder {
-        return new ElementFinder( {type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`}, this);
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`}, this);
+    }
+
+    public bySystelabTestId(systelabTestId: string): ElementFinder {
+        return new ElementFinder({
+            type: LocatorType.ElementSelector,
+            selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}='${systelabTestId}']`
+        }, this);
     }
 
 
@@ -49,6 +57,13 @@ export class ElementFinder {
 
     public allByCSS(cssExpression: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression}, this);
+    }
+
+    public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({
+            type: LocatorType.ArraySelector,
+            selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}='${systelabTestId}']`
+        }, this);
     }
 
 
@@ -157,12 +172,10 @@ export class ElementFinder {
             if (this.parent.getLocator().type == LocatorType.ElementSelector ||
                 this.parent.getLocator().type == LocatorType.ArrayItem) {
                 return await (await (this.parent as ElementFinder).findElement()).$(this.locator.selector as string);
-            }
-            else if (this.parent.getLocator().type == LocatorType.ArraySelector) {
+            } else if (this.parent.getLocator().type == LocatorType.ArraySelector) {
                 return (await (this.parent as ElementArrayFinder).findElements())[this.locator.index as number];
-            }
-            else {
-                throw "Unsupported locator type for parent item: " + this.parent.getLocator().type;
+            } else {
+                throw 'Unsupported locator type for parent item: ' + this.parent.getLocator().type;
             }
         } else {
             return $(this.locator.selector as string);

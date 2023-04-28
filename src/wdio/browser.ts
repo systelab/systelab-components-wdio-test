@@ -2,8 +2,9 @@ import * as tmp from "tmp";
 import * as fs from "fs";
 
 import { LocatorType } from "./locator";
-import { ElementFinder, ElementArrayFinder } from "./element-finder";
+import { ElementArrayFinder, ElementFinder } from "./element-finder";
 import { DefaultTimeout } from "./default-timeout";
+import { Constants } from "../constants";
 
 
 export class Browser {
@@ -65,6 +66,11 @@ export class Browser {
         return new ElementFinder( {type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`});
     }
 
+    public static bySystelabTestId(systelabTestId: string): ElementFinder {
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${systelabTestId}"]`});
+    }
+
+
 
     // Search list of elements
     public static allByTagName(tagName: string): ElementArrayFinder {
@@ -77,6 +83,10 @@ export class Browser {
 
     public static allByCSS(cssExpression: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression});
+    }
+
+    public static allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${systelabTestId}"]`});
     }
 
 
