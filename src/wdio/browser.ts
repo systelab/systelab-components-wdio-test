@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { LocatorType } from "./locator";
 import { ElementFinder, ElementArrayFinder } from "./element-finder";
 import { DefaultTimeout } from "./default-timeout";
-import {Test} from './test';
+import { Constants } from '../constants';
 
 
 export class Browser {
@@ -46,10 +46,6 @@ export class Browser {
         return new ElementFinder({type: LocatorType.ElementSelector, selector: `#${id}`});
     }
 
-    public static bySystelabTestId(dataTestId: string): ElementFinder {
-        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`});
-    }
-
     public static byTagName(tagName: string): ElementFinder {
         return new ElementFinder({type: LocatorType.ElementSelector, selector: `<${tagName}>`});
     }
@@ -70,12 +66,13 @@ export class Browser {
         return new ElementFinder( {type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`});
     }
 
-
-    // Search list of elements
-    public static allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`});
+    public static bySystelabTestId(dataTestId: string): ElementFinder {
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`});
     }
 
+
+
+    // Search list of elements
     public static allByTagName(tagName: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `<${tagName}>`});
     }
@@ -86,6 +83,10 @@ export class Browser {
 
     public static allByCSS(cssExpression: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression});
+    }
+
+    public static allBySystelabTestId(dataTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`});
     }
 
 

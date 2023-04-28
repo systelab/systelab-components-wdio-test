@@ -1,5 +1,4 @@
-import {Browser, DefaultTimeout, ElementArrayFinder, ElementFinder, LocatorType} from '../wdio';
-import {Test} from '../wdio/test';
+import { Browser, DefaultTimeout, ElementArrayFinder, ElementFinder } from '../wdio';
 
 
 export class BasePage {
@@ -26,10 +25,6 @@ export class BasePage {
 
 
     // Search by single element
-    public bySystelabTestId(dataTestId: string): ElementFinder {
-        return this.current.bySystelabTestId(dataTestId);
-    }
-
     public byId(id: string): ElementFinder {
         return this.current.byId(id);
     }
@@ -54,12 +49,13 @@ export class BasePage {
         return this.current.byElementText(tagName, text);
     }
 
-
-    // Search list of elements
-    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return this.current.allBySystelabTestId(dataTestId);
+    public bySystelabTestId(dataTestId: string): ElementFinder {
+        return this.current.bySystelabTestId(dataTestId);
     }
 
+
+
+    // Search list of elements
     public allByTagName(tagName: string): ElementArrayFinder {
         return this.current.allByTagName(tagName);
     }
@@ -70,6 +66,10 @@ export class BasePage {
 
     public allByCSS(cssExpression: string): ElementArrayFinder {
         return this.current.allByCSS(cssExpression);
+    }
+
+    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
+        return this.current.allBySystelabTestId(dataTestId);
     }
 
 

@@ -1,8 +1,8 @@
-import {ElementArray} from "webdriverio";
-import {Locator, LocatorType} from "./locator";
+import { ElementArray } from "webdriverio";
+import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
-import {Test} from './test';
+import { Constants } from '../constants';
 
 
 export class ElementFinder {
@@ -14,10 +14,6 @@ export class ElementFinder {
     }
 
     // Search single element
-    public bySystelabTestId(dataTestId: string): ElementFinder {
-        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
-    }
-
     public byId(id: string): ElementFinder {
         return new ElementFinder({type: LocatorType.ElementSelector, selector: `#${id}`}, this);
     }
@@ -42,12 +38,12 @@ export class ElementFinder {
         return new ElementFinder( {type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`}, this);
     }
 
-
-    // Search list of elements
-    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
-        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Test.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
+    public bySystelabTestId(dataTestId: string): ElementFinder {
+        return new ElementFinder({type: LocatorType.ElementSelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
     }
 
+
+    // Search list of elements
     public allByTagName(tagName: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `<${tagName}>`}, this);
     }
@@ -59,6 +55,11 @@ export class ElementFinder {
     public allByCSS(cssExpression: string): ElementArrayFinder {
         return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression}, this);
     }
+
+    public allBySystelabTestId(dataTestId: string): ElementArrayFinder {
+        return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `[${Constants.SYSTELAB_TEST_ID_ATTRIBUTE}="${dataTestId}"]`}, this);
+    }
+
 
 
     // Queries
