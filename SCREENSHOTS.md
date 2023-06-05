@@ -1,6 +1,6 @@
 # Screenshot utilities
 
-This utility provides several methods to faciliate implementing screenshot-based testing techniques.
+This library provides several utilities to facilitate implementing screenshot-based testing techniques.
 
 ## Generate a screenshot
 
@@ -78,15 +78,15 @@ Current implementation of the utility is based on following external libraries:
 - [pngjs](https://github.com/lukeapage/pngjs): For image read/write to disk
 
 
-# Screenshot reporting
+## Screenshot reporting
 
 This utility allows generating screenshot based reporting. For now, it has been created for helping on tests troubleshooting, although it could be extended and used also for formalizing execution evidences. 
 
 Screenshot reporting configuration:
 
-- setBasePath(string): void: Sets the base path where the screenshots will be located.
-- beforeSuite(suite: any): void: resets a spec (it) counter to zero. Intended to be called from beforeSuite hook.  
-- afterTest(test, context, status): Promise void: takes a screenshot and saves it for now in a basic folder structure. Intended to be called from the afterTest hook.
+- `setBasePath(string): void`: Sets the base path where the screenshots will be located.
+- `beforeSuite(suite: any): void`: resets a spec (it) counter to zero. Intended to be called from beforeSuite hook.  
+- `afterTest(test, context, status): Promise void`: takes a screenshot and saves it in a basic folder structure. Intended to be called from the afterTest hook.
   Structure example:
   ````
   - <"describe description string of 1st e2e-spec.ts file">/
@@ -101,21 +101,21 @@ Screenshot reporting configuration:
 
 Set the base path for the output of screenshot reporting. To be called from wdio.conf.ts beforeSession hook:
 ```typescript
-beforeSession: function (config, capabilities, specs) {
+beforeSession: function(config, capabilities, specs) {
   ScreenshotReporter.setBasePath('../reports/screenshots/e2e');
 },
 ```
 
-Call ScreenshotReporter.beforeSuite() method. To be called from wdio.conf.ts beforeSuite hook:
+Call `ScreenshotReporter.beforeSuite()` method. To be called from wdio.conf.ts beforeSuite hook:
 ```typescript
-beforeSuite: function (suite) {
+beforeSuite: function(suite) {
   ScreenshotReporter.beforeSuite(suite);
 },
 ```
 
-Call ScreenshotReporter.afterTest() method. To be called from wdio.conf.ts afterTest hook:
+Call `ScreenshotReporter.afterTest()` method. To be called from wdio.conf.ts afterTest hook:
 ```typescript
 afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-  await ScreenshotReporter.executeForTroubleshooting(test, context, { error, result, duration, passed, retries });
+  await ScreenshotReporter.afterTest(test, context, { error, result, duration, passed, retries });
 },
 ```
