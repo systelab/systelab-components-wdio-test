@@ -1,4 +1,5 @@
 export * from './pages/index';
+export * from './reporters/index';
 export * from './services/index';
 export * from './utils/index';
 export * from './wdio/index';
