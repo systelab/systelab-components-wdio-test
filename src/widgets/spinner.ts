@@ -11,7 +11,7 @@ export class Spinner extends Widget {
     }
 
     public async getText(): Promise<string> {
-        return this.byTagName('input').getAttribute('value');
+        return this.byTagName('input').getValue();
     }
 
     public async increase(): Promise<void> {
