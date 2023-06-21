@@ -16,4 +16,5 @@ export * from './spinner';
 export * from './switch';
 export * from './tab';
 export * from './tabs';
+export * from './toggle-selector';
 export * from './widget';
