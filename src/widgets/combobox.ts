@@ -1,5 +1,5 @@
 import { Widget } from './widget';
-import { ElementArrayFinder } from "../wdio";
+import {ElementArrayFinder, ElementFinder} from "../wdio";
 
 
 export class ComboBox extends Widget {
@@ -8,8 +8,7 @@ export class ComboBox extends Widget {
     }
 
     public async isOptionsListOpen(): Promise<boolean> {
-        const nOptions = await this.allByCSS('.ag-cell-value').count();
-        return nOptions > 0;
+        return await this.byCSS('.ag-root-wrapper').isPresent();
     }
 
     public async openOptionsList(): Promise<void> {
@@ -45,13 +44,25 @@ export class ComboBox extends Widget {
     }
 
     public async selectOptionByText(text: string): Promise<void> {
-        const options = await this.getOptions();
-        const optionIndex = options.findIndex((option) => option === text);
-        return this.selectOptionByNumber(optionIndex);
+        await this.openOptionsList();
+
+        let rows: ElementArrayFinder = this.allByCSS('.ag-cell-value');
+        let numberOfItems: number = await rows.count();
+        for (let i = 0; i < numberOfItems; i++) {
+            let optionText: string = await rows.get(i).getText();
+            if (text === optionText) {
+                await this.getOptionSelector(i).click();
+                return;
+            }
+        }
     }
 
-    public async selectOptionByNumber(i: number): Promise<void> {
+    public async selectOptionByNumber(optionIndex: number): Promise<void> {
         await this.openOptionsList();
-        await this.allByCSS(`[role='row'][row-index='` + i + `']`).get(1).click();
+        await this.getOptionSelector(optionIndex).click();
+    }
+
+    private getOptionSelector(optionIndex: number): ElementFinder {
+        return this.allByCSS(`[role='row'][row-index='` + optionIndex + `']`).get(1);
     }
 }
