@@ -1,4 +1,5 @@
 import allureReporter from '@wdio/allure-reporter'
+import {Status} from "allure-js-commons";
 
 
 export class ReportUtility {
@@ -16,7 +17,7 @@ export class ReportUtility {
    }
 
     public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
-        const testCaseReporter = ((browser.config as any).testCaseReporter);
+        const testCaseReporter = ((browser.options as any).testCaseReporter);
         try {
             if (testCaseReporter) {
                 testCaseReporter.onAssertStart(description);
@@ -24,14 +25,14 @@ export class ReportUtility {
 
             allureReporter.startStep(description);
             await expectationFunction();
-            allureReporter.endStep('passed');
+            allureReporter.endStep(Status.PASSED);
 
             if (testCaseReporter) {
                 testCaseReporter.onAssertEnd(description);
             }
         }
         catch (error) {
-            allureReporter.endStep('failed');
+            allureReporter.endStep(Status.FAILED);
             if (testCaseReporter) {
                 testCaseReporter.onAssertEnd(description, true);
             }

@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import Pixelmatch from 'pixelmatch';
 
 import {ElementFinder} from "../wdio";
-import {ReportUtility} from "./report.util";
-import {AssertionUtility} from "./assertion.util";
+import {ReportUtility} from "./report.util.js";
+import {AssertionUtility} from "./assertion.util.js";
 import {Widget} from "../widgets";
 import {BasePage} from "../pages";
 

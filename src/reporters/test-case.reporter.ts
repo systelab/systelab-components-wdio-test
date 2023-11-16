@@ -1,22 +1,23 @@
-const WDIOReporter = require("@wdio/reporter").default
-const colors = require("colors");
-const {TraceabilityUtility} = require("../../lib/utils/traceability.util");
+import WDIOReporter from '@wdio/reporter';
+import colors from "colors";
+import {browser} from "@wdio/globals";
+import {TraceabilityUtility} from "../utils/traceability.util.js";
 
 
 const jasmineTestCaseReporter =
 {
     specStarted: (result) =>
     {
-        browser.config.currentJasmineSpec = result;
+        (browser.options as any).currentJasmineSpec = result;
     },
 
     specDone: (result) =>
     {
-        browser.config.currentJasmineSpec = null;
+        (browser.options as any).currentJasmineSpec = null;
     },
 }
 
-class TestCaseReporter extends WDIOReporter
+export class TestCaseReporter extends WDIOReporter
 {
     indents = 0;
     startTime;
@@ -30,8 +31,9 @@ class TestCaseReporter extends WDIOReporter
 
     onRunnerStart(runnerStats)
     {
+        // @ts-ignore
         jasmine.getEnv().addReporter(jasmineTestCaseReporter);
-        browser.config.testCaseReporter = this
+        (browser.options as any).testCaseReporter = this
         console.log("");
     }
 
@@ -62,7 +64,7 @@ class TestCaseReporter extends WDIOReporter
 
     onAssertEnd(description, exception = false)
     {
-        const nFailedExpectations =  browser.config.currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations =  (browser.options as any).currentJasmineSpec.failedExpectations.length;
         if (!exception && this.failedExpectationsLogged >= nFailedExpectations)
         {
             console.log(colors.green(`${" ".repeat(6)}✓ ${description}`));
@@ -90,7 +92,7 @@ class TestCaseReporter extends WDIOReporter
     onSuiteEnd(suiteStats)
     {
         this.indents--;
-        ConsoleUtility.log("");
+        console.log("");
     }
 
     indent()
@@ -100,10 +102,10 @@ class TestCaseReporter extends WDIOReporter
 
     logLatestErrors()
     {
-        const nFailedExpectations =  browser.config.currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations =  (browser.options as any).currentJasmineSpec.failedExpectations.length;
         for (let i = this.failedExpectationsLogged; i < nFailedExpectations; i++)
         {
-            const failedExpectation = browser.config.currentJasmineSpec.failedExpectations[i];
+            const failedExpectation = (browser.options as any).currentJasmineSpec.failedExpectations[i];
             console.log(colors.red(`${" ".repeat(8)}- ${failedExpectation.message}`));
 
             let stackMessage = "";
@@ -119,5 +121,3 @@ class TestCaseReporter extends WDIOReporter
         this.failedExpectationsLogged = nFailedExpectations;
     }
 }
-
-exports.default = TestCaseReporter
