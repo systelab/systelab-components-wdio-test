@@ -1,4 +1,4 @@
-import {ReportUtility} from "./report.util";
+import {ReportUtility} from "./report.util.js";
 
 export class TraceabilityUtility {
     private static coveredSpecs: Set<string> = new Set<string>();

@@ -1,7 +1,8 @@
 {
   "name": "systelab-components-wdio-test",
-  "version": "1.10.2",
+  "version": "2.0.0",
   "license": "MIT",
+  "type": "module",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
   "keywords": [
     "Angular",
@@ -13,8 +14,7 @@
   "typings": "./lib/index.d.ts",
   "private": false,
   "files": [
-    "lib",
-    "src/reporters/test-case.reporter.js"
+    "lib"
   ],
   "scripts": {
     "build": "tsc",
@@ -28,25 +28,26 @@
     "core-js": "3.19.2",
     "pixelmatch": "5.3.0",
     "pngjs": "6.0.0",
-    "tslib": "2.3.1"
+    "tslib": "2.6.2"
   },
   "devDependencies": {
     "@types/core-js": "2.5.5",
-    "@types/jasmine": "3.10.2",
-    "@types/jasminewd2": "2.0.10",
-    "@types/node": "14.14.7",
+    "@types/jasmine": "5.1.0",
+    "@types/jasminewd2": "2.0.13",
+    "@types/node": "18.0.0",
     "@types/pixelmatch": "5.2.4",
     "@types/pngjs": "6.0.1",
-    "@wdio/allure-reporter": "7.16.10",
-    "@wdio/cli": "7.16.10",
-    "@wdio/jasmine-framework": "7.16.6",
-    "@wdio/local-runner": "7.16.10",
-    "@wdio/spec-reporter": "7.16.9",
-    "@wdio/types": "7.16.3",
+    "@types/tmp": "0.2.6",
+    "@wdio/allure-reporter": "8.23.0",
+    "@wdio/cli": "8.23.0",
+    "@wdio/jasmine-framework": "8.23.0",
+    "@wdio/local-runner": "8.23.0",
+    "@wdio/spec-reporter": "8.23.0",
+    "@wdio/types": "8.23.0",
     "colors": "1.4.0",
     "tmp": "0.2.1",
-    "ts-node": "10.4.0",
-    "typescript": "4.5.2",
-    "wdio-chromedriver-service": "7.2.2"
+    "ts-node": "10.9.1",
+    "typescript": "4.9.5",
+    "wdio-chromedriver-service": "8.1.1"
   }
 }
