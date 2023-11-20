@@ -6,12 +6,12 @@ import {TraceabilityUtility} from "../utils/traceability.util.js";
 
 const jasmineTestCaseReporter =
 {
-    specStarted: (result) =>
+    specStarted: (result: any) =>
     {
         (browser.options as any).currentJasmineSpec = result;
     },
 
-    specDone: (result) =>
+    specDone: (result: any) =>
     {
         (browser.options as any).currentJasmineSpec = null;
     },
@@ -19,17 +19,17 @@ const jasmineTestCaseReporter =
 
 export class TestCaseReporter extends WDIOReporter
 {
-    indents = 0;
-    startTime;
-    failedExpectationsLogged = 0;
+    indents: number = 0;
+    startTime: any;
+    failedExpectationsLogged: number = 0;
 
-    constructor(options)
+    constructor(options: any)
     {
         super(options)
         options = Object.assign(options, { stdout: true });
     }
 
-    onRunnerStart(runnerStats)
+    onRunnerStart(runnerStats: any)
     {
         // @ts-ignore
         jasmine.getEnv().addReporter(jasmineTestCaseReporter);
@@ -37,7 +37,7 @@ export class TestCaseReporter extends WDIOReporter
         console.log("");
     }
 
-    onSuiteStart(suiteStats)
+    onSuiteStart(suiteStats: any)
     {
         this.indents++;
         console.log(colors.blue(`${this.indent()}${suiteStats.fullTitle}`));
@@ -49,7 +49,7 @@ export class TestCaseReporter extends WDIOReporter
         }
     }
 
-    onTestStart(testStats)
+    onTestStart(testStats: any)
     {
         this.indents++;
         this.startTime = new Date().getTime();
@@ -57,12 +57,12 @@ export class TestCaseReporter extends WDIOReporter
         console.log(`${this.indent()}${testStats.title}`);
     }
 
-    onAssertStart(description)
+    onAssertStart(description: any)
     {
         this.logLatestErrors();
     }
 
-    onAssertEnd(description, exception = false)
+    onAssertEnd(description: any, exception = false)
     {
         const nFailedExpectations =  (browser.options as any).currentJasmineSpec.failedExpectations.length;
         if (!exception && this.failedExpectationsLogged >= nFailedExpectations)
@@ -77,7 +77,7 @@ export class TestCaseReporter extends WDIOReporter
         this.logLatestErrors();
     }
 
-    onTestEnd(testStats)
+    onTestEnd(testStats: any)
     {
         this.logLatestErrors();
 
@@ -89,7 +89,7 @@ export class TestCaseReporter extends WDIOReporter
         this.indents--;
     }
 
-    onSuiteEnd(suiteStats)
+    onSuiteEnd(suiteStats: any)
     {
         this.indents--;
         console.log("");

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { ElementArray } from "webdriverio";
 import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
