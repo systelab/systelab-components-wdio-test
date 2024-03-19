@@ -129,15 +129,15 @@ export class Browser {
     }
 
     // Window
-    public static async getWindowSize(): Promise<void> {
-        await browser.getWindowSize();
+    public static async getWindowSize(): Promise<{ width: number, height: number }> {
+        return await browser.getWindowSize() as { width: number; height: number };
     }
 
     public static async setWindowSize(width: number, height: number): Promise<void> {
         await browser.setWindowSize(width, height);
     }
 
-    public static async setFullScreen(): Promise<void> {
+    public static async setFullscreen(): Promise<void> {
         await browser.fullscreenWindow();
     }
 }
