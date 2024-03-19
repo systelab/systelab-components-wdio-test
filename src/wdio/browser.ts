@@ -127,4 +127,17 @@ export class Browser {
         const caps = browser.capabilities as any;
         return caps.platformName;
     }
+
+    // Window
+    public static async getWindowSize(): Promise<void> {
+        await browser.getWindowSize();
+    }
+
+    public static async setWindowSize(width: number, height: number): Promise<void> {
+        await browser.setWindowSize(width, height);
+    }
+
+    public static async setFullScreen(): Promise<void> {
+        await browser.fullscreenWindow();
+    }
 }
