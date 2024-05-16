@@ -100,6 +100,10 @@ export class ElementFinder {
         return (await this.findElement()).getValue();
     }
 
+    public async getHTML(includeSelectorTag: boolean): Promise<string> {
+        return (await this.findElement()).getHTML(includeSelectorTag);
+    }
+
     public async getAttribute(name: string): Promise<string> {
         return (await this.findElement()).getAttribute(name);
     }
