@@ -27,10 +27,9 @@ script:
 
 deploy:
   skip_cleanup: true
-  provider: script
+  provider: npm
   email: aserra@werfen.com
-  edge:
-    branch: v2.0.3-beta.4
+  edge: true
   api_key: $NPM_TOKEN
   on:
     tags: true
