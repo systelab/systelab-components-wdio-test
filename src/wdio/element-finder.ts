@@ -116,6 +116,20 @@ export class ElementFinder {
         return (await this.findElement()).getProperty(name);
     }
 
+    public async getBoundingRect(): Promise<{ x: number, y: number, width: number, height: number }> {
+        const position = await this.getPosition();
+        const size = await this.getSize();
+        return { ...position, ...size };
+    }
+
+    public async getPosition(): Promise<{ x: number, y: number }> {
+        return (await this.findElement()).getLocation();
+    }
+
+    public async getSize(): Promise<{ width: number, height: number }> {
+        return (await this.findElement()).getSize();
+    }
+
 
     // Actions
     public async click(): Promise<void> {
