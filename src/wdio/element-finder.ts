@@ -130,6 +130,24 @@ export class ElementFinder {
         return (await this.findElement()).getSize();
     }
 
+
+    // Actions
+    public async click(): Promise<void> {
+        return (await this.findElement()).click();
+    }
+
+    public async moveTo(): Promise<void> {
+        return (await this.findElement()).moveTo();
+    }
+
+    public async clear(): Promise<void> {
+        return (await this.findElement()).clearValue();
+    }
+
+    public async write(text: string): Promise<void> {
+        return (await this.findElement()).setValue(text);
+    }
+
     public async tap(): Promise<void> {
         const element = await this.findElement() as any;
         await browser.execute((element) => {
@@ -162,24 +180,6 @@ export class ElementFinder {
             });
             element.dispatchEvent(touchEndEvent);
         }, element);
-    }
-
-
-    // Actions
-    public async click(): Promise<void> {
-        return (await this.findElement()).click();
-    }
-
-    public async moveTo(): Promise<void> {
-        return (await this.findElement()).moveTo();
-    }
-
-    public async clear(): Promise<void> {
-        return (await this.findElement()).clearValue();
-    }
-
-    public async write(text: string): Promise<void> {
-        return (await this.findElement()).setValue(text);
     }
 
 
