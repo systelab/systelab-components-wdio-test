@@ -148,6 +148,40 @@ export class ElementFinder {
         return (await this.findElement()).setValue(text);
     }
 
+    public async tap(): Promise<void> {
+        const element = await this.findElement() as any;
+        await browser.execute((element) => {
+            const touchPoint = new Touch({
+                identifier: Date.now(),
+                target: element,
+                clientX: 0,
+                clientY: 0,
+                pageX: 0,
+                pageY: 0,
+                screenX: 0,
+                screenY: 0
+            });
+
+            const touchStartEvent = new TouchEvent('touchstart', {
+                cancelable: true,
+                bubbles: true,
+                touches: [touchPoint],
+                targetTouches: [],
+                changedTouches: [touchPoint]
+            });
+            element.dispatchEvent(touchStartEvent);
+
+            const touchEndEvent = new TouchEvent('touchend', {
+                cancelable: true,
+                bubbles: true,
+                touches: [touchPoint],
+                targetTouches: [],
+                changedTouches: [touchPoint]
+            });
+            element.dispatchEvent(touchEndEvent);
+        }, element);
+    }
+
 
     // Condition waits
     public async waitToBePresent(timeout: number = 500): Promise<void> {
