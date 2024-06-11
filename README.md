@@ -126,3 +126,13 @@ See [traceability](TRACEABILITY.md) page for details on how to add into Allure R
 ### Screenshots
 
 See [screenshots](SCREENSHOTS.md) page for details on utilities for screenshot-based testing techniques.
+
+### Documentation
+
+To auto-generate documentation, run the following command:
+
+```bash
+npm run compodoc
+```
+
+And then open the generated documentation (documentation folder) in the browser.
