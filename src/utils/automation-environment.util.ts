@@ -15,7 +15,7 @@ export enum BrowserType {
 
 export class AutomationEnvironment {
     private static mode: AutomationMode = AutomationMode.Runner;
-    private static browser: any = null;
+    private static browser: WebdriverIO.Browser = null as unknown as WebdriverIO.Browser;
     private static browserType: BrowserType = BrowserType.Chrome;
 
     public static getMode(): AutomationMode {
@@ -28,10 +28,10 @@ export class AutomationEnvironment {
 
     public static setTestRunnerMode(): void {
         this.mode = AutomationMode.Runner;
-        this.browser = null; // Browser instance will be managed by test runner
+        this.browser = null as unknown as WebdriverIO.Browser; // Browser instance will be managed by test runner
     }
 
-    public static setStandaloneMode(browser: any): void {
+    public static setStandaloneMode(browser: WebdriverIO.Browser): void {
         this.mode = AutomationMode.Standalone;
         this.browser = browser;
     }
