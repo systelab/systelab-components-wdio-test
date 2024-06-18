@@ -3,6 +3,7 @@ import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
 import { Constants } from "../constants";
+import { AutomationEnvironment } from "./automation-environment.util";
 
 
 export class ElementFinder {
@@ -150,7 +151,7 @@ export class ElementFinder {
 
     public async tap(): Promise<void> {
         const element = await this.findElement() as any;
-        await browser.execute((element) => {
+        await AutomationEnvironment.getWorkingBrowser().execute((element) => {
             const touchPoint = new Touch({
                 identifier: Date.now(),
                 target: element,
@@ -230,7 +231,7 @@ export class ElementFinder {
                 throw 'Unsupported locator type for parent item: ' + this.parent.getLocator().type;
             }
         } else {
-            return $(this.locator.selector as string);
+            return AutomationEnvironment.getWorkingBrowser().$(this.locator.selector as string);
         }
     }
 }
@@ -255,7 +256,7 @@ export class ElementArrayFinder {
         if (this.parent) {
             return (await (await this.parent.findElement()).$$(this.locator.selector as string));
         } else {
-            return $$(this.locator.selector as string);
+            return AutomationEnvironment.getWorkingBrowser().$$(this.locator.selector as string);
         }
     }
 }
