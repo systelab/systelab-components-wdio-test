@@ -3,7 +3,7 @@ import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
 import { Constants } from "../constants";
-import { AutomationEnvironment } from "./automation-environment.util";
+import { AutomationEnvironment, BrowserType } from "./automation-environment.util";
 
 
 export class ElementFinder {
@@ -134,19 +134,71 @@ export class ElementFinder {
 
     // Actions
     public async click(): Promise<void> {
-        return (await this.findElement()).click();
+        const element: WebdriverIO.Element = await this.findElement();
+        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+            return AutomationEnvironment.getWorkingBrowser().execute('arguments[0].click()', element);
+        } else {
+            return element.click();
+        }
     }
 
     public async moveTo(): Promise<void> {
-        return (await this.findElement()).moveTo();
+        const element: WebdriverIO.Element = await this.findElement();
+        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+            return AutomationEnvironment.getWorkingBrowser().execute(`
+                const el = arguments[0];
+                const rect = el.getBoundingClientRect();
+                const x = rect.left + (rect.width / 2);
+                const y = rect.top + (rect.height / 2);
+
+                const mouseMove = new MouseEvent('mousemove', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: x,
+                    clientY: y
+                });
+
+                const mouseOver = new MouseEvent('mouseover', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: x,
+                    clientY: y
+                });
+
+                el.dispatchEvent(mouseMove);
+                el.dispatchEvent(mouseOver);
+            `, element);
+        } else {
+            return element.moveTo();
+        }
     }
 
     public async clear(): Promise<void> {
-        return (await this.findElement()).clearValue();
+        const element: WebdriverIO.Element = await this.findElement();
+        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+            return AutomationEnvironment.getWorkingBrowser().execute(`
+                const el = arguments[0];
+                el.value="";
+                el.dispatchEvent(new Event("input", { bubbles: true }));
+            `, element);
+        } else {
+            return element.clearValue();
+        }
     }
 
     public async write(text: string): Promise<void> {
-        return (await this.findElement()).setValue(text);
+        const element: WebdriverIO.Element = await this.findElement();
+        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+            return AutomationEnvironment.getWorkingBrowser().execute(`
+                const el = arguments[0];
+                el.value="${text}";
+                el.dispatchEvent(new Event("input", { bubbles: true }));
+            `, element);
+        } else {
+            return element.setValue(text);
+        }
     }
 
     public async tap(): Promise<void> {
@@ -186,23 +238,27 @@ export class ElementFinder {
 
     // Condition waits
     public async waitToBePresent(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForExist({timeout});
+        const element: WebdriverIO.Element = await this.findElement();
+        await this.waitUntil(() => element.isExisting(), timeout);
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForDisplayed({timeout});
+        const element: WebdriverIO.Element = await this.findElement();
+        await this.waitUntil(() => element.isDisplayed(), timeout);
     }
 
     public async waitToBeClickable(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForClickable({timeout});
+        const element: WebdriverIO.Element = await this.findElement();
+        await this.waitUntil(() => element.isClickable(), timeout);
     }
 
     public async waitToBeEnabled(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForEnabled({timeout});
+        const element: WebdriverIO.Element = await this.findElement();
+        await this.waitUntil(() => element.isEnabled(), timeout);
     }
 
     public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
-        await (await this.findElement()).waitUntil(condition, {timeout});
+        await AutomationEnvironment.getWorkingBrowser().waitUntil(condition, {timeout});
     }
 
 
