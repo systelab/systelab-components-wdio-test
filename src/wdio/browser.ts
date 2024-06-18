@@ -1,44 +1,44 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 
+import { AutomationEnvironment } from "./automation-environment.util";
 import { LocatorType } from "./locator";
 import { ElementArrayFinder, ElementFinder } from "./element-finder";
 import { DefaultTimeout } from "./default-timeout";
 import { Constants } from "../constants";
-import { AutomationEnvironment } from "../utils/automation-environment.util";
 
 
 export class Browser {
 
     // Navigation
     public static async navigateToURL(url: string): Promise<void> {
-        await this.getWorkingBrowser().url(url);
+        await AutomationEnvironment.getWorkingBrowser().url(url);
     }
 
 
     // Keyboard
     public static async pressEsc(): Promise<void> {
-        return this.getWorkingBrowser().keys(['Escape']);
+        return AutomationEnvironment.getWorkingBrowser().keys(['Escape']);
     }
 
     public static async pressTab(): Promise<void> {
-        return this.getWorkingBrowser().keys(['Tab']);
+        return AutomationEnvironment.getWorkingBrowser().keys(['Tab']);
     }
 
     public static async pressBackspace(): Promise<void> {
-        return this.getWorkingBrowser().keys(['Backspace']);
+        return AutomationEnvironment.getWorkingBrowser().keys(['Backspace']);
     }
 
     public static async pressEnter(): Promise<void> {
-        return this.getWorkingBrowser().keys(['Enter']);
+        return AutomationEnvironment.getWorkingBrowser().keys(['Enter']);
     }
 
     public static async pressDelete(): Promise<void> {
-        return this.getWorkingBrowser().keys(['Delete']);
+        return AutomationEnvironment.getWorkingBrowser().keys(['Delete']);
     }
     
     public static async writeText(stringToWrite: string): Promise<void> {
-        await this.getWorkingBrowser().keys(stringToWrite.split(''));
+        await AutomationEnvironment.getWorkingBrowser().keys(stringToWrite.split(''));
     }
     
 
@@ -93,59 +93,52 @@ export class Browser {
 
     // Flow control
     public static async sleep(duration: number): Promise<void> {
-        await this.getWorkingBrowser().pause(duration);
+        await AutomationEnvironment.getWorkingBrowser().pause(duration);
     }
 
     public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
-        await this.getWorkingBrowser().waitUntil(condition, {timeout});
+        await AutomationEnvironment.getWorkingBrowser().waitUntil(condition, {timeout});
     }
 
 
     // Screenshots
     public static async takeScreenshot(): Promise<string> {
         const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
-        const screenshotBuffer: Buffer = await this.getWorkingBrowser().saveScreenshot(tempFilepath);
+        const screenshotBuffer: Buffer = await AutomationEnvironment.getWorkingBrowser().saveScreenshot(tempFilepath);
         fs.unlinkSync(tempFilepath);
         return screenshotBuffer.toString('base64');
     }
 
     public static async saveScreenshot(filepath: string): Promise<void> {
-        await this.getWorkingBrowser().saveScreenshot(filepath);
+        await AutomationEnvironment.getWorkingBrowser().saveScreenshot(filepath);
     }
 
     // Capabilities and Status
     public static getName(): string {
-        const caps = this.getWorkingBrowser().capabilities as any;
+        const caps = AutomationEnvironment.getWorkingBrowser().capabilities as any;
         return caps.browserName;
     }
 
     public static getVersion(): string {
-        const caps = this.getWorkingBrowser().capabilities as any;
+        const caps = AutomationEnvironment.getWorkingBrowser().capabilities as any;
         return caps.browserVersion;
     }
 
     public static getOperatingSystem(): string {
-        const caps = this.getWorkingBrowser().capabilities as any;
+        const caps = AutomationEnvironment.getWorkingBrowser().capabilities as any;
         return caps.platformName;
     }
 
     // Window
     public static async getWindowSize(): Promise<{ width: number, height: number }> {
-        return await this.getWorkingBrowser().getWindowSize() as { width: number; height: number };
+        return await AutomationEnvironment.getWorkingBrowser().getWindowSize() as { width: number; height: number };
     }
 
     public static async setWindowSize(width: number, height: number): Promise<void> {
-        await this.getWorkingBrowser().setWindowSize(width, height);
+        await AutomationEnvironment.getWorkingBrowser().setWindowSize(width, height);
     }
 
     public static async setFullscreen(): Promise<void> {
-        await this.getWorkingBrowser().fullscreenWindow();
-    }
-
-
-    // Auxiliary methods
-    private static getWorkingBrowser(): WebdriverIO.Browser {
-        const workingBrowser = AutomationEnvironment.getBrowser();
-        return (workingBrowser !== null) ? workingBrowser : browser;
+        await AutomationEnvironment.getWorkingBrowser().fullscreenWindow();
     }
 }
