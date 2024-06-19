@@ -1,5 +1,6 @@
 import allureReporter from '@wdio/allure-reporter'
-
+import { AutomationEnvironment, AutomationMode } from '../wdio';
+const colors = require("colors");
 
 export class ReportUtility {
 
@@ -16,6 +17,12 @@ export class ReportUtility {
    }
 
     public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
+        if (AutomationEnvironment.getMode() === AutomationMode.Standalone) {
+            await expectationFunction();
+            console.log(colors.yellow(`${" ".repeat(6)} ${description}`));
+            return;
+        }
+
         const testCaseReporter = ((browser.config as any).testCaseReporter);
         try {
             if (testCaseReporter) {
