@@ -1,7 +1,7 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 
-import { AutomationEnvironment } from "./automation-environment.util";
+import { AutomationEnvironment } from "./automation-environment";
 import { LocatorType } from "./locator";
 import { ElementArrayFinder, ElementFinder } from "./element-finder";
 import { DefaultTimeout } from "./default-timeout";

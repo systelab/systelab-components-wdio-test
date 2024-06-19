@@ -3,7 +3,7 @@ import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
 import { Constants } from "../constants";
-import { AutomationEnvironment, BrowserType } from "./automation-environment.util";
+import { AutomationEnvironment, BrowserType } from "./automation-environment";
 
 
 export class ElementFinder {
