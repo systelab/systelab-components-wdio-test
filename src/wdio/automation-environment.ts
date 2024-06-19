@@ -36,7 +36,7 @@ export class AutomationEnvironment {
         this.workingBrowser = null; // Browser instance will be managed by test runner
     }
 
-    public static setStandaloneMode(workingBrowser: WebdriverIO.Browser): void {
+    public static setStandaloneMode(workingBrowser: WebdriverIO.Browser | null): void {
         this.mode = AutomationMode.Standalone;
         this.workingBrowser = workingBrowser;
     }
