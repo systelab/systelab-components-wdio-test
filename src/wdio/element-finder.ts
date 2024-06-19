@@ -238,27 +238,23 @@ export class ElementFinder {
 
     // Condition waits
     public async waitToBePresent(timeout: number = 500): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        await this.waitUntil(() => element.isExisting(), timeout);
+        await (await this.findElement()).waitForExist({timeout});
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        await this.waitUntil(() => element.isDisplayed(), timeout);
+        await (await this.findElement()).waitForDisplayed({timeout});
     }
 
     public async waitToBeClickable(timeout: number = 500): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        await this.waitUntil(() => element.isClickable(), timeout);
+        await (await this.findElement()).waitForClickable({timeout});
     }
 
     public async waitToBeEnabled(timeout: number = 500): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        await this.waitUntil(() => element.isEnabled(), timeout);
+        await (await this.findElement()).waitForEnabled({timeout});
     }
 
     public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
-        await AutomationEnvironment.getWorkingBrowser().waitUntil(condition, {timeout});
+        await (await this.findElement()).waitUntil(condition, {timeout});
     }
 
 
