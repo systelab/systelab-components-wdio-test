@@ -7,12 +7,12 @@ const jasmineTestCaseReporter =
 {
     specStarted: (result) =>
     {
-        browser.config.currentJasmineSpec = result;
+        jasmine.getEnv().currentJasmineSpec = result;
     },
 
     specDone: (result) =>
     {
-        browser.config.currentJasmineSpec = null;
+        jasmine.getEnv().currentJasmineSpec = null;
     },
 }
 
@@ -31,7 +31,7 @@ class TestCaseReporter extends WDIOReporter
     onRunnerStart(runnerStats)
     {
         jasmine.getEnv().addReporter(jasmineTestCaseReporter);
-        browser.config.testCaseReporter = this
+        jasmine.getEnv().testCaseReporter = this;
         console.log("");
     }
 
@@ -62,7 +62,7 @@ class TestCaseReporter extends WDIOReporter
 
     onAssertEnd(description, exception = false)
     {
-        const nFailedExpectations =  browser.config.currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations = jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
         if (!exception && this.failedExpectationsLogged >= nFailedExpectations)
         {
             console.log(colors.green(`${" ".repeat(6)}✓ ${description}`));
@@ -100,10 +100,10 @@ class TestCaseReporter extends WDIOReporter
 
     logLatestErrors()
     {
-        const nFailedExpectations =  browser.config.currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations = jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
         for (let i = this.failedExpectationsLogged; i < nFailedExpectations; i++)
         {
-            const failedExpectation = browser.config.currentJasmineSpec.failedExpectations[i];
+            const failedExpectation = jasmine.getEnv().currentJasmineSpec.failedExpectations[i];
             console.log(colors.red(`${" ".repeat(8)}- ${failedExpectation.message}`));
 
             let stackMessage = "";

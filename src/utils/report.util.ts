@@ -17,13 +17,7 @@ export class ReportUtility {
    }
 
     public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
-        if (AutomationEnvironment.getMode() === AutomationMode.Standalone) {
-            await expectationFunction();
-            console.log(colors.yellow(`${" ".repeat(6)} ${description}`));
-            return;
-        }
-
-        const testCaseReporter = ((browser.config as any).testCaseReporter);
+        const testCaseReporter = ((jasmine.getEnv() as any).testCaseReporter);
         try {
             if (testCaseReporter) {
                 testCaseReporter.onAssertStart(description);
