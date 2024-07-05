@@ -1,3 +1,5 @@
+import {ScreenshotReporter} from "./screenshot.reporter";
+
 const colors = require("colors");
 
 import { TraceabilityUtility } from "../utils";
@@ -18,12 +20,17 @@ export class StandaloneTestCaseReporter implements CustomReporter {
     constructor() {
     }
 
+    public getCurrentSpec(): SpecResult | null {
+        return this.currentSpec;
+    }
+
     public jasmineStarted(suiteInfo: JasmineStartedInfo): void {
         (jasmine.getEnv() as any).testCaseReporter = this;
         console.log("");
     }
 
     public suiteStarted(suite: SuiteResult): void {
+        ScreenshotReporter.beforeSuite();
         this.indents++;
         console.log(colors.blue(`${this.indent()}${suite.description}`));
 
