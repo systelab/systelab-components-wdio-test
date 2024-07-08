@@ -22,6 +22,15 @@ export class AutomationEnvironment {
         return this.mode;
     }
 
+    public static hasWorkingBrowser(): boolean {
+        if (this.mode === AutomationMode.Standalone) {
+            return !!(this.workingBrowser);
+        }
+        else {
+            return true;
+        }
+    }
+
     public static getWorkingBrowser(): WebdriverIO.Browser {
         if (this.mode === AutomationMode.Standalone) {
             if (this.workingBrowser) {
