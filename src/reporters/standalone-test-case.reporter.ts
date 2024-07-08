@@ -1,14 +1,11 @@
-import {ScreenshotReporter} from "./screenshot.reporter";
-
 const colors = require("colors");
-
 import { TraceabilityUtility } from "../utils";
 
-import CustomReporter = jasmine.CustomReporter
-import JasmineStartedInfo = jasmine.JasmineStartedInfo
-import JasmineDoneInfo = jasmine.JasmineDoneInfo
-import SuiteResult = jasmine.SuiteResult
-import SpecResult = jasmine.SpecResult
+import CustomReporter = jasmine.CustomReporter;
+import JasmineStartedInfo = jasmine.JasmineStartedInfo;
+import JasmineDoneInfo = jasmine.JasmineDoneInfo;
+import SuiteResult = jasmine.SuiteResult;
+import SpecResult = jasmine.SpecResult;
 
 
 export class StandaloneTestCaseReporter implements CustomReporter {
@@ -20,17 +17,12 @@ export class StandaloneTestCaseReporter implements CustomReporter {
     constructor() {
     }
 
-    public getCurrentSpec(): SpecResult | null {
-        return this.currentSpec;
-    }
-
     public jasmineStarted(suiteInfo: JasmineStartedInfo): void {
         (jasmine.getEnv() as any).testCaseReporter = this;
         console.log("");
     }
 
     public suiteStarted(suite: SuiteResult): void {
-        ScreenshotReporter.beforeSuite();
         this.indents++;
         console.log(colors.blue(`${this.indent()}${suite.description}`));
 
