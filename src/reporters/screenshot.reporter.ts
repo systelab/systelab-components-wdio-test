@@ -26,9 +26,8 @@ export class ScreenshotReporter {
             const screenshotFilename = `${this.specCount.toString().padStart(2, "0")}-${test.description}`;
             const screenshotFilenameClean = this.getSanitizedFilename(screenshotFilename);
             const screenshotFilepath = `${screenshotFolderPath}/${screenshotFilenameClean}.png`;
-            const workingBrowser: WebdriverIO.Browser = AutomationEnvironment.getWorkingBrowser();
-            if (workingBrowser) {
-                await workingBrowser.saveScreenshot(screenshotFilepath);
+            if (AutomationEnvironment.hasWorkingBrowser()) {
+                await AutomationEnvironment.getWorkingBrowser().saveScreenshot(screenshotFilepath);
             } else {
                 fs.writeFileSync(screenshotFilepath.replace('.png', '-[no-working-browser].png'), '');
             }
