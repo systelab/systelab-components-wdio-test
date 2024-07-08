@@ -9,7 +9,7 @@ export class ScreenshotReporter {
         this.basePath = basePath;
     }
 
-    public static beforeSuite(suite: any = null): void {
+    public static beforeSuite(suite: any): void {
         this.specCount = 0;
     }
 
