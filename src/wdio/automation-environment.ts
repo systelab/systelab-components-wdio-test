@@ -25,8 +25,7 @@ export class AutomationEnvironment {
     public static hasWorkingBrowser(): boolean {
         if (this.mode === AutomationMode.Standalone) {
             return !!(this.workingBrowser);
-        }
-        else {
+        } else {
             return true;
         }
     }
