@@ -23,8 +23,12 @@ export class AutomationEnvironment {
     }
 
     public static getWorkingBrowser(): WebdriverIO.Browser {
-        if (this.workingBrowser) {
-            return this.workingBrowser;
+        if (this.mode === AutomationMode.Standalone) {
+            if (this.workingBrowser) {
+                return this.workingBrowser;
+            } else {
+                throw new Error('No working browser defined in WDIO standalone mode');
+            }
         }
         else {
             return browser;

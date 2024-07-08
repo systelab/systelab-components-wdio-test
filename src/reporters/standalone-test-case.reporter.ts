@@ -1,12 +1,11 @@
 const colors = require("colors");
-
 import { TraceabilityUtility } from "../utils";
 
-import CustomReporter = jasmine.CustomReporter
-import JasmineStartedInfo = jasmine.JasmineStartedInfo
-import JasmineDoneInfo = jasmine.JasmineDoneInfo
-import SuiteResult = jasmine.SuiteResult
-import SpecResult = jasmine.SpecResult
+import CustomReporter = jasmine.CustomReporter;
+import JasmineStartedInfo = jasmine.JasmineStartedInfo;
+import JasmineDoneInfo = jasmine.JasmineDoneInfo;
+import SuiteResult = jasmine.SuiteResult;
+import SpecResult = jasmine.SpecResult;
 
 
 export class StandaloneTestCaseReporter implements CustomReporter {
