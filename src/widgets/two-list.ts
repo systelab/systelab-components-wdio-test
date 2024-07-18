@@ -2,7 +2,7 @@ import { Widget } from './widget';
 import { Label } from './label';
 import { InputField } from './inputfield';
 import { Button } from './button';
-import { ElementArrayFinder, ElementFinder } from '../wdio';
+import { ElementArrayFinder } from '../wdio';
 import { Link } from './link';
 
 export class TwoList extends Widget {
@@ -57,21 +57,18 @@ export class TwoList extends Widget {
 
     public async getAllAvailableItems(): Promise<string[]> {
         const itemList: string[] = [];
-        let elemItem: ElementFinder;
-        for (let position = 1; position <= (await this.getNumberOfAvailableItems()); position++) {
-            elemItem = this.byCSS(`[id^=available${position - 1}]`);
-            itemList.push(await elemItem.getText());
+        const numberOfAvailableItems = await this.getNumberOfAvailableItems();
+        for (let position = 1; position <= numberOfAvailableItems; position++) {
+            itemList.push(await(this.byCSS(`[id^=available${position - 1}]`)).getText());
         }
         return itemList;
     }
 
     public async getAllVisibleItems(): Promise<string[]> {
         const itemList: string[] = [];
-        let elemItem: ElementFinder;
         const elemItems = await this.getAllVisibleElemItems();
         const numberOfVisibleItems = await elemItems.count();
         for (let position = 1; position <= numberOfVisibleItems; position++) {
-            elemItem = (await this.getAllVisibleElemItems()).get(position - 1);
             itemList.push(await elemItems.get(position - 1).getText());
         }
         return itemList;
