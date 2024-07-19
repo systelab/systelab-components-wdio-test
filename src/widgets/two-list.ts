@@ -40,19 +40,19 @@ export class TwoList extends Widget {
     }
 
     public async getNumberOfAvailableItems(): Promise<number> {
-        return (await this.getAllAvailableElemItems()).count();
+        return this.getAllAvailableElemItems().count();
     }
 
     public async getNumberOfSelectedAvailableItems(): Promise<number> {
-        return (await this.getSelectedAvailableElemItems()).count();
+        return this.getSelectedAvailableElemItems().count();
     }
 
     public async getNumberOfVisibleItems(): Promise<number> {
-        return (await this.getAllVisibleElemItems()).count();
+        return this.getAllVisibleElemItems().count();
     }
 
     public async getNumberOfSelectedVisibleItems(): Promise<number> {
-        return (await this.getSelectedVisibleElemItems()).count();
+        return this.getSelectedVisibleElemItems().count();
     }
 
     public async getAllAvailableItems(): Promise<string[]> {
@@ -66,7 +66,7 @@ export class TwoList extends Widget {
 
     public async getAllVisibleItems(): Promise<string[]> {
         const itemList: string[] = [];
-        const elemItems = await this.getAllVisibleElemItems();
+        const elemItems = this.getAllVisibleElemItems();
         const numberOfVisibleItems = await elemItems.count();
         for (let position = 1; position <= numberOfVisibleItems; position++) {
             itemList.push(await elemItems.get(position - 1).getText());
@@ -96,22 +96,6 @@ export class TwoList extends Widget {
         return positionList;
     }
 
-    private async getAllVisibleElemItems(): Promise<ElementArrayFinder> {
-        return this.allByCSS('div[class~="list-group"] > div[class~="slab-sortable-list-row"]');
-    }
-
-    private async getAllAvailableElemItems(): Promise<ElementArrayFinder> {
-        return this.allByCSS('li[id^=available]');
-    }
-
-    private async getSelectedVisibleElemItems(): Promise<ElementArrayFinder> {
-        return this.allByCSS('div[class~="list-group"] > div[class~="slab-sortable-list-row-selected"]');
-    }
-
-    private async getSelectedAvailableElemItems(): Promise<ElementArrayFinder> {
-        return this.allByCSS('li[class~="slab-twolistboxrowselected"]');
-    }
-
     public getRemoveAllLink(): Link {
         return new Link(this.byId('slab-remove-all'));
     }
@@ -119,5 +103,22 @@ export class TwoList extends Widget {
     public getAddAllLink(): Link {
         return new Link(this.byId('slab-add-all'));
     }
+
+    private getAllVisibleElemItems(): ElementArrayFinder {
+        return this.allByCSS('div[class~="list-group"] > div[class~="slab-sortable-list-row"]');
+    }
+
+    private getAllAvailableElemItems(): ElementArrayFinder {
+        return this.allByCSS('li[id^=available]');
+    }
+
+    private getSelectedVisibleElemItems(): ElementArrayFinder {
+        return this.allByCSS('div[class~="list-group"] > div[class~="slab-sortable-list-row-selected"]');
+    }
+
+    private getSelectedAvailableElemItems(): ElementArrayFinder {
+        return this.allByCSS('li[class~="slab-twolistboxrowselected"]');
+    }
+
 
 }
