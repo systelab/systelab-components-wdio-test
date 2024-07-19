@@ -76,7 +76,7 @@ export class TwoList extends Widget {
 
     public async getSelectedAvailableItemPositions(): Promise<number[]> {
         const positionList: number[] = [];
-        const elemItems = await this.getSelectedAvailableElemItems();
+        const elemItems = this.getSelectedAvailableElemItems();
         const numberOfSelectedItems = await elemItems.count();
         for (let index = 0; index < numberOfSelectedItems; index++) {
             let positionOfSelectedItem = parseInt((await elemItems.get(index).getAttribute('id')).replace('available', '')) + 1;
@@ -87,7 +87,7 @@ export class TwoList extends Widget {
 
     public async getSelectedVisibleItemPositions(): Promise<number[]> {
         const positionList: number[] = [];
-        const elemItems = await this.getSelectedVisibleElemItems();
+        const elemItems = this.getSelectedVisibleElemItems();
         const numberOfSelectedItems = await elemItems.count();
         for (let index = 0; index < numberOfSelectedItems; index++) {
             let positionOfSelectedItem = parseInt((await elemItems.get(index).getAttribute('id')).replace('element', '')) + 1;
