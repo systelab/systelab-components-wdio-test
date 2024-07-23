@@ -94,7 +94,12 @@ export class ElementFinder {
     }
 
     public async getText(): Promise<string> {
-        return (await this.findElement()).getText();
+        const browserType: BrowserType = AutomationEnvironment.getBrowserType();
+        if (browserType === BrowserType.TauriApp || browserType === BrowserType.WebKitGTK) {
+            return (await this.findElement()).getHTML(false);
+        } else {
+            return (await this.findElement()).getText();
+        }
     }
 
     public async getValue(): Promise<string> {
@@ -191,11 +196,11 @@ export class ElementFinder {
     public async write(text: string): Promise<void> {
         const element: WebdriverIO.Element = await this.findElement();
         if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
-            return AutomationEnvironment.getWorkingBrowser().execute(`
-                const el = arguments[0];
-                el.value="${text}";
-                el.dispatchEvent(new Event("input", { bubbles: true }));
-            `, element);
+            return AutomationEnvironment.getWorkingBrowser().execute((element, newValue) => {
+                element.value = newValue;
+                element.dispatchEvent(new Event("input", { bubbles: true }));
+                element.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true }));
+            }, element as any, text);
         } else {
             return element.setValue(text);
         }
