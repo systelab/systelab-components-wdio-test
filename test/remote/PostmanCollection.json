@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d85a1f87-b6ab-4d59-a1c3-b5c70d7b1100",
+		"_postman_id": "e4b645a2-6ec7-4f91-a493-4ef939735137",
 		"name": "WDIO Remote Server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30743682"
+		"_exporter_id": "1633643"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options\": {\r\n        \"capabilities\": {\r\n            \"browserName\": \"chrome\",\r\n            \"goog:chromeOptions\": {\r\n                \"args\": [\"--no-sandbox\"]\r\n            }\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options\": {\r\n        \"capabilities\": {\r\n            \"browserName\": \"chrome\",\r\n            \"goog:chromeOptions\": {\r\n                \"args\": [\"--no-sandbox\", \"--disable-search-engine-choice-screen\"]\r\n            }\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -40,13 +40,13 @@
 					"response": []
 				},
 				{
-					"name": "/wdio/applications/navigate (Chrome)",
+					"name": "/wdio/applications/1/stop",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options\": {\r\n        \"capabilities\": {\r\n            \"browserName\": \"chrome\",\r\n            \"goog:chromeOptions\": {\r\n                \"args\": [\"--no-sandbox\"]\r\n            }\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options\": {\r\n        \"capabilities\": {\r\n            \"browserName\": \"chrome\",\r\n            \"goog:chromeOptions\": {\r\n                \"args\": [\"--no-sandbox\", \"--disable-search-engine-choice-screen\"]\r\n            }\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -54,7 +54,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3333/wdio/applications/start",
+							"raw": "http://localhost:3333/wdio/applications/1/stop",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -63,7 +63,39 @@
 							"path": [
 								"wdio",
 								"applications",
-								"start"
+								"1",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/wdio/applications/1/navigate (www.werfen.com)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.werfen.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/wdio/applications/1/navigate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"wdio",
+								"applications",
+								"1",
+								"navigate"
 							]
 						}
 					},
@@ -73,7 +105,113 @@
 		},
 		{
 			"name": "Queries",
-			"item": []
+			"item": [
+				{
+					"name": "/wdio/applications/1/element/text (Single Element Selector)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"locators\": [\r\n        {\r\n            \"type\": \"ElementSelector\",\r\n            \"selector\": \".row-main-info .carousel-inner h1.info-container__title\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/wdio/applications/1/element/text",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"wdio",
+								"applications",
+								"1",
+								"element",
+								"text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/wdio/applications/1/element/text (Multiple Element Selector)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"locators\": [\r\n        {\r\n            \"type\": \"ElementSelector\",\r\n            \"selector\": \".row-main-info\"\r\n        },\r\n        {\r\n            \"type\": \"ElementSelector\",\r\n            \"selector\": \".carousel-inner\"\r\n        },\r\n        {\r\n            \"type\": \"ElementSelector\",\r\n            \"selector\": \"h1.info-container__title\"\r\n        }\r\n\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/wdio/applications/1/element/text",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"wdio",
+								"applications",
+								"1",
+								"element",
+								"text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/wdio/applications/1/element/text (Item in Array Selector)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"locators\": [\r\n        {\r\n            \"type\": \"ArraySelector\",\r\n            \"selector\": \"h1.info-container__title\"\r\n        },\r\n        {\r\n            \"type\": \"ArrayItem\",\r\n            \"index\": 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/wdio/applications/1/element/text",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"wdio",
+								"applications",
+								"1",
+								"element",
+								"text"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Actions",
