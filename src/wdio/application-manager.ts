@@ -10,10 +10,12 @@ export interface Application {
 }
 
 export class ApplicationManager {
+    private static nextId = 1;
     private static applications: Application[] = [];
 
     public static async start(browserType: BrowserType, options: RemoteOptions): Promise<Application> {
-        const id = this.applications.length + 1;
+        const id = this.nextId;
+        this.nextId += 1;
         const browser = await remote(options);
         const application: Application = { id, browserType, options, browser };
 
