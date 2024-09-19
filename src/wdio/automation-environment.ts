@@ -3,7 +3,8 @@ import { Application, ApplicationManager } from './application-manager';
 
 export enum AutomationMode {
     Runner,
-    Standalone
+    Standalone,
+    Remote
 }
 
 export enum BrowserType {
@@ -15,10 +16,17 @@ export enum BrowserType {
     TauriApp = 'TauriApp'
 }
 
+export interface RemoteApplication {
+    host: string;
+    port: number;
+    applicationId: number;
+}
+
 export class AutomationEnvironment {
     private static mode: AutomationMode = AutomationMode.Runner;
     private static workingBrowser: WebdriverIO.Browser | null = null;
     private static browserType: BrowserType = BrowserType.Chrome;
+    private static workingRemoteApplication: RemoteApplication | null = null;
 
     public static getMode(): AutomationMode {
         return this.mode;
@@ -48,11 +56,13 @@ export class AutomationEnvironment {
     public static setTestRunnerMode(): void {
         this.mode = AutomationMode.Runner;
         this.workingBrowser = null; // Browser instance will be managed by test runner
+        this.workingRemoteApplication = null;
     }
 
     public static setStandaloneMode(workingBrowser: WebdriverIO.Browser | null): void {
         this.mode = AutomationMode.Standalone;
         this.workingBrowser = workingBrowser;
+        this.workingRemoteApplication = null;
     }
 
     public static getBrowserType(): BrowserType {
@@ -71,5 +81,11 @@ export class AutomationEnvironment {
         } else {
             throw new Error(`Application with id ${applicationId} not found`);
         }
+    }
+
+    public static setRemoteApplication(remoteApplication: RemoteApplication): void {
+        this.mode = AutomationMode.Remote;
+        this.workingBrowser = null;
+        this.workingRemoteApplication = remoteApplication;
     }
 }
