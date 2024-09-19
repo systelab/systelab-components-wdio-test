@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "13df8b47-1c8d-4454-acdf-770956426f08",
+		"name": "WDIO Remote Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1633643"
+	},
+	"item": [
+		{
+			"name": "Applications Management",
+			"item": [
+				{
+					"name": "/wdio/applications/start (Chrome)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options2\": {\r\n        \r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/wdio/applications/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"wdio",
+								"applications",
+								"start"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Queries",
+			"item": []
+		},
+		{
+			"name": "Actions",
+			"item": []
+		}
+	]
+}
