@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
 import { Application, ApplicationManager } from '../../wdio/application-manager';
+import { JSONSchemaValidator } from './schema/json-schema-validator';
+import { ApplicationStartRequest } from './request/application-start.request';
 
 export class ApplicationAPI {
     public static async start(req: Request, res: Response): Promise<any> {
         try {
-            const options = req.body;
-            const application: Application = await ApplicationManager.start(options);
+            const requestBody: ApplicationStartRequest = JSONSchemaValidator.validateApplicationStartRequest(req.body);
+            const application: Application = await ApplicationManager.start(requestBody.browserType, requestBody.options);
             return res.status(HttpStatus.CREATED).json(application.id).send();
         } catch (err) {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
