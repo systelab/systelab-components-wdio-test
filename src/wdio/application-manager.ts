@@ -1,18 +1,21 @@
 import { remote, RemoteOptions } from "webdriverio";
+import { BrowserType } from "./automation-environment";
 
 
 export interface Application {
     id: number;
+    browserType: BrowserType;
+    options: RemoteOptions;
     browser: WebdriverIO.Browser;
 }
 
 export class ApplicationManager {
     private static applications: Application[] = [];
 
-    public static async start(options: RemoteOptions): Promise<Application> {
+    public static async start(browserType: BrowserType, options: RemoteOptions): Promise<Application> {
         const id = this.applications.length;
         const browser = await remote(options);
-        const application: Application = { id, browser };
+        const application: Application = { id, browserType, options, browser };
 
         this.applications.push(application);
         return application;
