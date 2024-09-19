@@ -21,6 +21,17 @@ Send a request to **POST localhost:3333/wdio/application/start** endpoint with t
 
     }
 }
+```
+
+## Navigate to URL
+
+
+
+## Query a text
+
+
+## Postman collection
+
 
 
 
