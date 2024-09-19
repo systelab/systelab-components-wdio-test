@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { TauriDriverAPI } from './tauri-driver.api';
 import { ApplicationAPI } from './application.api';
+import { ActionAPI } from './action.api';
 
 const wdioRouter: Router = Router();
 
@@ -47,7 +48,7 @@ wdioRouter.post('/applications/:id/navigate', ApplicationAPI.navigate);
 // wdioRouter.get('/applications/:id/element/size', QueryAPI.getSize);
 
 // Actions
-// wdioRouter.post('/applications/:id/element/click', ActionAPI.click);
+wdioRouter.post('/applications/:id/element/click', ActionAPI.click);
 // wdioRouter.post('/applications/:id/element/move-to', ActionAPI.moveTo);
 // wdioRouter.post('/applications/:id/element/clear', ActionAPI.clear);
 // wdioRouter.post('/applications/:id/element/write', ActionAPI.write);
