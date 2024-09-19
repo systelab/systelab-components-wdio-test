@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { TauriDriverUtility } from "../../utils/tauri-driver.util";
+import { TauriDriverUtility } from '../../utils/tauri-driver.util';
+import { HttpStatus } from './http-status';
 
 
 export class TauriDriverAPI {

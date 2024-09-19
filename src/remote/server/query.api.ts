@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { AutomationEnvironment, ElementFinder, ElementFinderBuilder } from '../../wdio';
 import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { BasicElementRequest } from './request/basic-element.request';
+import { HttpStatus } from './http-status';
 
 
 export class QueryAPI {

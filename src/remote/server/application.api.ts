@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { Application, ApplicationManager } from '../../wdio/application-manager';
 import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { ApplicationStartRequest } from './request/application-start.request';
+import { HttpStatus } from './http-status';
+
 
 export class ApplicationAPI {
     public static async start(req: Request, res: Response): Promise<any> {
