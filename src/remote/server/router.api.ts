@@ -47,6 +47,8 @@ wdioRouter.get('/applications/:id/element/value', QueryAPI.getValue);
 // wdioRouter.get('/applications/:id/element/bounding-rect', QueryAPI.getBoundingRect);
 // wdioRouter.get('/applications/:id/element/position', QueryAPI.getPosition);
 // wdioRouter.get('/applications/:id/element/size', QueryAPI.getSize);
+// wdioRouter.get('/applications/:id/element/count', QueryAPI.count);
+
 
 // Actions
 wdioRouter.post('/applications/:id/element/click', ActionAPI.click);
