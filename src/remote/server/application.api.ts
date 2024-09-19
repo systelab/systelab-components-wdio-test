@@ -21,4 +21,9 @@ export class ApplicationAPI {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
         }
     }
+
+    public static async navigate(req: Request, res: Response): Promise<any> {
+        // TODO: Implement
+        return null;
+    }
 }
