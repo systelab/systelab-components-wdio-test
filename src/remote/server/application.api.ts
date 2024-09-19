@@ -12,7 +12,14 @@ export class ApplicationAPI {
             const application: Application = await ApplicationManager.start(requestBody.browserType, requestBody.options);
             return res.status(HttpStatus.CREATED).json(application.id).send();
         } catch (err) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+            let errorMessage;
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            } else {
+                errorMessage = err;
+            }
+
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": errorMessage}).send();
         }
     }
 
