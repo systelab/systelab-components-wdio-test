@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { TauriDriverAPI } from './tauri-driver.api';
 import { ApplicationAPI } from './application.api';
 import { ActionAPI } from './action.api';
+import { QueryAPI } from './query.api';
 
 const wdioRouter: Router = Router();
 
@@ -37,8 +38,8 @@ wdioRouter.post('/applications/:id/navigate', ApplicationAPI.navigate);
 // wdioRouter.get('/applications/:id/element/enabled', QueryAPI.isEnabled);
 // wdioRouter.get('/applications/:id/element/selected', QueryAPI.isSelected);
 // wdioRouter.get('/applications/:id/element/focused', QueryAPI.isFocused);
-// wdioRouter.get('/applications/:id/element/text', QueryAPI.getText);
-// wdioRouter.get('/applications/:id/element/value', QueryAPI.getValue);
+wdioRouter.get('/applications/:id/element/text', QueryAPI.getText);
+wdioRouter.get('/applications/:id/element/value', QueryAPI.getValue);
 // wdioRouter.get('/applications/:id/element/html', QueryAPI.getHTML);
 // wdioRouter.get('/applications/:id/element/attribute', QueryAPI.getAttribute);
 // wdioRouter.get('/applications/:id/element/css-property', QueryAPI.getCSSProperty);
