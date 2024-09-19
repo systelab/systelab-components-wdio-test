@@ -317,3 +317,23 @@ export class ElementArrayFinder {
         }
     }
 }
+
+export class ElementFinderBuilder {
+
+    public static build(locators: Locator[]): ElementFinder | ElementArrayFinder | null {
+        if (locators.length === 0) {
+            return null;
+        }
+
+        const parent: ElementFinder | ElementArrayFinder | null = ElementFinderBuilder.build(locators.slice(0, locators.length - 1));
+
+        const lastLocator: Locator = locators[locators.length - 1];
+        if (lastLocator.type === LocatorType.ElementSelector || lastLocator.type === LocatorType.ArrayItem) {
+            return new ElementFinder(lastLocator, parent);
+        } else if (lastLocator.type === LocatorType.ArraySelector) {
+            return new ElementArrayFinder(lastLocator, parent as ElementFinder | null);
+        } else {
+            throw 'Unsupported locator type: ' + lastLocator.type;
+        }
+    }
+}
