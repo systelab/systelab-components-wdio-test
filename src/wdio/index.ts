@@ -1,3 +1,4 @@
+export * from './application-manager';
 export * from './automation-environment';
 export * from './browser';
 export * from './default-timeout';

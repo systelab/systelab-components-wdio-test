@@ -3,6 +3,7 @@ import { AutomationEnvironment, ElementFinder, ElementFinderBuilder } from '../.
 import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { BasicElementRequest } from './request/basic-element.request';
 import { HttpStatus } from './http-status';
+import { ErrorHandlerAPI } from './error-handler.api';
 
 
 export class ActionAPI {
@@ -14,7 +15,7 @@ export class ActionAPI {
             await element.click();
             return res.status(HttpStatus.NO_CONTENT).send();
         } catch (err) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+            return ErrorHandlerAPI.handle(res, err);
         }
     }
 
