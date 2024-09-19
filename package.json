@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "start-remote-test-server": "npx ts-node --project tsconfig.json test/remote/server.ts"
   },
   "repository": {
     "type": "git",
