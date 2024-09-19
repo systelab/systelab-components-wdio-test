@@ -4,7 +4,6 @@ import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { ApplicationStartRequest } from './request/application-start.request';
 import { HttpStatus } from './http-status';
 import { AutomationEnvironment } from '../../wdio/automation-environment';
-import { BasicElementRequest } from './request/basic-element.request';
 import { ApplicationNavigateRequest } from './request/application-navigate.request';
 import { Browser } from '../../wdio';
 
@@ -14,16 +13,9 @@ export class ApplicationAPI {
         try {
             const requestBody: ApplicationStartRequest = JSONSchemaValidator.validateApplicationStartRequest(req.body);
             const application: Application = await ApplicationManager.start(requestBody.browserType, requestBody.options);
-            return res.status(HttpStatus.CREATED).json(application.id).send();
+            return res.status(HttpStatus.CREATED).json({ id: application.id }).send();
         } catch (err) {
-            let errorMessage;
-            if (err instanceof Error) {
-                errorMessage = err.message;
-            } else {
-                errorMessage = err;
-            }
-
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": errorMessage}).send();
+            return this.handleError(res, err);
         }
     }
 
@@ -32,7 +24,7 @@ export class ApplicationAPI {
             await ApplicationManager.stop(+req.params.id);
             return res.status(HttpStatus.NO_CONTENT).send();
         } catch (err) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+            return this.handleError(res, err);
         }
     }
 
@@ -40,10 +32,21 @@ export class ApplicationAPI {
         try {
             AutomationEnvironment.setApplication(+req.params.id);
             const requestBody: ApplicationNavigateRequest = JSONSchemaValidator.validateApplicationNavigateRequest(req.body);
-            Browser.navigateToURL(requestBody.url);            
+            await Browser.navigateToURL(requestBody.url);            
             return res.status(HttpStatus.NO_CONTENT).send();
         } catch (err) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+            return this.handleError(res, err);
         }
+    }
+
+    private static handleError(res: Response, err: any): any {
+        let errorMessage;
+        if (err instanceof Error) {
+            errorMessage = err.message;
+        } else {
+            errorMessage = err;
+        }
+
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": errorMessage}).send();
     }
 }
