@@ -29,7 +29,7 @@ export class JSONSchemaValidator {
         const schema: LoadedSchema = this.loadSchema(schemaFilename);
         const validData: boolean = schema.validateFn(data);
         if (!validData) {
-            throw new Error(`Data does not fulfill JSON schema '${schemaFilename}':` + schema.validateFn.errors);
+            throw new Error(`Data does not fulfill JSON schema '${schemaFilename}':` + JSON.stringify(schema.validateFn.errors));
         }
     }
 
@@ -39,7 +39,7 @@ export class JSONSchemaValidator {
             return loadedSchema;
         }
 
-        const schemaPath = path.resolve(filename);
+        const schemaPath = path.resolve(__dirname, filename);
         const schemaFile: string = fs.readFileSync(schemaPath, 'utf-8');
         const schemaObject: any = JSON.parse(schemaFile);
         const compiledSchema = this.ajv.compile(schemaObject);
