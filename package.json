@@ -25,6 +25,7 @@
     "url": "git+https://github.com/systelab/systelab-components-wdio-test.git"
   },
   "dependencies": {
+    "ajv": "8.17.1",
     "core-js": "3.19.2",
     "express": "4.21.0",
     "pixelmatch": "5.3.0",
