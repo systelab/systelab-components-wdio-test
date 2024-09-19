@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { BasicElementRequest } from '../request/basic-element.request';
+import { ApplicationStartRequest } from '../request/application-start.request';
 
 
 interface LoadedSchema {
@@ -13,6 +14,11 @@ interface LoadedSchema {
 export class JSONSchemaValidator {
     private static ajv = new Ajv();
     private static loadedSchemas: LoadedSchema[] = [];
+
+    public static validateApplicationStartRequest(data: unknown): ApplicationStartRequest {
+        this.validateData(data, 'application-start-request-schema.json');
+        return data as ApplicationStartRequest;
+    }
 
     public static validateBasicElementRequest(data: unknown): BasicElementRequest {
         this.validateData(data, 'basic-element-request-schema.json');
