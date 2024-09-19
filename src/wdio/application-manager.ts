@@ -13,7 +13,7 @@ export class ApplicationManager {
     private static applications: Application[] = [];
 
     public static async start(browserType: BrowserType, options: RemoteOptions): Promise<Application> {
-        const id = this.applications.length;
+        const id = this.applications.length + 1;
         const browser = await remote(options);
         const application: Application = { id, browserType, options, browser };
 
@@ -26,15 +26,6 @@ export class ApplicationManager {
         if (app) {
             await app.browser.deleteSession();
             this.applications = this.applications.filter(app => app.id !== id);
-        } else {
-            throw new Error(`Application with id ${id} not found`);
-        }
-    }
-
-    public static async navigate(id: number,url:string): Promise<any> {
-        const app = this.get(id);
-        if (app) {
-            await app.browser.navigateTo(url);
         } else {
             throw new Error(`Application with id ${id} not found`);
         }
