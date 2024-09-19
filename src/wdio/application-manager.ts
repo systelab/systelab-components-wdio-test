@@ -31,6 +31,15 @@ export class ApplicationManager {
         }
     }
 
+    public static async navigate(id: number,url:string): Promise<any> {
+        const app = this.get(id);
+        if (app) {
+            await app.browser.navigateTo(url);
+        } else {
+            throw new Error(`Application with id ${id} not found`);
+        }
+    }
+
     public static get(id: number): Application | undefined {
         return this.applications.find(app => app.id === id);
     }

@@ -3,6 +3,10 @@ import { Application, ApplicationManager } from '../../wdio/application-manager'
 import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { ApplicationStartRequest } from './request/application-start.request';
 import { HttpStatus } from './http-status';
+import { AutomationEnvironment } from '../../wdio/automation-environment';
+import { BasicElementRequest } from './request/basic-element.request';
+import { ApplicationNavigateRequest } from './request/application-navigate.request';
+import { Browser } from '../../wdio';
 
 
 export class ApplicationAPI {
@@ -25,8 +29,7 @@ export class ApplicationAPI {
 
     public static async stop(req: Request, res: Response): Promise<any> {
         try {
-            const applicationId: number = +req.params.id;
-            await ApplicationManager.stop(applicationId);
+            await ApplicationManager.stop(+req.params.id);
             return res.status(HttpStatus.NO_CONTENT).send();
         } catch (err) {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
@@ -34,7 +37,13 @@ export class ApplicationAPI {
     }
 
     public static async navigate(req: Request, res: Response): Promise<any> {
-        // TODO: Implement
-        return null;
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: ApplicationNavigateRequest = JSONSchemaValidator.validateApplicationNavigateRequest(req.body);
+            Browser.navigateToURL(requestBody.url);            
+            return res.status(HttpStatus.NO_CONTENT).send();
+        } catch (err) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+        }
     }
 }

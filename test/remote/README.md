@@ -18,13 +18,18 @@ Send a request to **POST localhost:3333/wdio/application/start** endpoint with t
 {
     "browserType": "Chrome",
     "options": {
-
+        "capabilities": {
+            "browserName": "chrome",
+            "goog:chromeOptions": {
+                "args": ["--no-sandbox"]
+            }
+        }
     }
 }
 ```
 
 ## Navigate to URL
-
+Send a request to **POST localhost:3333/wdio/
 
 
 ## Query a text

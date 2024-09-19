@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "13df8b47-1c8d-4454-acdf-770956426f08",
+		"_postman_id": "d85a1f87-b6ab-4d59-a1c3-b5c70d7b1100",
 		"name": "WDIO Remote Server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1633643"
+		"_exporter_id": "30743682"
 	},
 	"item": [
 		{
@@ -16,7 +16,37 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options2\": {\r\n        \r\n    }\r\n}",
+							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options\": {\r\n        \"capabilities\": {\r\n            \"browserName\": \"chrome\",\r\n            \"goog:chromeOptions\": {\r\n                \"args\": [\"--no-sandbox\"]\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/wdio/applications/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"wdio",
+								"applications",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/wdio/applications/navigate (Chrome)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"browserType\": \"Chrome\",\r\n    \"options\": {\r\n        \"capabilities\": {\r\n            \"browserName\": \"chrome\",\r\n            \"goog:chromeOptions\": {\r\n                \"args\": [\"--no-sandbox\"]\r\n            }\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

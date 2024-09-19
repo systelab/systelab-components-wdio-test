@@ -4,6 +4,7 @@ import path from 'path';
 
 import { BasicElementRequest } from '../request/basic-element.request';
 import { ApplicationStartRequest } from '../request/application-start.request';
+import { ApplicationNavigateRequest } from '../request/application-navigate.request';
 
 
 interface LoadedSchema {
@@ -18,6 +19,11 @@ export class JSONSchemaValidator {
     public static validateApplicationStartRequest(data: unknown): ApplicationStartRequest {
         this.validateData(data, 'application-start-request-schema.json');
         return data as ApplicationStartRequest;
+    }
+
+    public static validateApplicationNavigateRequest(data: unknown): ApplicationNavigateRequest {
+        this.validateData(data, 'application-navigate-request-schema.json');
+        return data as ApplicationNavigateRequest;
     }
 
     public static validateBasicElementRequest(data: unknown): BasicElementRequest {
