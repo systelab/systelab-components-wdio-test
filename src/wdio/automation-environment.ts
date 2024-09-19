@@ -1,3 +1,5 @@
+import { Application, ApplicationManager } from './application-manager';
+
 
 export enum AutomationMode {
     Runner,
@@ -5,12 +7,12 @@ export enum AutomationMode {
 }
 
 export enum BrowserType {
-    Chrome,
-    Edge,
-    Firefox,
-    Safari,
-    WebKitGTK,
-    TauriApp
+    Chrome = 'Chrome',
+    Edge = 'Edge',
+    Firefox = 'Firefox',
+    Safari = 'Safari',
+    WebKitGTK = 'WebKitGTK',
+    TauriApp = 'TauriApp'
 }
 
 export class AutomationEnvironment {
@@ -59,5 +61,15 @@ export class AutomationEnvironment {
 
     public static setBrowserType(browserType: BrowserType): void {
         this.browserType = browserType;
+    }
+
+    public static setApplication(applicationId: number): void {
+        const application: Application = ApplicationManager.get(applicationId) as Application;
+        if (application) {
+            this.setBrowserType(application.browserType);
+            this.setStandaloneMode(application.browser);
+        } else {
+            throw new Error(`Application with id ${applicationId} not found`);
+        }
     }
 }
