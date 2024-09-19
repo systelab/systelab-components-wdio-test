@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://www.werfen.com/wdio_schema.json",
+    "$id": "http://www.werfen.com/basic-element-request-schema.json",
     "title": "Schema for a basic request regarding an element of WDIO REST API",
     "type": "object",
     "properties": {
