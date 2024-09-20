@@ -46,10 +46,10 @@ wdioRouter.get('/applications/:id/element/html', QueryAPI.getHTML);
 wdioRouter.get('/applications/:id/element/attribute', QueryAPI.getAttribute);
 wdioRouter.get('/applications/:id/element/css-property', QueryAPI.getCSSProperty);
 wdioRouter.get('/applications/:id/element/property', QueryAPI.getProperty);
-// wdioRouter.get('/applications/:id/element/bounding-rect', QueryAPI.getBoundingRect);
-// wdioRouter.get('/applications/:id/element/position', QueryAPI.getPosition);
-// wdioRouter.get('/applications/:id/element/size', QueryAPI.getSize);
-// wdioRouter.get('/applications/:id/element/count', QueryAPI.count);
+wdioRouter.get('/applications/:id/element/bounding-rect', QueryAPI.getBoundingRect);
+wdioRouter.get('/applications/:id/element/position', QueryAPI.getPosition);
+wdioRouter.get('/applications/:id/element/size', QueryAPI.getSize);
+wdioRouter.get('/applications/:id/element/count', QueryAPI.count);
 
 
 // Actions

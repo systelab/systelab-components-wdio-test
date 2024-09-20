@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AutomationEnvironment, ElementFinder, ElementFinderBuilder } from '../../wdio';
+import { AutomationEnvironment, ElementArrayFinder, ElementFinder, ElementFinderBuilder } from '../../wdio';
 import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { BasicElementRequest } from './request/basic-element.request';
 import { HttpStatus } from './http-status';
@@ -150,6 +150,55 @@ export class QueryAPI {
             const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
             const property: string = await element.getProperty(requestBody.name);
             return res.status(HttpStatus.OK).json({ property }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async getBoundingRect(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: BasicElementRequest = JSONSchemaValidator.validateBasicElementRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            const value: { x: number, y: number, width: number, height: number } = await element.getBoundingRect();
+            return res.status(HttpStatus.OK).json({ value }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async getPosition(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: BasicElementRequest = JSONSchemaValidator.validateBasicElementRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            const value: { x: number, y: number} = await element.getPosition();
+            return res.status(HttpStatus.OK).json({ value }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+
+    public static async getSize(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: BasicElementRequest = JSONSchemaValidator.validateBasicElementRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            const value: { width: number, height: number } = await element.getSize();
+            return res.status(HttpStatus.OK).json({ value }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async count(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: BasicElementRequest = JSONSchemaValidator.validateBasicElementRequest(req.body);
+            const elementArray: ElementArrayFinder = ElementFinderBuilder.build(requestBody.locators) as ElementArrayFinder;
+            const value: number = await elementArray.count();
+            return res.status(HttpStatus.OK).json({ value }).send();
         } catch (err) {
             return ErrorHandlerAPI.handle(res, err);
         }
