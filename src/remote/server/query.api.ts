@@ -5,7 +5,7 @@ import { BasicElementRequest } from './request/basic-element.request';
 import { HttpStatus } from './http-status';
 import { ErrorHandlerAPI } from './error-handler.api';
 import { HTMLRequest } from './request/html.request';
-import { PropertyRequest } from './request/property.request';
+import { PropertyElementRequest } from './request/property-element.request';
 
 
 export class QueryAPI {
@@ -122,7 +122,7 @@ export class QueryAPI {
     public static async getAttribute(req: Request, res: Response): Promise<any> {
         try {
             AutomationEnvironment.setApplication(+req.params.id);
-            const requestBody: PropertyRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+            const requestBody: PropertyElementRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
             const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
             const attribute: string = await element.getAttribute(requestBody.name);
             return res.status(HttpStatus.OK).json({ attribute }).send();
@@ -134,7 +134,7 @@ export class QueryAPI {
     public static async getCSSProperty(req: Request, res: Response): Promise<any> {
         try {
             AutomationEnvironment.setApplication(+req.params.id);
-            const requestBody: PropertyRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+            const requestBody: PropertyElementRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
             const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
             const property: string = await element.getCSSProperty(requestBody.name);
             return res.status(HttpStatus.OK).json({ property }).send();
@@ -146,7 +146,7 @@ export class QueryAPI {
     public static async getProperty(req: Request, res: Response): Promise<any> {
         try {
             AutomationEnvironment.setApplication(+req.params.id);
-            const requestBody: PropertyRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+            const requestBody: PropertyElementRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
             const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
             const property: string = await element.getProperty(requestBody.name);
             return res.status(HttpStatus.OK).json({ property }).send();

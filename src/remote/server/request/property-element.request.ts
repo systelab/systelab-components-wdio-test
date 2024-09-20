@@ -1,5 +1,5 @@
 import { BasicElementRequest } from "./basic-element.request";
 
-export interface PropertyRequest extends BasicElementRequest{
+export interface PropertyElementRequest extends BasicElementRequest{
     name: string;
 }

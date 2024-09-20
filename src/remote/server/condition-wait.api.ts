@@ -7,7 +7,7 @@ import { ErrorHandlerAPI } from './error-handler.api';
 import { WriteElementRequest } from './request/write-element.request';
 
 
-export class ActionAPI {
+export class ConditionWaitAPI {
     public static async click(req: Request, res: Response): Promise<any> {
         try {
             AutomationEnvironment.setApplication(+req.params.id);
