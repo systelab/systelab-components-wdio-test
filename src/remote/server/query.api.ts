@@ -5,6 +5,7 @@ import { BasicElementRequest } from './request/basic-element.request';
 import { HttpStatus } from './http-status';
 import { ErrorHandlerAPI } from './error-handler.api';
 import { HTMLRequest } from './request/html.request';
+import { PropertyRequest } from './request/property.request';
 
 
 export class QueryAPI {
@@ -113,6 +114,42 @@ export class QueryAPI {
             const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
             const html: string = await element.getHTML(requestBody.includeSelectorTag);
             return res.status(HttpStatus.OK).json({ html }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async getAttribute(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: PropertyRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            const attribute: string = await element.getAttribute(requestBody.name);
+            return res.status(HttpStatus.OK).json({ attribute }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async getCSSProperty(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: PropertyRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            const property: string = await element.getCSSProperty(requestBody.name);
+            return res.status(HttpStatus.OK).json({ property }).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async getProperty(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: PropertyRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            const property: string = await element.getProperty(requestBody.name);
+            return res.status(HttpStatus.OK).json({ property }).send();
         } catch (err) {
             return ErrorHandlerAPI.handle(res, err);
         }
