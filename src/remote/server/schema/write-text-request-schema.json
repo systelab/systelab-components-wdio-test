@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://www.werfen.com/write-text-request-schema.json",
+    "title": "Schema for a request to write text simulating a sequence of ket strokes on the application managed by WDIO REST API",
+    "type": "object",
+    "properties": {
+        "stringToWrite": {
+            "type": "string",
+            "description": "Text to write"
+        }
+    },
+    "required": ["stringToWrite"],
+    "additionalProperties": false
+}

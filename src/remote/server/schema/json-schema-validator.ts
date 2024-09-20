@@ -6,6 +6,7 @@ import { BasicElementRequest } from '../request/basic-element.request';
 import { ApplicationStartRequest } from '../request/application-start.request';
 import { ApplicationNavigateRequest } from '../request/application-navigate.request';
 import { WindowSizeRequest } from '../request/window-size.request';
+import { WriteTextRequest } from '../request/write-text.request';
 
 
 interface LoadedSchema {
@@ -35,6 +36,11 @@ export class JSONSchemaValidator {
     public static validateWindowSizeRequest(data: unknown): WindowSizeRequest {
         this.validateData(data, 'window-size-request-schema.json');
         return data as WindowSizeRequest;
+    }
+
+    public static validateWriteTextRequest(data: unknown): WriteTextRequest {
+        this.validateData(data, 'write-text-request-schema.json');
+        return data as WriteTextRequest;
     }
 
     private static validateData(data: unknown, schemaFilename: string): void {

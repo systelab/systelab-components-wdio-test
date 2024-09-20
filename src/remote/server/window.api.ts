@@ -3,9 +3,7 @@ import { Request, Response } from 'express';
 import { HttpStatus } from './http-status';
 import { ErrorHandlerAPI } from './error-handler.api';
 import { AutomationEnvironment, ApplicationManager, Browser, ElementFinder, ElementFinderBuilder } from '../../wdio';
-import { ApplicationNavigateRequest } from './request/application-navigate.request';
 import { JSONSchemaValidator } from './schema/json-schema-validator';
-import { BasicElementRequest } from './request/basic-element.request';
 import { WindowSizeRequest } from './request/window-size.request';
 
 
