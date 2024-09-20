@@ -33,6 +33,14 @@ export class AutomationEnvironment {
         return this.mode;
     }
 
+    public static isLocalMode(): boolean {
+        return !this.isRemoteMode();
+    }
+
+    public static isRemoteMode(): boolean {
+        return this.mode === AutomationMode.Remote;
+    }
+
     public static hasWorkingBrowser(): boolean {
         if (this.mode === AutomationMode.Standalone) {
             return !!(this.workingBrowser);
@@ -82,6 +90,10 @@ export class AutomationEnvironment {
         } else {
             throw new Error(`Application with id ${applicationId} not found`);
         }
+    }
+
+    public static getWorkingRemoteApplication(): RemoteApplication {
+        return this.workingRemoteApplication as RemoteApplication;
     }
 
     public static setRemoteApplication(remoteApplication: RemoteApplication): void {
