@@ -6,9 +6,10 @@ import { BasicElementRequest } from '../request/basic-element.request';
 import { ApplicationStartRequest } from '../request/application-start.request';
 import { ApplicationNavigateRequest } from '../request/application-navigate.request';
 import { WindowSizeRequest } from '../request/window-size.request';
-import { WriteTextRequest } from '../request/write-text.request';
+import { ApplicationWriteTextRequest } from '../request/application-write-text.request';
 import { HTMLRequest } from '../request/html.request';
 import { PropertyRequest } from '../request/property.request';
+import { WriteRequest } from '../request/write.request';
 
 
 interface LoadedSchema {
@@ -40,9 +41,9 @@ export class JSONSchemaValidator {
         return data as WindowSizeRequest;
     }
 
-    public static validateWriteTextRequest(data: unknown): WriteTextRequest {
-        this.validateData(data, 'write-text-request-schema.json');
-        return data as WriteTextRequest;
+    public static validateApplicationWriteTextRequest(data: unknown): ApplicationWriteTextRequest {
+        this.validateData(data, 'application-write-text-request-schema.json');
+        return data as ApplicationWriteTextRequest;
     }
 
     public static validateHTMLRequest(data: unknown): HTMLRequest {
@@ -53,6 +54,11 @@ export class JSONSchemaValidator {
     public static validatePropertyRequest(data: unknown): PropertyRequest {
         this.validateData(data, 'property-request-schema.json');
         return data as PropertyRequest;
+    }
+
+    public static validateWriteRequest(data: unknown): WriteRequest {
+        this.validateData(data, 'write-request-schema.json');
+        return data as WriteRequest;
     }
 
     private static validateData(data: unknown, schemaFilename: string): void {

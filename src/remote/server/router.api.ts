@@ -54,10 +54,10 @@ wdioRouter.get('/applications/:id/element/count', QueryAPI.count);
 
 // Actions
 wdioRouter.post('/applications/:id/element/click', ActionAPI.click);
-// wdioRouter.post('/applications/:id/element/move-to', ActionAPI.moveTo);
-// wdioRouter.post('/applications/:id/element/clear', ActionAPI.clear);
-// wdioRouter.post('/applications/:id/element/write', ActionAPI.write);
-// wdioRouter.post('/applications/:id/element/tap', ActionAPI.tap);
+wdioRouter.post('/applications/:id/element/move-to', ActionAPI.moveTo);
+wdioRouter.post('/applications/:id/element/clear', ActionAPI.clear);
+wdioRouter.post('/applications/:id/element/write', ActionAPI.write);
+wdioRouter.post('/applications/:id/element/tap', ActionAPI.tap);
 
 // Condition waits
 // wdioRouter.post('/applications/:id/wait', ConditionWaitAPI.untilCondition);

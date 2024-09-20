@@ -4,7 +4,7 @@ import { HttpStatus } from './http-status';
 import { ErrorHandlerAPI } from './error-handler.api';
 import { AutomationEnvironment, ApplicationManager, Browser, ElementFinder, ElementFinderBuilder } from '../../wdio';
 import { JSONSchemaValidator } from './schema/json-schema-validator';
-import { WriteTextRequest } from './request/write-text.request';
+import { ApplicationWriteTextRequest } from './request/application-write-text.request';
 
 
 export class KeyboardAPI {
@@ -62,7 +62,7 @@ export class KeyboardAPI {
     public static async writeText(req: Request, res: Response): Promise<any> {
         try {
             AutomationEnvironment.setApplication(+req.params.id);   
-            const requestBody: WriteTextRequest = JSONSchemaValidator.validateWriteTextRequest(req.body);    
+            const requestBody: ApplicationWriteTextRequest = JSONSchemaValidator.validateApplicationWriteTextRequest(req.body);    
             await Browser.writeText(requestBody.stringToWrite);
             return res.status(HttpStatus.NO_CONTENT).send();
         } catch (err) {

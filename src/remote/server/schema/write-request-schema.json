@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://www.werfen.com/property-request-schema.json",
-    "title": "Schema for a request to get element attribute/property on the application managed by WDIO REST API",
+    "$id": "http://www.werfen.com/write-request-schema.json",
+    "title": "Schema for a request to write text on an Element of the application managed by WDIO REST API",
     "type": "object",
     "properties": {
         "locators": {
@@ -30,11 +30,11 @@
             },
             "minItems": 1
         },
-        "name": {
+        "text": {
             "type": "string",
-            "description": "Property name"
+            "description": "Text to write on the element"
         }
     },
-    "required": ["locators","name"],
+    "required": ["locators","text"],
     "additionalProperties": false
 }
