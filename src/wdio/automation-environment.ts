@@ -19,6 +19,7 @@ export enum BrowserType {
 export interface RemoteApplication {
     host: string;
     port: number;
+    apiPrefix: string;
     applicationId: number;
 }
 
