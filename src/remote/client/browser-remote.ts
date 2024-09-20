@@ -1,21 +1,21 @@
 import { AutomationEnvironment, RemoteApplication } from "../../wdio";
+import { HttpStatus } from "../server/http-status";
 
 export class BrowserRemote {
 
     // Navigation
     public static async navigateToURL(url: string): Promise<void> {
-        const remoteApplication: RemoteApplication = AutomationEnvironment.getWorkingRemoteApplication();
-        // Call endpoint
+        await this.executeEndpoint('POST', 'navigate', { url });
     }
 
 
     // Keyboard
     public static async pressEsc(): Promise<void> {
-        // TODO
+        await this.executeEndpoint('POST', 'keyboard/escape');
     }
 
     public static async pressTab(): Promise<void> {
-        // TODO
+        await this.executeEndpoint('POST', 'keyboard/tab');
     }
 
     public static async pressBackspace(): Promise<void> {
@@ -82,4 +82,30 @@ export class BrowserRemote {
     public static async setFullscreen(): Promise<void> {
         // TODO
     }
+
+
+    // Auxiliary methods
+    private static async executeEndpoint(method: string, route: string, body: object = {}): Promise<any> {
+        const remoteApplication: RemoteApplication = AutomationEnvironment.getWorkingRemoteApplication();
+        const host = remoteApplication.host;
+        const port = remoteApplication.port;
+        const apiPrefix = remoteApplication.apiPrefix;
+        const applicationId = remoteApplication.applicationId;
+        const baseURL = `http://${host}:${port}/${apiPrefix}/applications/${applicationId}`;
+        const endpointURL = `${baseURL}/${route}`;
+
+        const response: Response = await fetch(endpointURL, {
+            method,
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body),
+        });
+
+        if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            const errorMessage: string = (response.body as any).error as string;
+            throw new Error('Error: ' + errorMessage);
+        }
+
+        return response.body;
+    }
+
 }
