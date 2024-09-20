@@ -87,11 +87,11 @@ export class BrowserRemote {
     // Auxiliary methods
     private static async executeEndpoint(method: string, route: string, body: object = {}): Promise<any> {
         const remoteApplication: RemoteApplication = AutomationEnvironment.getWorkingRemoteApplication();
-        const host = remoteApplication.host;
-        const port = remoteApplication.port;
-        const apiPrefix = remoteApplication.apiPrefix;
-        const applicationId = remoteApplication.applicationId;
-        const baseURL = `http://${host}:${port}/${apiPrefix}/applications/${applicationId}`;
+        const hostname = remoteApplication.host.name;
+        const port = remoteApplication.host.port;
+        const apiPrefix = remoteApplication.host.apiPrefix;
+        const applicationId = remoteApplication.remoteId;
+        const baseURL = `http://${hostname}:${port}/${apiPrefix}/applications/${applicationId}`;
         const endpointURL = `${baseURL}/${route}`;
 
         const response: Response = await fetch(endpointURL, {

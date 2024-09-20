@@ -1,4 +1,5 @@
 import { Application, ApplicationManager } from './application-manager';
+import { RemoteApplication } from './application-manager-remote';
 
 
 export enum AutomationMode {
@@ -16,12 +17,6 @@ export enum BrowserType {
     TauriApp = 'TauriApp'
 }
 
-export interface RemoteApplication {
-    host: string;
-    port: number;
-    apiPrefix: string;
-    applicationId: number;
-}
 
 export class AutomationEnvironment {
     private static mode: AutomationMode = AutomationMode.Runner;

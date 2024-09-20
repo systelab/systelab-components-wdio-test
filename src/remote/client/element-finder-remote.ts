@@ -151,11 +151,11 @@ export class ElementFinderRemote {
 
     // Auxiliary methods
     private async executeEndpoint(method: string, route: string, body: object): Promise<any> {
-        const host = this.remoteApplication.host;
-        const port = this.remoteApplication.port;
-        const apiPrefix = this.remoteApplication.apiPrefix;
-        const applicationId = this.remoteApplication.applicationId;
-        const baseURL = `http://${host}:${port}/${apiPrefix}/applications/${applicationId}`;
+        const hostname = this.remoteApplication.host.name;
+        const port = this.remoteApplication.host.port;
+        const apiPrefix = this.remoteApplication.host.apiPrefix;
+        const applicationId = this.remoteApplication.remoteId;
+        const baseURL = `http://${hostname}:${port}/${apiPrefix}/applications/${applicationId}`;
         const endpointURL = `${baseURL}/${route}`;
 
         const response: Response = await fetch(endpointURL, {
