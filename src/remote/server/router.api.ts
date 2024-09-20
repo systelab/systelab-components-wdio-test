@@ -34,15 +34,15 @@ wdioRouter.post('/applications/:id/keyboard/delete', KeyboardAPI.pressDelete);
 wdioRouter.post('/applications/:id/keyboard/text', KeyboardAPI.writeText);
 
 // Queries
-// wdioRouter.get('/applications/:id/element/present', QueryAPI.isPresent);
-// wdioRouter.get('/applications/:id/element/displayed', QueryAPI.isDisplayed);
-// wdioRouter.get('/applications/:id/element/clickable', QueryAPI.isClickable);
-// wdioRouter.get('/applications/:id/element/enabled', QueryAPI.isEnabled);
-// wdioRouter.get('/applications/:id/element/selected', QueryAPI.isSelected);
-// wdioRouter.get('/applications/:id/element/focused', QueryAPI.isFocused);
+wdioRouter.get('/applications/:id/element/present', QueryAPI.isPresent);
+wdioRouter.get('/applications/:id/element/displayed', QueryAPI.isDisplayed);
+wdioRouter.get('/applications/:id/element/clickable', QueryAPI.isClickable);
+wdioRouter.get('/applications/:id/element/enabled', QueryAPI.isEnabled);
+wdioRouter.get('/applications/:id/element/selected', QueryAPI.isSelected);
+wdioRouter.get('/applications/:id/element/focused', QueryAPI.isFocused);
 wdioRouter.get('/applications/:id/element/text', QueryAPI.getText);
 wdioRouter.get('/applications/:id/element/value', QueryAPI.getValue);
-// wdioRouter.get('/applications/:id/element/html', QueryAPI.getHTML);
+wdioRouter.get('/applications/:id/element/html', QueryAPI.getHTML);
 // wdioRouter.get('/applications/:id/element/attribute', QueryAPI.getAttribute);
 // wdioRouter.get('/applications/:id/element/css-property', QueryAPI.getCSSProperty);
 // wdioRouter.get('/applications/:id/element/property', QueryAPI.getProperty);
