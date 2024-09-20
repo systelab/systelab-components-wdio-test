@@ -3,6 +3,7 @@ import { TauriDriverAPI } from './tauri-driver.api';
 import { ApplicationAPI } from './application.api';
 import { ActionAPI } from './action.api';
 import { QueryAPI } from './query.api';
+import { WindowAPI } from './window.api';
 
 const wdioRouter: Router = Router();
 
@@ -19,9 +20,9 @@ wdioRouter.get('/applications/:id/version', ApplicationAPI.getVersion);
 wdioRouter.get('/applications/:id/os', ApplicationAPI.getOperatingSystem);
 
 // Window
-// wdioRouter.get('/applications/:id/window/size', WindowAPI.getSize);
-// wdioRouter.post('/applications/:id/window/size', WindowAPI.setSize);
-// wdioRouter.post('/applications/:id/window/fullscreen', WindowAPI.setFullscreen);
+wdioRouter.get('/applications/:id/window/size', WindowAPI.getSize);
+wdioRouter.post('/applications/:id/window/size', WindowAPI.setSize);
+wdioRouter.post('/applications/:id/window/fullscreen', WindowAPI.setFullscreen);
 
 // Keyboard
 // wdioRouter.post('/applications/:id/keyboard/escape', KeyboardAPI.pressEscape);

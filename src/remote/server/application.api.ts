@@ -9,6 +9,7 @@ import { JSONSchemaValidator } from './schema/json-schema-validator';
 
 
 export class ApplicationAPI {
+   
     public static async start(req: Request, res: Response): Promise<any> {
         try {
             const requestBody: ApplicationStartRequest = JSONSchemaValidator.validateApplicationStartRequest(req.body);

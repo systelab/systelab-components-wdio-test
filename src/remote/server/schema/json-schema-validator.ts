@@ -5,6 +5,7 @@ import path from 'path';
 import { BasicElementRequest } from '../request/basic-element.request';
 import { ApplicationStartRequest } from '../request/application-start.request';
 import { ApplicationNavigateRequest } from '../request/application-navigate.request';
+import { WindowSizeRequest } from '../request/window-size.request';
 
 
 interface LoadedSchema {
@@ -29,6 +30,11 @@ export class JSONSchemaValidator {
     public static validateBasicElementRequest(data: unknown): BasicElementRequest {
         this.validateData(data, 'basic-element-request-schema.json');
         return data as BasicElementRequest;
+    }
+
+    public static validateWindowSizeRequest(data: unknown): WindowSizeRequest {
+        this.validateData(data, 'window-size-request-schema.json');
+        return data as WindowSizeRequest;
     }
 
     private static validateData(data: unknown, schemaFilename: string): void {
