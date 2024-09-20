@@ -14,9 +14,9 @@ wdioRouter.post('/tauri-driver/stop', TauriDriverAPI.stop);
 wdioRouter.post('/applications/start', ApplicationAPI.start);
 wdioRouter.post('/applications/:id/stop', ApplicationAPI.stop);
 wdioRouter.post('/applications/:id/navigate', ApplicationAPI.navigate);
-// wdioRouter.get('/applications/:id/name', ApplicationAPI.getName);
-// wdioRouter.get('/applications/:id/version', ApplicationAPI.getVersion);
-// wdioRouter.get('/applications/:id/os', ApplicationAPI.getOperatingSystem);
+wdioRouter.get('/applications/:id/name', ApplicationAPI.getName);
+wdioRouter.get('/applications/:id/version', ApplicationAPI.getVersion);
+wdioRouter.get('/applications/:id/os', ApplicationAPI.getOperatingSystem);
 
 // Window
 // wdioRouter.get('/applications/:id/window/size', WindowAPI.getSize);

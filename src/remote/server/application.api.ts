@@ -38,4 +38,31 @@ export class ApplicationAPI {
             return ErrorHandlerAPI.handle(res, err);
         }
     }
+
+    public static async getName(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            return res.status(HttpStatus.OK).json(Browser.getName()).send();
+        } catch (err) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+        }
+    }
+
+    public static async getVersion(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            return res.status(HttpStatus.OK).json(Browser.getVersion()).send();
+        } catch (err) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+        }
+    }
+
+    public static async getOperatingSystem(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            return res.status(HttpStatus.OK).json(Browser.getOperatingSystem()).send();
+        } catch (err) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+        }
+    }
 }
