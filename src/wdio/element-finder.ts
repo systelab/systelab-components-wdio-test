@@ -1,9 +1,11 @@
 import { ElementArray } from "webdriverio";
-import { Locator, LocatorType } from "./locator";
 import * as tmp from "tmp";
 import fs from "fs";
+
+import { Locator, LocatorType } from "./locator";
+import { AutomationEnvironment, BrowserType, RemoteApplication } from "./automation-environment";
 import { Constants } from "../constants";
-import { AutomationEnvironment, BrowserType } from "./automation-environment";
+import { ElementFinderRemote } from "../remote/client/element-finder-remote";
 
 
 export class ElementFinder {
@@ -13,6 +15,17 @@ export class ElementFinder {
     public getLocator(): Locator {
         return this.locator;
     }
+
+    public getLocatorsChain(): Locator[] {
+        let locators: Locator[] = [];
+        if (this.parent) {
+            locators = this.parent.getLocatorsChain();
+        }
+
+        locators.push(this.locator);
+        return locators;
+    }
+
 
     // Search single element
     public byId(id: string): ElementFinder {
@@ -70,209 +83,317 @@ export class ElementFinder {
 
     // Queries
     public async isPresent(): Promise<boolean> {
-        return (await this.findElement()).isExisting();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).isExisting();
+        } else {
+            return this.findRemoteElement().isPresent();
+        }
     }
 
     public async isDisplayed(): Promise<boolean> {
-        return (await this.findElement()).isDisplayed();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).isDisplayed();
+        } else {
+            return this.findRemoteElement().isDisplayed();
+        }
     }
 
     public async isClickable(): Promise<boolean> {
-        return (await this.findElement()).isClickable();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).isClickable();
+        } else {
+            return this.findRemoteElement().isClickable();
+        }
     }
 
     public async isEnabled(): Promise<boolean> {
-        return (await this.findElement()).isEnabled();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).isEnabled();
+        } else {
+            return this.findRemoteElement().isEnabled();
+        }
     }
 
     public async isSelected(): Promise<boolean> {
-        return (await this.findElement()).isSelected();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).isSelected();
+        } else {
+            return this.findRemoteElement().isSelected();
+        }
     }
 
     public async isFocused(): Promise<boolean> {
-        return (await this.findElement()).isFocused();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).isFocused();
+        } else {
+            return this.findRemoteElement().isFocused();
+        }
     }
 
     public async getText(): Promise<string> {
-        const browserType: BrowserType = AutomationEnvironment.getBrowserType();
-        if (browserType === BrowserType.TauriApp || browserType === BrowserType.WebKitGTK) {
-            return (await this.findElement()).getHTML(false);
+        if (AutomationEnvironment.isLocalMode()) {
+            const browserType: BrowserType = AutomationEnvironment.getBrowserType();
+            if (browserType === BrowserType.TauriApp || browserType === BrowserType.WebKitGTK) {
+                return (await this.findElement()).getHTML(false);
+            } else {
+                return (await this.findElement()).getText();
+            }
         } else {
-            return (await this.findElement()).getText();
+            return this.findRemoteElement().getText();
         }
     }
 
     public async getValue(): Promise<string> {
-        return (await this.findElement()).getValue();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).getValue();
+        } else {
+            return this.findRemoteElement().getValue();
+        }
     }
 
     public async getHTML(includeSelectorTag: boolean): Promise<string> {
-        return (await this.findElement()).getHTML(includeSelectorTag);
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).getHTML(includeSelectorTag);
+        } else {
+            return this.findRemoteElement().getHTML(includeSelectorTag);
+        }
     }
 
     public async getAttribute(name: string): Promise<string> {
-        return (await this.findElement()).getAttribute(name);
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).getAttribute(name);
+        } else {
+            return this.findRemoteElement().getAttribute(name);
+        }
     }
 
     public async getCSSProperty(name: string): Promise<string> {
-        return (await (await this.findElement()).getCSSProperty(name)).value as string;
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await (await this.findElement()).getCSSProperty(name)).value as string;
+        } else {
+            return this.findRemoteElement().getCSSProperty(name);
+        }
     }
 
     public async getProperty(name: string): Promise<any> {
-        return (await this.findElement()).getProperty(name);
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).getProperty(name);
+        } else {
+            return this.findRemoteElement().getProperty(name);
+        }
     }
 
     public async getBoundingRect(): Promise<{ x: number, y: number, width: number, height: number }> {
-        const position = await this.getPosition();
-        const size = await this.getSize();
-        return { ...position, ...size };
+        if (AutomationEnvironment.isLocalMode()) {
+            const position = await this.getPosition();
+            const size = await this.getSize();
+            return { ...position, ...size };
+        } else {
+            return this.findRemoteElement().getBoundingRect();
+        }
     }
 
     public async getPosition(): Promise<{ x: number, y: number }> {
-        return (await this.findElement()).getLocation();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).getLocation();
+        } else {
+            return this.findRemoteElement().getPosition();
+        }
     }
 
     public async getSize(): Promise<{ width: number, height: number }> {
-        return (await this.findElement()).getSize();
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElement()).getSize();
+        } else {
+            return this.findRemoteElement().getSize();
+        }
     }
 
 
     // Actions
     public async click(): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
-            return AutomationEnvironment.getWorkingBrowser().execute('arguments[0].click()', element);
+        if (AutomationEnvironment.isLocalMode()) {
+            const element: WebdriverIO.Element = await this.findElement();
+            if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+                return AutomationEnvironment.getWorkingBrowser().execute('arguments[0].click()', element);
+            } else {
+                return element.click();
+            }
         } else {
-            return element.click();
+            return this.findRemoteElement().click();
         }
     }
 
     public async moveTo(): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
-            return AutomationEnvironment.getWorkingBrowser().execute(`
-                const el = arguments[0];
-                const rect = el.getBoundingClientRect();
-                const x = rect.left + (rect.width / 2);
-                const y = rect.top + (rect.height / 2);
+        if (AutomationEnvironment.isLocalMode()) {
+            const element: WebdriverIO.Element = await this.findElement();
+            if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+                return AutomationEnvironment.getWorkingBrowser().execute(`
+                    const el = arguments[0];
+                    const rect = el.getBoundingClientRect();
+                    const x = rect.left + (rect.width / 2);
+                    const y = rect.top + (rect.height / 2);
 
-                const mouseMove = new MouseEvent('mousemove', {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true,
-                    clientX: x,
-                    clientY: y
-                });
+                    const mouseMove = new MouseEvent('mousemove', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true,
+                        clientX: x,
+                        clientY: y
+                    });
 
-                const mouseOver = new MouseEvent('mouseover', {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true,
-                    clientX: x,
-                    clientY: y
-                });
+                    const mouseOver = new MouseEvent('mouseover', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true,
+                        clientX: x,
+                        clientY: y
+                    });
 
-                el.dispatchEvent(mouseMove);
-                el.dispatchEvent(mouseOver);
-            `, element);
+                    el.dispatchEvent(mouseMove);
+                    el.dispatchEvent(mouseOver);
+                `, element);
+            } else {
+                return element.moveTo();
+            }
         } else {
-            return element.moveTo();
+            return this.findRemoteElement().moveTo();
         }
     }
 
     public async clear(): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
-            return AutomationEnvironment.getWorkingBrowser().execute(`
-                const el = arguments[0];
-                el.value="";
-                el.dispatchEvent(new Event("input", { bubbles: true }));
-            `, element);
+        if (AutomationEnvironment.isLocalMode()) {
+            const element: WebdriverIO.Element = await this.findElement();
+            if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+                return AutomationEnvironment.getWorkingBrowser().execute(`
+                    const el = arguments[0];
+                    el.value="";
+                    el.dispatchEvent(new Event("input", { bubbles: true }));
+                `, element);
+            } else {
+                return element.clearValue();
+            }
         } else {
-            return element.clearValue();
+            return this.findRemoteElement().clear();
         }
     }
 
     public async write(text: string): Promise<void> {
-        const element: WebdriverIO.Element = await this.findElement();
-        if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
-            return AutomationEnvironment.getWorkingBrowser().execute((element, newValue) => {
-                element.value = newValue;
-                element.dispatchEvent(new Event("input", { bubbles: true }));
-                element.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true }));
-            }, element as any, text);
+        if (AutomationEnvironment.isLocalMode()) {
+            const element: WebdriverIO.Element = await this.findElement();
+            if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
+                return AutomationEnvironment.getWorkingBrowser().execute((element, newValue) => {
+                    element.value = newValue;
+                    element.dispatchEvent(new Event("input", { bubbles: true }));
+                    element.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true }));
+                }, element as any, text);
+            } else {
+                return element.setValue(text);
+            }
         } else {
-            return element.setValue(text);
+            return this.findRemoteElement().write(text);
         }
     }
 
     public async tap(): Promise<void> {
-        const element = await this.findElement() as any;
-        await AutomationEnvironment.getWorkingBrowser().execute((element) => {
-            const touchPoint = new Touch({
-                identifier: Date.now(),
-                target: element,
-                clientX: 0,
-                clientY: 0,
-                pageX: 0,
-                pageY: 0,
-                screenX: 0,
-                screenY: 0
-            });
+        if (AutomationEnvironment.isLocalMode()) {
+            const element = await this.findElement() as any;
+            await AutomationEnvironment.getWorkingBrowser().execute((element) => {
+                const touchPoint = new Touch({
+                    identifier: Date.now(),
+                    target: element,
+                    clientX: 0,
+                    clientY: 0,
+                    pageX: 0,
+                    pageY: 0,
+                    screenX: 0,
+                    screenY: 0
+                });
 
-            const touchStartEvent = new TouchEvent('touchstart', {
-                cancelable: true,
-                bubbles: true,
-                touches: [touchPoint],
-                targetTouches: [],
-                changedTouches: [touchPoint]
-            });
-            element.dispatchEvent(touchStartEvent);
+                const touchStartEvent = new TouchEvent('touchstart', {
+                    cancelable: true,
+                    bubbles: true,
+                    touches: [touchPoint],
+                    targetTouches: [],
+                    changedTouches: [touchPoint]
+                });
+                element.dispatchEvent(touchStartEvent);
 
-            const touchEndEvent = new TouchEvent('touchend', {
-                cancelable: true,
-                bubbles: true,
-                touches: [touchPoint],
-                targetTouches: [],
-                changedTouches: [touchPoint]
-            });
-            element.dispatchEvent(touchEndEvent);
-        }, element);
+                const touchEndEvent = new TouchEvent('touchend', {
+                    cancelable: true,
+                    bubbles: true,
+                    touches: [touchPoint],
+                    targetTouches: [],
+                    changedTouches: [touchPoint]
+                });
+                element.dispatchEvent(touchEndEvent);
+            }, element);
+        } else {
+            return this.findRemoteElement().tap();
+        }
     }
 
 
     // Condition waits
     public async waitToBePresent(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForExist({timeout});
+        if (AutomationEnvironment.isLocalMode()) {
+            await (await this.findElement()).waitForExist({timeout});
+        } else {
+            await this.findRemoteElement().waitToBePresent(timeout);
+        }
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForDisplayed({timeout});
+        if (AutomationEnvironment.isLocalMode()) {
+            await (await this.findElement()).waitForDisplayed({timeout});
+        } else {
+            await this.findRemoteElement().waitToBeDisplayed(timeout);
+        }
     }
 
     public async waitToBeClickable(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForClickable({timeout});
+        if (AutomationEnvironment.isLocalMode()) {
+            await (await this.findElement()).waitForClickable({timeout});
+        } else {
+            await this.findRemoteElement().waitToBeClickable(timeout);
+        }
     }
 
     public async waitToBeEnabled(timeout: number = 500): Promise<void> {
-        await (await this.findElement()).waitForEnabled({timeout});
+        if (AutomationEnvironment.isLocalMode()) {
+            await (await this.findElement()).waitForEnabled({timeout});
+        } else {
+            await this.findRemoteElement().waitToBeEnabled(timeout);
+        }
     }
 
     public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
-        await (await this.findElement()).waitUntil(condition, {timeout});
+        if (AutomationEnvironment.isLocalMode()) {
+            await (await this.findElement()).waitUntil(condition, {timeout});
+        } else {
+            await this.findRemoteElement().waitUntil(condition, timeout);
+        }
     }
 
 
     // Screenshots
     public async takeScreenshot(): Promise<string> {
-        const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
-        const screenshotBuffer: Buffer = await (await this.findElement()).saveScreenshot(tempFilepath);
-        fs.unlinkSync(tempFilepath);
-        return screenshotBuffer.toString('base64');
+        if (AutomationEnvironment.isLocalMode()) {
+            const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
+            const screenshotBuffer: Buffer = await (await this.findElement()).saveScreenshot(tempFilepath);
+            fs.unlinkSync(tempFilepath);
+            return screenshotBuffer.toString('base64');
+        } else {
+            return this.findRemoteElement().takeScreenshot();
+        }
     }
 
     public async saveScreenshot(filepath: string): Promise<void> {
-        await (await this.findElement()).saveScreenshot(filepath);
+        if (AutomationEnvironment.isLocalMode()) {
+            await (await this.findElement()).saveScreenshot(filepath);
+        } else {
+            return this.findRemoteElement().saveScreenshot(filepath);
+        }
     }
 
 
@@ -291,6 +412,12 @@ export class ElementFinder {
             return AutomationEnvironment.getWorkingBrowser().$(this.locator.selector as string);
         }
     }
+
+    private findRemoteElement(): ElementFinderRemote {
+        const locators: Locator[] = this.getLocatorsChain();
+        const remoteApplication: RemoteApplication = AutomationEnvironment.getWorkingRemoteApplication();
+        return new ElementFinderRemote(remoteApplication, locators);
+    }
 }
 
 export class ElementArrayFinder {
@@ -301,12 +428,27 @@ export class ElementArrayFinder {
         return this.locator;
     }
 
+    public getLocatorsChain(): Locator[] {
+        let locators: Locator[] = [];
+        if (this.parent) {
+            locators = this.parent.getLocatorsChain();
+        }
+
+        locators.push(this.locator);
+        return locators;
+    }
+
+
     public get(index: number): ElementFinder {
         return new ElementFinder({type: LocatorType.ArrayItem, index}, this);
     }
 
     public async count(): Promise<number> {
-        return (await this.findElements()).length;
+        if (AutomationEnvironment.isLocalMode()) {
+            return (await this.findElements()).length;
+        } else {
+            return this.findRemoteElement().count();
+        }
     }
 
     public async findElements(): Promise<ElementArray> {
@@ -315,6 +457,12 @@ export class ElementArrayFinder {
         } else {
             return AutomationEnvironment.getWorkingBrowser().$$(this.locator.selector as string);
         }
+    }
+
+    private findRemoteElement(): ElementFinderRemote {
+        const locators: Locator[] = this.getLocatorsChain();
+        const remoteApplication: RemoteApplication = AutomationEnvironment.getWorkingRemoteApplication();
+        return new ElementFinderRemote(remoteApplication, locators);
     }
 }
 
