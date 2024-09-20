@@ -4,6 +4,7 @@ import { ApplicationAPI } from './application.api';
 import { ActionAPI } from './action.api';
 import { QueryAPI } from './query.api';
 import { WindowAPI } from './window.api';
+import { KeyboardAPI } from './keyboard.api';
 
 const wdioRouter: Router = Router();
 
@@ -25,12 +26,12 @@ wdioRouter.post('/applications/:id/window/size', WindowAPI.setSize);
 wdioRouter.post('/applications/:id/window/fullscreen', WindowAPI.setFullscreen);
 
 // Keyboard
-// wdioRouter.post('/applications/:id/keyboard/escape', KeyboardAPI.pressEscape);
-// wdioRouter.post('/applications/:id/keyboard/tab', KeyboardAPI.pressTab);
-// wdioRouter.post('/applications/:id/keyboard/backspace', KeyboardAPI.pressBackspace);
-// wdioRouter.post('/applications/:id/keyboard/enter', KeyboardAPI.pressEnter);
-// wdioRouter.post('/applications/:id/keyboard/delete', KeyboardAPI.pressDelete);
-// wdioRouter.post('/applications/:id/keyboard/text', KeyboardAPI.writeText);
+wdioRouter.post('/applications/:id/keyboard/escape', KeyboardAPI.pressEscape);
+wdioRouter.post('/applications/:id/keyboard/tab', KeyboardAPI.pressTab);
+wdioRouter.post('/applications/:id/keyboard/backspace', KeyboardAPI.pressBackspace);
+wdioRouter.post('/applications/:id/keyboard/enter', KeyboardAPI.pressEnter);
+wdioRouter.post('/applications/:id/keyboard/delete', KeyboardAPI.pressDelete);
+wdioRouter.post('/applications/:id/keyboard/text', KeyboardAPI.writeText);
 
 // Queries
 // wdioRouter.get('/applications/:id/element/present', QueryAPI.isPresent);

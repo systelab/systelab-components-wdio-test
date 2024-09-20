@@ -7,7 +7,7 @@ import { JSONSchemaValidator } from './schema/json-schema-validator';
 import { WriteTextRequest } from './request/write-text.request';
 
 
-export class KeyboardAPIAPI {
+export class KeyboardAPI {
     
     public static async pressEscape(req: Request, res: Response): Promise<any> {
         try {
