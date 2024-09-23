@@ -3,9 +3,10 @@ import * as tmp from "tmp";
 import fs from "fs";
 
 import { Locator, LocatorType } from "./locator";
-import { AutomationEnvironment, BrowserType, RemoteApplication } from "./automation-environment";
+import { AutomationEnvironment, BrowserType } from "./automation-environment";
 import { Constants } from "../constants";
 import { ElementFinderRemote } from "../remote/client/element-finder-remote";
+import { RemoteApplication } from "./application-manager-remote";
 
 
 export class ElementFinder {

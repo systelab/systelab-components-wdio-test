@@ -34,22 +34,22 @@ wdioRouter.post('/applications/:id/keyboard/delete', KeyboardAPI.pressDelete);
 wdioRouter.post('/applications/:id/keyboard/text', KeyboardAPI.writeText);
 
 // Queries
-wdioRouter.get('/applications/:id/element/present', QueryAPI.isPresent);
-wdioRouter.get('/applications/:id/element/displayed', QueryAPI.isDisplayed);
-wdioRouter.get('/applications/:id/element/clickable', QueryAPI.isClickable);
-wdioRouter.get('/applications/:id/element/enabled', QueryAPI.isEnabled);
-wdioRouter.get('/applications/:id/element/selected', QueryAPI.isSelected);
-wdioRouter.get('/applications/:id/element/focused', QueryAPI.isFocused);
-wdioRouter.get('/applications/:id/element/text', QueryAPI.getText);
-wdioRouter.get('/applications/:id/element/value', QueryAPI.getValue);
-wdioRouter.get('/applications/:id/element/html', QueryAPI.getHTML);
-wdioRouter.get('/applications/:id/element/attribute', QueryAPI.getAttribute);
-wdioRouter.get('/applications/:id/element/css-property', QueryAPI.getCSSProperty);
-wdioRouter.get('/applications/:id/element/property', QueryAPI.getProperty);
-wdioRouter.get('/applications/:id/element/bounding-rect', QueryAPI.getBoundingRect);
-wdioRouter.get('/applications/:id/element/position', QueryAPI.getPosition);
-wdioRouter.get('/applications/:id/element/size', QueryAPI.getSize);
-wdioRouter.get('/applications/:id/element/count', QueryAPI.count);
+wdioRouter.post('/applications/:id/element/present', QueryAPI.isPresent);
+wdioRouter.post('/applications/:id/element/displayed', QueryAPI.isDisplayed);
+wdioRouter.post('/applications/:id/element/clickable', QueryAPI.isClickable);
+wdioRouter.post('/applications/:id/element/enabled', QueryAPI.isEnabled);
+wdioRouter.post('/applications/:id/element/selected', QueryAPI.isSelected);
+wdioRouter.post('/applications/:id/element/focused', QueryAPI.isFocused);
+wdioRouter.post('/applications/:id/element/text', QueryAPI.getText);
+wdioRouter.post('/applications/:id/element/value', QueryAPI.getValue);
+wdioRouter.post('/applications/:id/element/html', QueryAPI.getHTML);
+wdioRouter.post('/applications/:id/element/attribute', QueryAPI.getAttribute);
+wdioRouter.post('/applications/:id/element/css-property', QueryAPI.getCSSProperty);
+wdioRouter.post('/applications/:id/element/property', QueryAPI.getProperty);
+wdioRouter.post('/applications/:id/element/bounding-rect', QueryAPI.getBoundingRect);
+wdioRouter.post('/applications/:id/element/position', QueryAPI.getPosition);
+wdioRouter.post('/applications/:id/element/size', QueryAPI.getSize);
+wdioRouter.post('/applications/:id/element/count', QueryAPI.count);
 
 
 // Actions

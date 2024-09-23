@@ -12,7 +12,9 @@ export class ApplicationAPI {
    
     public static async start(req: Request, res: Response): Promise<any> {
         try {
+            console.log("IN Create Application")
             const requestBody: ApplicationStartRequest = JSONSchemaValidator.validateApplicationStartRequest(req.body);
+            console.log(`request body ${requestBody}`)
             const application: Application = await ApplicationManager.start(requestBody.browserType, requestBody.options);
             return res.status(HttpStatus.CREATED).json({ id: application.id }).send();
         } catch (err) {

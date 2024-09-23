@@ -43,8 +43,9 @@ export class ElementFinderRemote {
     }
 
     public async getText(): Promise<string> {
-        const response = await this.executeEndpoint('GET', 'element/text', { locators: this.locators });
-        return response.text;
+        const response = await this.executeEndpoint('POST', 'element/text', { locators: this.locators });
+        const json = await response.json()
+        return json.text;
     }
 
     public async getValue(): Promise<string> {
@@ -116,7 +117,7 @@ export class ElementFinderRemote {
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-        // TODO
+        return
     }
 
     public async waitToBeClickable(timeout: number = 500): Promise<void> {
@@ -151,6 +152,7 @@ export class ElementFinderRemote {
 
     // Auxiliary methods
     private async executeEndpoint(method: string, route: string, body: object): Promise<any> {
+
         const hostname = this.remoteApplication.host.name;
         const port = this.remoteApplication.host.port;
         const apiPrefix = this.remoteApplication.host.apiPrefix;
@@ -158,17 +160,25 @@ export class ElementFinderRemote {
         const baseURL = `http://${hostname}:${port}/${apiPrefix}/applications/${applicationId}`;
         const endpointURL = `${baseURL}/${route}`;
 
-        const response: Response = await fetch(endpointURL, {
-            method,
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(body),
-        });
+        try {
+            const response: Response = await fetch(endpointURL, {
+                method,
+                headers: {'content-type': 'application/json'},
+                body: JSON.stringify(body),
+            });
 
-        if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-            const errorMessage: string = (response.body as any).error as string;
-            throw new Error('Error: ' + errorMessage);
+            if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+                const errorMessage: string = (response.body as any).error as string;
+                throw new Error('Error: ' + errorMessage);
+            }
+
+            return response;
+        }catch (err){
+            // Log error message and any additional details
+            console.error('Fetch error:', err);
+
+            // Optionally re-throw the error if needed for further error handling
+            throw err;
         }
-
-        return response.body;
     }
 }

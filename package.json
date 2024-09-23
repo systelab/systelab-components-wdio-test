@@ -19,7 +19,8 @@
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build",
-    "start-remote-test-server": "npx ts-node --project tsconfig.json test/remote/server.ts"
+    "start-remote-test-server": "npx ts-node --project tsconfig.json test/remote/server.ts",
+    "test-remote-server": "npx ts-node --project tsconfig.json -r tsconfig-paths/register ./node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=remote-application-jasmine.json"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,8 @@
     "express": "4.21.0",
     "pixelmatch": "5.3.0",
     "pngjs": "6.0.0",
-    "tslib": "2.3.1"
+    "tslib": "2.3.1",
+    "webdriverio": "7.36.0"
   },
   "devDependencies": {
     "@types/core-js": "2.5.5",
@@ -44,12 +46,13 @@
     "@wdio/allure-reporter": "7.16.10",
     "@wdio/cli": "7.16.10",
     "@wdio/jasmine-framework": "7.16.6",
-    "@wdio/local-runner": "7.16.10",
     "@wdio/spec-reporter": "7.16.9",
     "@wdio/types": "7.16.3",
     "colors": "1.4.0",
+    "jasmine-spec-reporter": "7.0.0",
     "tmp": "0.2.1",
     "ts-node": "10.4.0",
+    "tsconfig-paths": "4.2.0",
     "typescript": "4.5.2",
     "wdio-chromedriver-service": "7.2.2"
   }
