@@ -44,7 +44,7 @@ export class ElementFinderRemote {
 
     public async getText(): Promise<string> {
         const response = await this.executeEndpoint('POST', 'element/text', { locators: this.locators });
-        const json = await response.json()
+        const body = await response.json();
         return json.text;
     }
 
@@ -64,7 +64,7 @@ export class ElementFinderRemote {
     }
 
     public async getCSSProperty(name: string): Promise<string> {
-        const response = await this.executeEndpoint('GET', 'element/css-property', { locators: this.locators, name });
+        const response = await this.executeEndpoint('POST', 'element/css-property', { locators: this.locators, name });
         return response.property;
     }
 
@@ -113,7 +113,8 @@ export class ElementFinderRemote {
 
     // Condition waits
     public async waitToBePresent(timeout: number = 500): Promise<void> {
-        // TODO
+        const response = await this.executeEndpoint('GET', 'element/css-property', { locators: this.locators, name });
+        return response.property;
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {

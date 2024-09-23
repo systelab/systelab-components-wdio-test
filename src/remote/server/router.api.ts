@@ -5,6 +5,8 @@ import { ActionAPI } from './action.api';
 import { QueryAPI } from './query.api';
 import { WindowAPI } from './window.api';
 import { KeyboardAPI } from './keyboard.api';
+import { ConditionWaitAPI } from './condition-wait.api';
+import { ScreenshotAPI } from './screenshot.api';
 
 const wdioRouter: Router = Router();
 
@@ -61,14 +63,14 @@ wdioRouter.post('/applications/:id/element/tap', ActionAPI.tap);
 
 // Condition waits
 // wdioRouter.post('/applications/:id/wait', ConditionWaitAPI.untilCondition);
-// wdioRouter.post('/applications/:id/element/wait-present', ConditionWaitAPI.untilElementPresent);
-// wdioRouter.post('/applications/:id/element/wait-displayed', ConditionWaitAPI.untilElementDisplayed);
-// wdioRouter.post('/applications/:id/element/wait-clickable', ConditionWaitAPI.untilElementClickable);
-// wdioRouter.post('/applications/:id/element/wait-enabled', ConditionWaitAPI.untilElementEnabled);
+wdioRouter.post('/applications/:id/element/wait-present', ConditionWaitAPI.untilElementPresent);
+wdioRouter.post('/applications/:id/element/wait-displayed', ConditionWaitAPI.untilElementDisplayed);
+wdioRouter.post('/applications/:id/element/wait-clickable', ConditionWaitAPI.untilElementClickable);
+wdioRouter.post('/applications/:id/element/wait-enabled', ConditionWaitAPI.untilElementEnabled);
 
 // Screenshots
-// wdioRouter.post('/applications/:id/screenshot', ScreenshotAPI.takeAll);
-// wdioRouter.post('/applications/:id/element/screenshot', ScreenshotAPI.takeElement);
+wdioRouter.post('/applications/:id/screenshot', ScreenshotAPI.takeAll);
+wdioRouter.post('/applications/:id/element/screenshot', ScreenshotAPI.takeElement);
 
 
 export default wdioRouter;
