@@ -117,7 +117,7 @@ export class ElementFinderRemote {
     }
 
     public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-        return
+        // TODO
     }
 
     public async waitToBeClickable(timeout: number = 500): Promise<void> {
@@ -159,26 +159,17 @@ export class ElementFinderRemote {
         const applicationId = this.remoteApplication.remoteId;
         const baseURL = `http://${hostname}:${port}/${apiPrefix}/applications/${applicationId}`;
         const endpointURL = `${baseURL}/${route}`;
+        const response: Response = await fetch(endpointURL, {
+            method,
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(body),
+        });
 
-        try {
-            const response: Response = await fetch(endpointURL, {
-                method,
-                headers: {'content-type': 'application/json'},
-                body: JSON.stringify(body),
-            });
-
-            if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-                const errorMessage: string = (response.body as any).error as string;
-                throw new Error('Error: ' + errorMessage);
-            }
-
-            return response;
-        }catch (err){
-            // Log error message and any additional details
-            console.error('Fetch error:', err);
-
-            // Optionally re-throw the error if needed for further error handling
-            throw err;
+        if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            const errorMessage: string = (response.body as any).error as string;
+            throw new Error('Error: ' + errorMessage);
         }
+
+        return response;
     }
 }

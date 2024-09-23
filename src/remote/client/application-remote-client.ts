@@ -12,7 +12,6 @@ export class ApplicationRemoteClient {
   }
 
   public static async stop(application: RemoteApplication): Promise<void> {
-    const host = {hostname: application.host, port: application.host.port, apiPrefix: application.host.apiPrefix};
     await this.executeEndpoint(application.host, `${application.remoteId}/stop`);
   }
 
