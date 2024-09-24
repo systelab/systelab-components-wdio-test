@@ -1,5 +1,6 @@
 import {AutomationEnvironment, RemoteApplication} from "../../wdio";
 import {HttpStatus} from "../server/http-status";
+import fs from "fs";
 
 export class BrowserRemote {
 
@@ -56,7 +57,10 @@ export class BrowserRemote {
   }
 
   public static async saveScreenshot(filepath: string): Promise<void> {
-    // TODO
+    const screenshot = await this.takeScreenshot();
+    const base64Data = screenshot.replace(/^data:image\/png;base64,/, '');
+    const buffer = Buffer.from(base64Data, 'base64');
+    fs.writeFileSync(filepath, buffer);
   }
 
   // Capabilities and Status

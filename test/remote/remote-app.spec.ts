@@ -33,6 +33,8 @@ describe('Remote application test', () => {
   it('Open systelab components page', async () => {
     await Browser.navigateToURL('https://systelab.github.io/components');
     await ComponentsPage.get().getFormShowcaseSection().waitToBeDisplayed(2000);
+    await Browser.saveScreenshot('test/systelab-page.png');
+    await ComponentsPage.get().getFormShowcaseSection().getInputForm().saveScreenshot('test/input-form.png');
 
     expect(await ComponentsPage.get().getFormShowcaseSection().isDisplayed()).toBeTruthy();
     expect(await ComponentsPage.get().getFormShowcaseSection().getInputForm().getDisabledInput().isDisabled()).toBeTruthy();
