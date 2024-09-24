@@ -19,68 +19,79 @@ export class BrowserRemote {
   }
 
   public static async pressBackspace(): Promise<void> {
-    // TODO
+    await this.executeEndpoint('POST', 'keyboard/backspace');
   }
 
   public static async pressEnter(): Promise<void> {
-    // TODO
+    await this.executeEndpoint('POST', 'keyboard/enter');
   }
 
   public static async pressDelete(): Promise<void> {
-    // TODO
+    await this.executeEndpoint('POST', 'keyboard/delete');
   }
 
   public static async writeText(stringToWrite: string): Promise<void> {
-    // TODO
+    await this.executeEndpoint('POST', 'keyboard/text', {stringToWrite});
   }
 
 
   // Flow control
   public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number): Promise<void> {
-    // TODO
-  }
+    const startTime = Date.now();
 
+    while (Date.now() - startTime < timeout) {
+      const satisfied: boolean = await condition();
+      if (satisfied) {
+        return;
+      }
+    }
+    throw new Error('Timeout: condition not satisfied');
+  }
 
   // Screenshots
   public static async takeScreenshot(): Promise<string> {
-    // TODO
-    return '';
+    const response = await this.executeEndpoint('POST', 'screenshot');
+    const body = await response.json();
+    return body.screenshot;
   }
 
   public static async saveScreenshot(filepath: string): Promise<void> {
     // TODO
   }
 
-
   // Capabilities and Status
   public static async getName(): Promise<string> {
-    // TODO
-    return '';
+    const response = await this.executeEndpoint('GET', 'name');
+    const body = await response.json();
+    return body.name;
   }
 
   public static async getVersion(): Promise<string> {
-    // TODO
-    return '';
+    const response = await this.executeEndpoint('GET', 'version');
+    const body = await response.json();
+    return body.version;
   }
 
   public static async getOperatingSystem(): Promise<string> {
-    // TODO
-    return '';
+    const response = await this.executeEndpoint('GET', 'os');
+    const body = await response.json();
+    return body.os;
   }
 
 
   // Window
   public static async getWindowSize(): Promise<{ width: number, height: number }> {
-    // TODO
-    return {width: 0, height: 0};
+    const response = await this.executeEndpoint('GET', 'os');
+    const body = await response.json();
+    return body;
   }
 
   public static async setWindowSize(width: number, height: number): Promise<void> {
-    // TODO
+    await this.executeEndpoint('POST', 'window/size', {width, height});
   }
 
   public static async setFullscreen(): Promise<void> {
-    // TODO
+    await this.executeEndpoint('POST', 'window/fullscreen');
   }
 
 
@@ -95,18 +106,23 @@ export class BrowserRemote {
     const baseURL = `http://${hostname}:${port}/${apiPrefix}/applications/${applicationId}`;
     const endpointURL = `${baseURL}/${route}`;
 
-    const response: Response = await fetch(endpointURL, {
-      method,
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-
+    let response: Response;
+    if (method === 'POST') {
+      response = await fetch(endpointURL, {
+        method,
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(body),
+      });
+    } else {
+      response = await fetch(endpointURL, {
+        method,
+        headers: {'content-type': 'application/json'},
+      });
+    }
     if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
       const errorMessage: string = (response.body as any).error as string;
       throw new Error('Error: ' + errorMessage);
     }
-
     return response;
   }
-
 }

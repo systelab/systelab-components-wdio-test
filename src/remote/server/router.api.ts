@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import { TauriDriverAPI } from './tauri-driver.api';
-import { ApplicationAPI } from './application.api';
-import { ActionAPI } from './action.api';
-import { QueryAPI } from './query.api';
-import { WindowAPI } from './window.api';
-import { KeyboardAPI } from './keyboard.api';
-import { ConditionWaitAPI } from './condition-wait.api';
-import { ScreenshotAPI } from './screenshot.api';
+import {Router} from 'express';
+import {TauriDriverAPI} from './tauri-driver.api';
+import {ApplicationAPI} from './application.api';
+import {ActionAPI} from './action.api';
+import {QueryAPI} from './query.api';
+import {WindowAPI} from './window.api';
+import {KeyboardAPI} from './keyboard.api';
+import {ConditionWaitAPI} from './condition-wait.api';
+import {ScreenshotAPI} from './screenshot.api';
 
 const wdioRouter: Router = Router();
 
@@ -36,37 +36,36 @@ wdioRouter.post('/applications/:id/keyboard/delete', KeyboardAPI.pressDelete);
 wdioRouter.post('/applications/:id/keyboard/text', KeyboardAPI.writeText);
 
 // Queries
-wdioRouter.post('/applications/:id/element/present', QueryAPI.isPresent);
-wdioRouter.post('/applications/:id/element/displayed', QueryAPI.isDisplayed);
-wdioRouter.post('/applications/:id/element/clickable', QueryAPI.isClickable);
-wdioRouter.post('/applications/:id/element/enabled', QueryAPI.isEnabled);
-wdioRouter.post('/applications/:id/element/selected', QueryAPI.isSelected);
-wdioRouter.post('/applications/:id/element/focused', QueryAPI.isFocused);
-wdioRouter.post('/applications/:id/element/text', QueryAPI.getText);
-wdioRouter.post('/applications/:id/element/value', QueryAPI.getValue);
-wdioRouter.post('/applications/:id/element/html', QueryAPI.getHTML);
-wdioRouter.post('/applications/:id/element/attribute', QueryAPI.getAttribute);
-wdioRouter.post('/applications/:id/element/css-property', QueryAPI.getCSSProperty);
-wdioRouter.post('/applications/:id/element/property', QueryAPI.getProperty);
-wdioRouter.post('/applications/:id/element/bounding-rect', QueryAPI.getBoundingRect);
-wdioRouter.post('/applications/:id/element/position', QueryAPI.getPosition);
-wdioRouter.post('/applications/:id/element/size', QueryAPI.getSize);
-wdioRouter.post('/applications/:id/element/count', QueryAPI.count);
+wdioRouter.post('/applications/:id/element/query/present', QueryAPI.isPresent);
+wdioRouter.post('/applications/:id/element/query/displayed', QueryAPI.isDisplayed);
+wdioRouter.post('/applications/:id/element/query/clickable', QueryAPI.isClickable);
+wdioRouter.post('/applications/:id/element/query/enabled', QueryAPI.isEnabled);
+wdioRouter.post('/applications/:id/element/query/selected', QueryAPI.isSelected);
+wdioRouter.post('/applications/:id/element/query/focused', QueryAPI.isFocused);
+wdioRouter.post('/applications/:id/element/query/text', QueryAPI.getText);
+wdioRouter.post('/applications/:id/element/query/value', QueryAPI.getValue);
+wdioRouter.post('/applications/:id/element/query/html', QueryAPI.getHTML);
+wdioRouter.post('/applications/:id/element/query/attribute', QueryAPI.getAttribute);
+wdioRouter.post('/applications/:id/element/query/css-property', QueryAPI.getCSSProperty);
+wdioRouter.post('/applications/:id/element/query/property', QueryAPI.getProperty);
+wdioRouter.post('/applications/:id/element/query/bounding-rect', QueryAPI.getBoundingRect);
+wdioRouter.post('/applications/:id/element/query/position', QueryAPI.getPosition);
+wdioRouter.post('/applications/:id/element/query/size', QueryAPI.getSize);
+wdioRouter.post('/applications/:id/element/query/count', QueryAPI.count);
 
 
 // Actions
-wdioRouter.post('/applications/:id/element/click', ActionAPI.click);
-wdioRouter.post('/applications/:id/element/move-to', ActionAPI.moveTo);
-wdioRouter.post('/applications/:id/element/clear', ActionAPI.clear);
-wdioRouter.post('/applications/:id/element/write', ActionAPI.write);
-wdioRouter.post('/applications/:id/element/tap', ActionAPI.tap);
+wdioRouter.post('/applications/:id/element/action/click', ActionAPI.click);
+wdioRouter.post('/applications/:id/element/action/move-to', ActionAPI.moveTo);
+wdioRouter.post('/applications/:id/element/action/clear', ActionAPI.clear);
+wdioRouter.post('/applications/:id/element/action/write', ActionAPI.write);
+wdioRouter.post('/applications/:id/element/action/tap', ActionAPI.tap);
 
 // Condition waits
-// wdioRouter.post('/applications/:id/wait', ConditionWaitAPI.untilCondition);
-wdioRouter.post('/applications/:id/element/wait-present', ConditionWaitAPI.untilElementPresent);
-wdioRouter.post('/applications/:id/element/wait-displayed', ConditionWaitAPI.untilElementDisplayed);
-wdioRouter.post('/applications/:id/element/wait-clickable', ConditionWaitAPI.untilElementClickable);
-wdioRouter.post('/applications/:id/element/wait-enabled', ConditionWaitAPI.untilElementEnabled);
+wdioRouter.post('/applications/:id/element/wait/present', ConditionWaitAPI.untilElementPresent);
+wdioRouter.post('/applications/:id/element/wait/displayed', ConditionWaitAPI.untilElementDisplayed);
+wdioRouter.post('/applications/:id/element/wait/clickable', ConditionWaitAPI.untilElementClickable);
+wdioRouter.post('/applications/:id/element/wait/enabled', ConditionWaitAPI.untilElementEnabled);
 
 // Screenshots
 wdioRouter.post('/applications/:id/screenshot', ScreenshotAPI.takeAll);

@@ -1,16 +1,5 @@
-import {
-  AutomationEnvironment,
-  Browser,
-  BrowserType,
-  ElementFinder,
-  LocatorType,
-  RemoteApplicationManager
-} from '../../src/wdio';
-import {RemoteApplication} from "../../lib";
-import { spawn } from 'child_process';
-import path from 'path';
-import * as os from "os";
-import * as Path from "path";
+import {AutomationEnvironment, Browser, BrowserType, RemoteApplication, RemoteApplicationManager} from '../../src';
+import {ComponentsPage} from '../pages/components.po';
 
 describe('Remote application test', () => {
   // Manually start the remote-application-server ( npm run start-remote-test-server) in a separate terminal
@@ -28,7 +17,8 @@ describe('Remote application test', () => {
           "goog:chromeOptions": {
             "args": [
               "--no-sandbox",
-              "--disable-search-engine-choice-screen"
+              "--disable-search-engine-choice-screen",
+              "--start-fullscreen"
             ]
           }
         }
@@ -40,16 +30,34 @@ describe('Remote application test', () => {
     await RemoteApplicationManager.stop(application.id);
   })
 
-  it('Open werfen url', async () => {
-    const titleElement: ElementFinder = new ElementFinder({
-        type: LocatorType.ElementSelector,
-        selector: 'h1.info-container__title'
-      },
-      new ElementFinder({type: LocatorType.ElementSelector, selector: '.carousel-inner'},
-        new ElementFinder({type: LocatorType.ElementSelector, selector: '.row-main-info'})));
-    await Browser.navigateToURL('https://werfen.com');
-    // await titleElement.waitToBeDisplayed(20000);
+  it('Open systelab components page', async () => {
+    await Browser.navigateToURL('https://systelab.github.io/components');
+    await ComponentsPage.get().getFormShowcaseSection().waitToBeDisplayed(2000);
 
-    expect(await titleElement.getText()).toEqual('Powering Patient Care');
+    expect(await ComponentsPage.get().getFormShowcaseSection().isDisplayed()).toBeTruthy();
+    expect(await ComponentsPage.get().getFormShowcaseSection().getInputForm().getDisabledInput().isDisabled()).toBeTruthy();
   });
+
+  it('Fill some input boxes', async () => {
+    await ComponentsPage.get().getFormShowcaseSection().getInputForm().getFullWidth().setText("Systelab Test");
+    await ComponentsPage.get().getFormShowcaseSection().getInputForm().getNumberInput().setText("1234");
+
+    expect(await ComponentsPage.get().getFormShowcaseSection().getInputForm().getFullWidth().getText()).toEqual("Systelab Test");
+    expect(await ComponentsPage.get().getFormShowcaseSection().getInputForm().getNumberInput().getText()).toEqual("1234");
+  });
+
+  it('Click on modals', async () => {
+    await ComponentsPage.get().getNavigationBar().getModals().click();
+    await ComponentsPage.get().getModalsShowcaseSection().getToast().waitToBeDisplayed(2000);
+
+    expect(await ComponentsPage.get().getModalsShowcaseSection().getToast().isDisplayed()).toBeTruthy();
+  });
+
+  it('Click on Error Toast', async () => {
+    await ComponentsPage.get().getModalsShowcaseSection().getToast().getError().click();
+    await ComponentsPage.get().getToastPopup().waitToBeDisplayed(1000);
+
+    expect(await ComponentsPage.get().getToastPopup().isDisplayed()).toBeTruthy();
+  });
+
 });
