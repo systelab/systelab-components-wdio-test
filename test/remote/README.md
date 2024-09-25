@@ -29,14 +29,64 @@ Send a request to **POST localhost:3333/wdio/application/start** endpoint with t
 ```
 
 ## Navigate to URL
-Send a request to **POST localhost:3333/wdio/
+Send a request to POST localhost:3333/wdio/applications/1/navigate endpoint with the following body:
+
+```json
+{
+  "url": "https://www.werfen.com"
+}
+```
+
+## Query a text
+
+Send a request to POST localhost:3333/wdio/applications/1/navigate endpoint with the following body:
+
+```json
+{
+  "locators":[
+    {
+      "type":"ElementSelector",
+      "selector":".row-main-info"
+    },
+    {
+      "type":"ElementSelector",
+      "selector":".carousel-inner"
+    },
+    {
+      "type":"ElementSelector",
+      "selector":"h1.info-container__title"
+    }
+  ]
+}
+```
 
 
 ## Query a text
 
+Send a request to POST localhost:3333/wdio/applications/1/element/action/click endpoint with the following body:
+
+```json
+{
+  "locators":[
+    {
+      "type":"ElementSelector",
+      "selector":".row-main-info"
+    },
+    {
+      "type":"ElementSelector",
+      "selector":".carousel-inner"
+    },
+    {
+      "type":"ElementSelector",
+      "selector":"h1.info-container__title"
+    }
+  ]
+}
+```
 
 ## Postman collection
 
+You can find more examples by importing the PostmanCollection.json on Postman. The examples can be found on WDIO Remote Server
 
 
 
