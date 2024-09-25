@@ -62,4 +62,17 @@ describe('Remote application test', () => {
     expect(await ComponentsPage.get().getToastPopup().isDisplayed()).toBeTruthy();
   });
 
+  it('Click on Form Input', async () => {
+    await ComponentsPage.get().getNavigationBar().getFormComponents().click();
+    await ComponentsPage.get().getFormShowcaseSection().getInputForm().waitToBeDisplayed(2000);
+
+    expect(await ComponentsPage.get().getFormShowcaseSection().getInputForm().isDisplayed()).toBeTruthy();
+  });
+
+  it('Wait 5 seconds on form input page', async () => {
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    expect(await ComponentsPage.get().getFormShowcaseSection().getInputForm().isDisplayed()).toBeTruthy();
+  });
+
 });
