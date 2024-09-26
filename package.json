@@ -20,7 +20,7 @@
     "build": "tsc",
     "prepublish": "npm run build",
     "start-remote-test-server": "npx ts-node --project tsconfig.json test/remote/server.ts",
-    "test-remote-server": "npx ts-node --project tsconfig.json -r tsconfig-paths/register ./node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=remote-application-jasmine.json"
+    "test-remote-server": "node -r ts-node/register -r tsconfig-paths/register node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=test/remote/remote-application-jasmine.json"
   },
   "repository": {
     "type": "git",

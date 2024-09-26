@@ -1,5 +1,5 @@
 import {SpecReporter, StacktraceOption} from 'jasmine-spec-reporter';
-import {StandaloneTestCaseReporter} from "./src";
+import {StandaloneTestCaseReporter} from "../../src";
 
 
 const specReporter: SpecReporter = new SpecReporter({

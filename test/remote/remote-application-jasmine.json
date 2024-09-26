@@ -4,8 +4,8 @@
     "**/*.spec.ts"
   ],
   "helpers": [
-    "../../node_modules/ts-node/register",
-    "../../remote-application-jasmine.setup.ts"
+    "remote-application-jasmine.setup.ts",
+    "../../node_modules/ts-node/register"
   ],
   "random": false,
   "seed": null,

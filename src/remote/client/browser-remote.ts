@@ -85,7 +85,7 @@ export class BrowserRemote {
 
   // Window
   public static async getWindowSize(): Promise<{ width: number, height: number }> {
-    const response = await this.executeEndpoint('GET', 'os');
+    const response = await this.executeEndpoint('GET', 'size');
     const body = await response.json();
     return body;
   }

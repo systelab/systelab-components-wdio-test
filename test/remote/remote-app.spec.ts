@@ -2,7 +2,7 @@ import {AutomationEnvironment, Browser, BrowserType, RemoteApplication, RemoteAp
 import {ComponentsPage} from '../pages/components.po';
 
 describe('Remote application test', () => {
-  // Manually start the remote-application-server ( npm run start-remote-test-server) in a separate terminal
+
   let application: RemoteApplication;
   beforeAll(async () => {
     application = await RemoteApplicationManager.start(

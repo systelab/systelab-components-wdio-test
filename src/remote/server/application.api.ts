@@ -43,27 +43,27 @@ export class ApplicationAPI {
   public static async getName(req: Request, res: Response): Promise<any> {
     try {
       AutomationEnvironment.setApplication(+req.params.id);
-      return res.status(HttpStatus.OK).json({name: Browser.getName()}).send();
+      return res.status(HttpStatus.OK).json({name: await Browser.getName()}).send();
     } catch (err) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+      return ErrorHandlerAPI.handle(res, err);
     }
   }
 
   public static async getVersion(req: Request, res: Response): Promise<any> {
     try {
       AutomationEnvironment.setApplication(+req.params.id);
-      return res.status(HttpStatus.OK).json({version: Browser.getVersion()}).send();
+      return res.status(HttpStatus.OK).json({version: await Browser.getVersion()}).send();
     } catch (err) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+      return ErrorHandlerAPI.handle(res, err);
     }
   }
 
   public static async getOperatingSystem(req: Request, res: Response): Promise<any> {
     try {
       AutomationEnvironment.setApplication(+req.params.id);
-      return res.status(HttpStatus.OK).json({os: Browser.getOperatingSystem()}).send();
+      return res.status(HttpStatus.OK).json({os: await Browser.getOperatingSystem()}).send();
     } catch (err) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({"error": err}).send();
+      return ErrorHandlerAPI.handle(res, err);
     }
   }
 }

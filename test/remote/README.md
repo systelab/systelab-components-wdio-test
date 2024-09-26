@@ -39,7 +39,7 @@ Send a request to POST localhost:3333/wdio/applications/1/navigate endpoint with
 
 ## Query a text
 
-Send a request to POST localhost:3333/wdio/applications/1/navigate endpoint with the following body:
+Send a request to POST localhost:3333/wdio/applications/1/element/query/text endpoint with the following body:
 
 ```json
 {
@@ -61,7 +61,7 @@ Send a request to POST localhost:3333/wdio/applications/1/navigate endpoint with
 ```
 
 
-## Query a text
+## Click on an element
 
 Send a request to POST localhost:3333/wdio/applications/1/element/action/click endpoint with the following body:
 
@@ -86,7 +86,19 @@ Send a request to POST localhost:3333/wdio/applications/1/element/action/click e
 
 ## Postman collection
 
-You can find more examples by importing the PostmanCollection.json on Postman. The examples can be found on WDIO Remote Server
+You can find more examples by importing the `PostmanCollection.json` on Postman. The examples can be found on WDIO Remote Server
 
+
+## Run test suite collection
+
+To run the test suite, first start the remote server by running on a terminal:
+
+```shell
+npm run start-remote-test-server
+```
+Then, on other terminal, run:
+```shell
+npm run test-remote-server
+```
 
 

@@ -117,7 +117,7 @@ export class ElementFinderRemote {
   }
 
   public async clear(): Promise<void> {
-    await this.executeEndpoint('POST', 'element/action/move-to', {locators: this.locators});
+    await this.executeEndpoint('POST', 'element/action/clear', {locators: this.locators});
   }
 
   public async write(text: string): Promise<void> {
@@ -131,19 +131,19 @@ export class ElementFinderRemote {
 
   // Condition waits
   public async waitToBePresent(timeout: number = 500): Promise<void> {
-    await this.executeEndpoint('GET', 'element/wait/present', {locators: this.locators});
+    await this.executeEndpoint('POST', 'element/wait/present', {locators: this.locators});
   }
 
   public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
-    await this.executeEndpoint('GET', 'element/wait/displayed', {locators: this.locators});
+    await this.executeEndpoint('POST', 'element/wait/displayed', {locators: this.locators});
   }
 
   public async waitToBeClickable(timeout: number = 500): Promise<void> {
-    await this.executeEndpoint('GET', 'element/wait/clickable', {locators: this.locators});
+    await this.executeEndpoint('POST', 'element/wait/clickable', {locators: this.locators});
   }
 
   public async waitToBeEnabled(timeout: number = 500): Promise<void> {
-    await this.executeEndpoint('GET', 'element/wait/enabled', {locators: this.locators});
+    await this.executeEndpoint('POST', 'element/wait/enabled', {locators: this.locators});
   }
 
   public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
