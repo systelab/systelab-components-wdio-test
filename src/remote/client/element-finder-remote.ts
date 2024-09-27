@@ -150,10 +150,13 @@ export class ElementFinderRemote {
     const startTime = Date.now();
 
     while (Date.now() - startTime < timeout) {
-      const satisfied: boolean = await condition();
-      if (satisfied) {
-        return;
-      }
+      try{
+        const satisfied: boolean = await condition();
+        if (satisfied) {
+          return;
+        }
+      } catch (err){
+      }      
     }
     throw new Error('Timeout: condition not satisfied');
   }
@@ -190,23 +193,17 @@ export class ElementFinderRemote {
     const applicationId = this.remoteApplication.remoteId;
     const baseURL = `http://${hostname}:${port}/${apiPrefix}/applications/${applicationId}`;
     const endpointURL = `${baseURL}/${route}`;
-    try {
-      const response: Response = await fetch(endpointURL, {
-        method,
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(body),
-      });
+    const response: Response = await fetch(endpointURL, {
+      method,
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify(body),
+    });
 
-      if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-        const errorMessage: string = (response.body as any).error as string;
-        throw new Error('Error: ' + errorMessage);
-      }
-
-      return response;
-    } catch (err) {
-      console.error('Fetch encountered an error:', err.message);
-      console.error('Fetch stack trace:', err.stack);
-      throw err;
+    if (response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+      const errorMessage: string = (response.body as any).error as string;
+      throw new Error('Error: ' + errorMessage);
     }
+    
+    return response;
   }
 }

@@ -5,20 +5,19 @@ import {HttpStatus} from '../server/http-status';
 export class TauriDriverRemote {
 
   public static async start(remoteHost: RemoteHost): Promise<void> {
-    await this.executeEndpoint('POST', 'start');
+    await this.executeEndpoint(remoteHost,'POST', 'start');
   }
 
   public static async stop(remoteHost: RemoteHost): Promise<void> {
-    await this.executeEndpoint('POST', 'stop');
+    await this.executeEndpoint( remoteHost, 'POST', 'stop');
   }
 
   // Auxiliary methods
-  private static async executeEndpoint(method: string, route: string): Promise<any> {
-    const remoteApplication: RemoteApplication = AutomationEnvironment.getWorkingRemoteApplication();
+  private static async executeEndpoint(remoteHost: RemoteHost,method: string, route: string): Promise<any> {
 
-    const hostname = remoteApplication.host.name;
-    const port = remoteApplication.host.port;
-    const apiPrefix = remoteApplication.host.apiPrefix;
+    const hostname = remoteHost.name;
+    const port = remoteHost.port;
+    const apiPrefix = remoteHost.apiPrefix;
     const baseURL = `http://${hostname}:${port}/${apiPrefix}`;
     const endpointURL = `${baseURL}/${route}`;
 
