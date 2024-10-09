@@ -5,11 +5,11 @@ import { ApplicationRemoteClient } from "../remote/client/application-remote-cli
 
 export interface RemoteApplication {
     id: number;
-    host: RemoteHost;
+    host: RemoteHostData;
     remoteId: number;
 }
 
-export interface RemoteHost {
+export interface RemoteHostData {
     name: string;
     port: number;
     apiPrefix: string;
@@ -19,7 +19,7 @@ export class RemoteApplicationManager {
     private static nextId = 1;
     private static applications: RemoteApplication[] = [];
 
-    public static async start(remoteHost: RemoteHost, browserType: BrowserType, options: RemoteOptions): Promise<RemoteApplication> {
+    public static async start(remoteHost: RemoteHostData, browserType: BrowserType, options: RemoteOptions): Promise<RemoteApplication> {
         const id = this.nextId;
         this.nextId += 1;
         const remoteId: number = await ApplicationRemoteClient.start(remoteHost, browserType, options);

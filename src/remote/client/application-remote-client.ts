@@ -1,11 +1,11 @@
 import {RemoteOptions} from "webdriverio";
-import {BrowserType, RemoteApplication, RemoteHost} from "../../wdio";
+import {BrowserType, RemoteApplication, RemoteHostData} from "../../wdio";
 import {HttpStatus} from "../server/http-status";
 
 
 export class ApplicationRemoteClient {
 
-  public static async start(host: RemoteHost, browserType: BrowserType, options: RemoteOptions): Promise<number> {
+  public static async start(host: RemoteHostData, browserType: BrowserType, options: RemoteOptions): Promise<number> {
     const response = await this.executeEndpoint(host, 'start', {browserType, options});
     const body = await response.json();
     return body.id;
@@ -17,7 +17,7 @@ export class ApplicationRemoteClient {
 
 
   // Auxiliary methods
-  private static async executeEndpoint(remoteHost: RemoteHost, route: string, body: object = {}): Promise<any> {
+  private static async executeEndpoint(remoteHost: RemoteHostData, route: string, body: object = {}): Promise<any> {
     const host = remoteHost.name;
     const port = remoteHost.port;
     const apiPrefix = remoteHost.apiPrefix;
