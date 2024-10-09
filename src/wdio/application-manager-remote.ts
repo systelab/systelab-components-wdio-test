@@ -43,3 +43,4 @@ export class RemoteApplicationManager {
         return this.applications.find(app => app.id === id);
     }
 }
+
