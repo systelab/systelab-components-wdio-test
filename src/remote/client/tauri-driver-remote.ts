@@ -1,19 +1,19 @@
-import {AutomationEnvironment, RemoteApplication, RemoteHost} from '../../wdio';
+import {AutomationEnvironment, RemoteApplication, RemoteHostData} from '../../wdio';
 import {HttpStatus} from '../server/http-status';
 
 
 export class TauriDriverRemote {
 
-  public static async start(remoteHost: RemoteHost): Promise<void> {
+  public static async start(remoteHost: RemoteHostData): Promise<void> {
     await this.executeEndpoint(remoteHost,'POST', 'start');
   }
 
-  public static async stop(remoteHost: RemoteHost): Promise<void> {
+  public static async stop(remoteHost: RemoteHostData): Promise<void> {
     await this.executeEndpoint( remoteHost, 'POST', 'stop');
   }
 
   // Auxiliary methods
-  private static async executeEndpoint(remoteHost: RemoteHost,method: string, route: string): Promise<any> {
+  private static async executeEndpoint(remoteHost: RemoteHostData,method: string, route: string): Promise<any> {
 
     const hostname = remoteHost.name;
     const port = remoteHost.port;
