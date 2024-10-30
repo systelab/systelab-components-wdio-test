@@ -1,1 +1,1 @@
-export * from './grid-attributes.service';
+export * from './grid-attributes.service.js';

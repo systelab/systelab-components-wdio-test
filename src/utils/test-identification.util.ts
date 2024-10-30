@@ -1,5 +1,5 @@
-import { ReportUtility } from "./report.util";
-import { Browser } from "../wdio";
+import { ReportUtility } from "./report.util.js";
+import { Browser } from "../wdio/browser.js";
 
 export class TestIdentification
 {
