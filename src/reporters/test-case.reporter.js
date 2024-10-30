@@ -1,43 +1,41 @@
 import WDIOReporter from '@wdio/reporter';
 import colors from "colors";
-import {browser} from "@wdio/globals";
 import {TraceabilityUtility} from "../utils/traceability.util.js";
 
 
 const jasmineTestCaseReporter =
 {
-    specStarted: (result: any) =>
+    specStarted: (result) =>
     {
-        (browser.options as any).currentJasmineSpec = result;
+        jasmine.getEnv().currentJasmineSpec = result;
     },
 
-    specDone: (result: any) =>
+    specDone: (result) =>
     {
-        (browser.options as any).currentJasmineSpec = null;
+        jasmine.getEnv().currentJasmineSpec = null;
     },
 }
 
-export class TestCaseReporter extends WDIOReporter
+class TestCaseReporter extends WDIOReporter
 {
-    indents: number = 0;
-    startTime: any;
-    failedExpectationsLogged: number = 0;
+    indents = 0;
+    startTime;
+    failedExpectationsLogged = 0;
 
-    constructor(options: any)
+    constructor(options)
     {
         super(options)
         options = Object.assign(options, { stdout: true });
     }
 
-    onRunnerStart(runnerStats: any)
+    onRunnerStart(runnerStats)
     {
-        // @ts-ignore
         jasmine.getEnv().addReporter(jasmineTestCaseReporter);
-        (browser.options as any).testCaseReporter = this
+        jasmine.getEnv().testCaseReporter = this;
         console.log("");
     }
 
-    onSuiteStart(suiteStats: any)
+    onSuiteStart(suiteStats)
     {
         this.indents++;
         console.log(colors.blue(`${this.indent()}${suiteStats.fullTitle}`));
@@ -49,7 +47,7 @@ export class TestCaseReporter extends WDIOReporter
         }
     }
 
-    onTestStart(testStats: any)
+    onTestStart(testStats)
     {
         this.indents++;
         this.startTime = new Date().getTime();
@@ -57,14 +55,14 @@ export class TestCaseReporter extends WDIOReporter
         console.log(`${this.indent()}${testStats.title}`);
     }
 
-    onAssertStart(description: any)
+    onAssertStart(description)
     {
         this.logLatestErrors();
     }
 
-    onAssertEnd(description: any, exception = false)
+    onAssertEnd(description, exception = false)
     {
-        const nFailedExpectations =  (browser.options as any).currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations =  jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
         if (!exception && this.failedExpectationsLogged >= nFailedExpectations)
         {
             console.log(colors.green(`${" ".repeat(6)}✓ ${description}`));
@@ -77,7 +75,7 @@ export class TestCaseReporter extends WDIOReporter
         this.logLatestErrors();
     }
 
-    onTestEnd(testStats: any)
+    onTestEnd(testStats)
     {
         this.logLatestErrors();
 
@@ -89,7 +87,7 @@ export class TestCaseReporter extends WDIOReporter
         this.indents--;
     }
 
-    onSuiteEnd(suiteStats: any)
+    onSuiteEnd(suiteStats)
     {
         this.indents--;
         console.log("");
@@ -102,10 +100,10 @@ export class TestCaseReporter extends WDIOReporter
 
     logLatestErrors()
     {
-        const nFailedExpectations =  (browser.options as any).currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations =  jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
         for (let i = this.failedExpectationsLogged; i < nFailedExpectations; i++)
         {
-            const failedExpectation = (browser.options as any).currentJasmineSpec.failedExpectations[i];
+            const failedExpectation = jasmine.getEnv().currentJasmineSpec.failedExpectations[i];
             console.log(colors.red(`${" ".repeat(8)}- ${failedExpectation.message}`));
 
             let stackMessage = "";
@@ -121,3 +119,5 @@ export class TestCaseReporter extends WDIOReporter
         this.failedExpectationsLogged = nFailedExpectations;
     }
 }
+
+export default TestCaseReporter;

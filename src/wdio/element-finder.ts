@@ -1,9 +1,9 @@
 // @ts-ignore
 import { ElementArray } from "webdriverio";
-import { Locator, LocatorType } from "./locator";
+import { Locator, LocatorType } from "./locator.js";
 import * as tmp from "tmp";
 import fs from "fs";
-import { Constants } from "../constants";
+import { Constants } from "../constants.js";
 
 
 export class ElementFinder {

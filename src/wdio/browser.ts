@@ -1,10 +1,10 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 
-import { LocatorType } from "./locator";
-import { ElementArrayFinder, ElementFinder } from "./element-finder";
-import { DefaultTimeout } from "./default-timeout";
-import { Constants } from "../constants";
+import { LocatorType } from "./locator.js";
+import { ElementArrayFinder, ElementFinder } from "./element-finder.js";
+import { DefaultTimeout } from "./default-timeout.js";
+import { Constants } from "../constants.js";
 
 
 export class Browser {

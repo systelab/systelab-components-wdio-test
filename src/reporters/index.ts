@@ -1,2 +1,2 @@
-export * from './screenshot.reporter';
-export * from './test-case.reporter';
+export * from './screenshot.reporter.js';
+export * from './test-case.reporter.js';

@@ -17,7 +17,8 @@ export class ReportUtility {
    }
 
     public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
-        const testCaseReporter = ((browser.options as any).testCaseReporter);
+        // @ts-ignore
+        const testCaseReporter = ((jasmine.getEnv() as any).testCaseReporter);
         try {
             if (testCaseReporter) {
                 testCaseReporter.onAssertStart(description);
