@@ -4,7 +4,7 @@ import { ElementArrayFinder, ElementFinder } from "../wdio";
 
 export class ComboBox extends Widget {
     public async click(): Promise<void> {
-        return this.elem.byCSS('dropdown-toggle').click();
+        return this.elem.byCSS('.dropdown-toggle').click();
     }
 
     public async isOptionsListOpen(): Promise<boolean> {
@@ -14,7 +14,7 @@ export class ComboBox extends Widget {
     public async openOptionsList(): Promise<void> {
         const isOpen = await this.isOptionsListOpen();
         if (!isOpen) {
-            await this.elem.click();
+            await this.click();
             await this.waitUntil(async () => this.isOptionsListOpen());
         }
     }
@@ -22,7 +22,7 @@ export class ComboBox extends Widget {
     public async closeOptionsList(): Promise<void> {
         const isOpen = await this.isOptionsListOpen();
         if (isOpen) {
-            await this.elem.click();
+            await this.click();
             await this.waitUntil(async () => !(await this.isOptionsListOpen()));
         }
     }
@@ -49,7 +49,7 @@ export class ComboBox extends Widget {
         let rows: ElementArrayFinder = this.allByCSS('.ag-cell-value');
         let numberOfItems: number = await rows.count();
         for (let i = 0; i < numberOfItems; i++) {
-            let optionText: string = await rows.get(i).getText();
+            let optionText: string = await rows.get(i).getHTML(false);
             if (text === optionText) {
                 await this.getOptionSelector(i).click();
                 return;

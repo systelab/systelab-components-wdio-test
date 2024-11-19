@@ -18,11 +18,11 @@ export class TestIdentification
         this.appVersion = appVersion;
     }
 
-    public static captureEnvironment(): void {
-        ReportUtility.addLabel("OS", Browser.getOperatingSystem());
+    public static async captureEnvironment(): Promise<void> {
+        ReportUtility.addLabel("OS", await Browser.getOperatingSystem());
         ReportUtility.addLabel("testExecutionDateTime", new Date().toLocaleString());
-        ReportUtility.addLabel("browser", Browser.getName());
-        ReportUtility.addLabel("browserVersion", Browser.getVersion());
+        ReportUtility.addLabel("browser", await Browser.getName());
+        ReportUtility.addLabel("browserVersion", await Browser.getVersion());
         ReportUtility.addLabel("appVersion", this.appVersion);
     }
 }

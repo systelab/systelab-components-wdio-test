@@ -6,6 +6,7 @@
         "target": "ES2020",
         "module": "ESNext",
         "moduleResolution": "Node",
+        "resolveJsonModule": true,
         "importHelpers": true,
         "removeComments": true,
         "noImplicitAny": true,
@@ -14,6 +15,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "allowJs": true,
+        "allowSyntheticDefaultImports": true,
         "types": [
             "node",
             "@wdio/globals/types",
@@ -23,6 +25,7 @@
         "outDir": "./lib"
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "src/**/*.json"
     ],
 }

@@ -62,7 +62,7 @@ class TestCaseReporter extends WDIOReporter
 
     onAssertEnd(description, exception = false)
     {
-        const nFailedExpectations =  jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations = jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
         if (!exception && this.failedExpectationsLogged >= nFailedExpectations)
         {
             console.log(colors.green(`${" ".repeat(6)}✓ ${description}`));
@@ -100,7 +100,7 @@ class TestCaseReporter extends WDIOReporter
 
     logLatestErrors()
     {
-        const nFailedExpectations =  jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
+        const nFailedExpectations = jasmine.getEnv().currentJasmineSpec.failedExpectations.length;
         for (let i = this.failedExpectationsLogged; i < nFailedExpectations; i++)
         {
             const failedExpectation = jasmine.getEnv().currentJasmineSpec.failedExpectations[i];
