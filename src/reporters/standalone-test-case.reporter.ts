@@ -1,3 +1,5 @@
+import jasmine from "jasmine";
+
 const colors = require("colors");
 import { TraceabilityUtility } from "../utils";
 
@@ -18,6 +20,7 @@ export class StandaloneTestCaseReporter implements CustomReporter {
     }
 
     public jasmineStarted(suiteInfo: JasmineStartedInfo): void {
+        // @ts-ignore
         (jasmine.getEnv() as any).testCaseReporter = this;
         console.log("");
     }
