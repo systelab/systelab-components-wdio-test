@@ -1,8 +1,8 @@
-export * from './application-manager';
-export * from './application-manager-remote';
-export * from './automation-environment';
-export * from './browser';
-export * from './default-timeout';
-export * from './element-finder';
-export * from './locator';
+export * from './application-manager.js';
+export * from './application-manager-remote.js';
+export * from './automation-environment.js';
+export * from './browser.js';
+export * from './default-timeout.js';
+export * from './element-finder.js';
+export * from './locator.js';
 

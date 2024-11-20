@@ -1,6 +1,6 @@
 import fs from "fs";
-import {Locator, RemoteApplication} from "../../wdio";
-import {HttpStatus} from "../server/http-status";
+import {Locator, RemoteApplication} from "../../wdio/index.js";
+import {HttpStatus} from "../server/http-status.js";
 
 
 export class ElementFinderRemote {

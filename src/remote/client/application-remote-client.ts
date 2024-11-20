@@ -1,6 +1,6 @@
 import {RemoteOptions} from "webdriverio";
-import {BrowserType, RemoteApplication, RemoteHostData} from "../../wdio";
-import {HttpStatus} from "../server/http-status";
+import {BrowserType, RemoteApplication, RemoteHostData} from "../../wdio/index.js";
+import {HttpStatus} from "../server/http-status.js";
 
 
 export class ApplicationRemoteClient {

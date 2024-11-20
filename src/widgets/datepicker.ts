@@ -1,5 +1,5 @@
-import { Widget } from './widget';
-import { Browser, ElementFinder } from "../wdio";
+import { Widget } from './widget.js';
+import { Browser, ElementFinder } from "../wdio/index.js";
 
 export class Datepicker extends Widget {
 

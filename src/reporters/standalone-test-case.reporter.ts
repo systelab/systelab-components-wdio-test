@@ -1,7 +1,7 @@
 import jasmine from "jasmine";
 
-const colors = require("colors");
-import { TraceabilityUtility } from "../utils";
+import colors from "colors";
+import { TraceabilityUtility } from "../utils/traceability.util.js";
 
 import CustomReporter = jasmine.CustomReporter;
 import JasmineStartedInfo = jasmine.JasmineStartedInfo;

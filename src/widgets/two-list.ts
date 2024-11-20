@@ -1,9 +1,9 @@
-import { Widget } from './widget';
-import { Label } from './label';
-import { InputField } from './inputfield';
-import { Button } from './button';
-import { ElementArrayFinder } from '../wdio';
-import { Link } from './link';
+import { Widget } from './widget.js';
+import { Label } from './label.js';
+import { InputField } from './inputfield.js';
+import { Button } from './button.js';
+import { ElementArrayFinder } from '../wdio/element-finder.js';
+import { Link } from './link.js';
 
 export class TwoList extends Widget {
 

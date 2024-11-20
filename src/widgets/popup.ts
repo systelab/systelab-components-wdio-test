@@ -1,5 +1,5 @@
-import { Button } from './button';
-import { Widget } from './widget';
+import { Button } from './button.js';
+import { Widget } from './widget.js';
 
 export class Popup extends Widget {
 

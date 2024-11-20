@@ -1,12 +1,12 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 
-import { AutomationEnvironment } from "./automation-environment";
-import { LocatorType } from "./locator";
-import { ElementArrayFinder, ElementFinder } from "./element-finder";
-import { DefaultTimeout } from "./default-timeout";
-import { Constants } from "../constants";
-import { BrowserRemote } from "../remote/client/browser-remote";
+import { AutomationEnvironment } from "./automation-environment.js";
+import { LocatorType } from "./locator.js";
+import { ElementArrayFinder, ElementFinder } from "./element-finder.js";
+import { DefaultTimeout } from "./default-timeout.js";
+import { Constants } from "../constants.js";
+import { BrowserRemote } from "../remote/client/browser-remote.js";
 
 
 export class Browser {

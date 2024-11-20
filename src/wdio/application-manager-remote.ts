@@ -1,6 +1,6 @@
 import { RemoteOptions } from "webdriverio";
-import { BrowserType } from "./automation-environment";
-import { ApplicationRemoteClient } from "../remote/client/application-remote-client";
+import { BrowserType } from "./automation-environment.js";
+import { ApplicationRemoteClient } from "../remote/client/application-remote-client.js";
 
 
 export interface RemoteApplication {

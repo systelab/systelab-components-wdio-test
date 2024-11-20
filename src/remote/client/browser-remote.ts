@@ -1,5 +1,5 @@
-import {AutomationEnvironment, RemoteApplication} from "../../wdio";
-import {HttpStatus} from "../server/http-status";
+import {AutomationEnvironment, RemoteApplication} from "../../wdio/index.js";
+import {HttpStatus} from "../server/http-status.js";
 import fs from "fs";
 
 export class BrowserRemote {

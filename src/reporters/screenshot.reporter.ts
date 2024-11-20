@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {AutomationEnvironment} from "../wdio";
+import {AutomationEnvironment} from "../wdio/index.js";
 
 export class ScreenshotReporter {
     private static basePath = "./reports/screenshots";

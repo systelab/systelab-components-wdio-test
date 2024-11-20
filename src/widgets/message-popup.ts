@@ -1,6 +1,6 @@
-import { Button } from './button';
-import { Widget } from './widget';
-import { Browser } from "../wdio";
+import { Button } from './button.js';
+import { Widget } from './widget.js';
+import { Browser } from "../wdio/browser.js";
 
 
 export class MessagePopup extends Widget {

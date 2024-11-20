@@ -1,5 +1,5 @@
-import { Widget } from './widget';
-import { ElementArrayFinder, ElementFinder } from "../wdio";
+import { Widget } from './widget.js';
+import { ElementArrayFinder, ElementFinder } from "../wdio/index.js";
 
 
 export class ComboBox extends Widget {

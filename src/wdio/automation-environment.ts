@@ -1,5 +1,5 @@
-import {Application, ApplicationManager} from './application-manager';
-import {RemoteApplication} from './application-manager-remote';
+import {Application, ApplicationManager} from './application-manager.js';
+import {RemoteApplication} from './application-manager-remote.js';
 
 
 export enum AutomationMode {

@@ -1,5 +1,5 @@
-import { Widget } from './widget';
-import { Tab } from '../widgets/tab';
+import { Widget } from './widget.js';
+import { Tab } from '../widgets/tab.js';
 
 export class Tabs extends Widget {
 

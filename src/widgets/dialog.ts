@@ -1,7 +1,6 @@
-import { Button } from './button';
-import { MessagePopup } from './message-popup';
-import { Widget } from './widget';
-import { Browser } from "../wdio";
+import {Button} from './button.js';
+import {MessagePopup} from './message-popup.js';
+import {Widget} from './widget.js';
 
 export class Dialog extends Widget {
 

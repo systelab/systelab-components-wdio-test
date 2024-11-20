@@ -1,5 +1,5 @@
-import {AutomationEnvironment, RemoteApplication, RemoteHostData} from '../../wdio';
-import {HttpStatus} from '../server/http-status';
+import {RemoteHostData} from '../../wdio/index.js';
+import {HttpStatus} from '../server/http-status.js';
 
 
 export class TauriDriverRemote {

@@ -1,5 +1,5 @@
-import { Widget } from './widget';
-import {Browser, ElementArrayFinder, ElementFinder} from "../wdio";
+import {Widget} from './widget.js';
+import {Browser, ElementArrayFinder} from "../wdio/index.js";
 
 
 export class ContextMenu extends Widget {
