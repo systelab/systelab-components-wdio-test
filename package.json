@@ -1,6 +1,6 @@
 {
   "name": "systelab-components-wdio-test",
-  "version": "2.0.2",
+  "version": "8.0.0",
   "license": "MIT",
   "type": "module",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
@@ -18,23 +18,29 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "start-remote-test-server": "npx ts-node --project tsconfig.json test/remote/server.ts",
+    "test-remote-server": "node -r ts-node/register -r tsconfig-paths/register node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=test/remote/remote-application-jasmine.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/systelab/systelab-components-wdio-test.git"
   },
   "dependencies": {
+    "ajv": "8.17.1",
     "core-js": "3.19.2",
+    "express": "4.21.0",
     "pixelmatch": "5.3.0",
     "pngjs": "6.0.0",
-    "tslib": "2.6.2"
+    "tslib": "2.7.0",
+    "webdriverio": "8.40.6"
   },
   "devDependencies": {
     "@types/core-js": "2.5.5",
+    "@types/express": "4.17.21",
     "@types/jasmine": "5.1.0",
     "@types/jasminewd2": "2.0.13",
-    "@types/node": "18.0.0",
+    "@types/node": "20.6.0",
     "@types/pixelmatch": "5.2.4",
     "@types/pngjs": "6.0.1",
     "@types/tmp": "0.2.6",
@@ -45,6 +51,7 @@
     "@wdio/spec-reporter": "8.40.6",
     "@wdio/types": "8.40.6",
     "colors": "1.4.0",
+    "jasmine-spec-reporter": "7.0.0",
     "tmp": "0.2.1",
     "ts-node": "10.9.1",
     "typescript": "4.9.5",

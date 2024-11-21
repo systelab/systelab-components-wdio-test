@@ -1,0 +1,26 @@
+{
+  "spec_dir": "test/remote",
+  "spec_files": [
+    "**/*.spec.ts"
+  ],
+  "helpers": [
+    "remote-application-jasmine.setup.ts",
+    "../../node_modules/ts-node/register"
+  ],
+  "random": false,
+  "seed": null,
+  "stopSpecOnExpectationFailure": false,
+  "env": {
+    "failSpecWithNoExpectations": false,
+    "stopOnSpecFailure": false,
+    "stopOnSuiteFailure": false,
+    "random": false,
+    "seed": null,
+    "specFilter": ""
+  },
+  "require": [
+    "ts-node/register",
+    "tsconfig-paths/register"
+  ],
+  "reporters": []
+}

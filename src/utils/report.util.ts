@@ -1,6 +1,5 @@
-import allureReporter from '@wdio/allure-reporter'
+import allureReporter from '@wdio/allure-reporter';
 import {Status} from "allure-js-commons";
-
 
 export class ReportUtility {
 

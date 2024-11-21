@@ -1,6 +1,6 @@
-import { DefaultTimeout, ElementArrayFinder, ElementFinder } from "../wdio";
-import { ContextMenu } from './context-menu';
-import { Widget } from './widget';
+import {DefaultTimeout, ElementArrayFinder, ElementFinder} from "../wdio/index.js";
+import {ContextMenu} from './context-menu.js';
+import {Widget} from './widget.js';
 
 
 export class Grid extends Widget {

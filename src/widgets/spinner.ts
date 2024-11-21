@@ -1,5 +1,5 @@
-import { Widget } from "./widget";
-import { Browser } from '../wdio';
+import { Widget } from "./widget.js";
+import { Browser } from '../wdio/browser.js';
 
 export class Spinner extends Widget {
 

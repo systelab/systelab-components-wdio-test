@@ -1,43 +1,73 @@
 import * as tmp from "tmp";
 import * as fs from "fs";
 
+import { AutomationEnvironment } from "./automation-environment.js";
 import { LocatorType } from "./locator.js";
 import { ElementArrayFinder, ElementFinder } from "./element-finder.js";
 import { DefaultTimeout } from "./default-timeout.js";
 import { Constants } from "../constants.js";
+import { BrowserRemote } from "../remote/client/browser-remote.js";
 
 
 export class Browser {
 
     // Navigation
     public static async navigateToURL(url: string): Promise<void> {
-        await browser.url(url);
+        if (AutomationEnvironment.isLocalMode()) {
+            await AutomationEnvironment.getWorkingBrowser().url(url);
+        } else {
+            await BrowserRemote.navigateToURL(url);
+        }
     }
 
 
     // Keyboard
     public static async pressEsc(): Promise<void> {
-        return browser.keys(['Escape']);
+        if (AutomationEnvironment.isLocalMode()) {
+            return AutomationEnvironment.getWorkingBrowser().keys(['Escape']);
+        } else {
+            return BrowserRemote.pressEsc();
+        }
     }
 
     public static async pressTab(): Promise<void> {
-        return browser.keys(['Tab']);
+        if (AutomationEnvironment.isLocalMode()) {
+            return AutomationEnvironment.getWorkingBrowser().keys(['Tab']);
+        } else {
+            return BrowserRemote.pressTab();
+        }
     }
 
     public static async pressBackspace(): Promise<void> {
-        return browser.keys(['Backspace']);
+        if (AutomationEnvironment.isLocalMode()) {
+            return AutomationEnvironment.getWorkingBrowser().keys(['Backspace']);
+        } else {
+            return BrowserRemote.pressBackspace();
+        }
     }
 
     public static async pressEnter(): Promise<void> {
-        return browser.keys(['Enter']);
+        if (AutomationEnvironment.isLocalMode()) {
+            return AutomationEnvironment.getWorkingBrowser().keys(['Enter']);
+        } else {
+            return BrowserRemote.pressEnter();
+        }
     }
 
     public static async pressDelete(): Promise<void> {
-        return browser.keys(['Delete']);
+        if (AutomationEnvironment.isLocalMode()) {
+            return AutomationEnvironment.getWorkingBrowser().keys(['Delete']);
+        } else {
+            return BrowserRemote.pressDelete();
+        }
     }
     
     public static async writeText(stringToWrite: string): Promise<void> {
-        await browser.keys(stringToWrite.split(''));
+        if (AutomationEnvironment.isLocalMode()) {
+            return AutomationEnvironment.getWorkingBrowser().keys(stringToWrite.split(''));
+        } else {
+            return BrowserRemote.writeText(stringToWrite);
+        }
     }
     
 
@@ -92,52 +122,90 @@ export class Browser {
 
     // Flow control
     public static async sleep(duration: number): Promise<void> {
-        await browser.pause(duration);
+        await AutomationEnvironment.getWorkingBrowser().pause(duration);
     }
 
     public static async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = DefaultTimeout.SLOW_WAIT): Promise<void> {
-        await browser.waitUntil(condition, {timeout});
+        if (AutomationEnvironment.isLocalMode()) {
+            await AutomationEnvironment.getWorkingBrowser().waitUntil(condition, {timeout});
+        } else {
+            await BrowserRemote.waitUntil(condition, timeout);
+        }
     }
 
 
     // Screenshots
     public static async takeScreenshot(): Promise<string> {
-        const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
-        const screenshotBuffer: Buffer = await browser.saveScreenshot(tempFilepath);
-        fs.unlinkSync(tempFilepath);
-        return screenshotBuffer.toString('base64');
+        if (AutomationEnvironment.isLocalMode()) {
+            const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
+            const screenshotBuffer: Buffer = await AutomationEnvironment.getWorkingBrowser().saveScreenshot(tempFilepath);
+            fs.unlinkSync(tempFilepath);
+            return screenshotBuffer.toString('base64');
+        } else {
+            return BrowserRemote.takeScreenshot();
+        }
     }
 
     public static async saveScreenshot(filepath: string): Promise<void> {
-        await browser.saveScreenshot(filepath);
+        if (AutomationEnvironment.isLocalMode()) {
+            await AutomationEnvironment.getWorkingBrowser().saveScreenshot(filepath);
+        } else {
+            await BrowserRemote.saveScreenshot(filepath);
+        }
     }
+
 
     // Capabilities and Status
-    public static getName(): string {
-        const caps = browser.capabilities as any;
-        return caps.browserName;
+    public static async getName(): Promise<string> {
+        if (AutomationEnvironment.isLocalMode()) {
+            const caps = AutomationEnvironment.getWorkingBrowser().capabilities as any;
+            return caps.browserName;
+        } else {
+            return BrowserRemote.getName();
+        }
     }
 
-    public static getVersion(): string {
-        const caps = browser.capabilities as any;
-        return caps.browserVersion;
+    public static async getVersion(): Promise<string> {
+        if (AutomationEnvironment.isLocalMode()) {
+            const caps = AutomationEnvironment.getWorkingBrowser().capabilities as any;
+            return caps.browserVersion;
+        } else {
+            return BrowserRemote.getVersion();
+        }
     }
 
-    public static getOperatingSystem(): string {
-        const caps = browser.capabilities as any;
-        return caps.platformName;
+    public static async getOperatingSystem(): Promise<string> {
+        if (AutomationEnvironment.isLocalMode()) {
+            const caps = AutomationEnvironment.getWorkingBrowser().capabilities as any;
+            return caps.platformName;
+        } else {
+            return BrowserRemote.getOperatingSystem();
+        }
     }
+
 
     // Window
     public static async getWindowSize(): Promise<{ width: number, height: number }> {
-        return await browser.getWindowSize() as { width: number; height: number };
+        if (AutomationEnvironment.isLocalMode()) {
+            return await AutomationEnvironment.getWorkingBrowser().getWindowSize() as { width: number; height: number };
+        } else {
+            return BrowserRemote.getWindowSize();
+        }
     }
 
     public static async setWindowSize(width: number, height: number): Promise<void> {
-        await browser.setWindowSize(width, height);
+        if (AutomationEnvironment.isLocalMode()) {
+            await AutomationEnvironment.getWorkingBrowser().setWindowSize(width, height);
+        } else {
+            await BrowserRemote.setWindowSize(width, height);
+        }
     }
 
     public static async setFullscreen(): Promise<void> {
-        await browser.fullscreenWindow();
+        if (AutomationEnvironment.isLocalMode()) {
+            await AutomationEnvironment.getWorkingBrowser().fullscreenWindow();
+        } else {
+            await BrowserRemote.setFullscreen();
+        }
     }
 }

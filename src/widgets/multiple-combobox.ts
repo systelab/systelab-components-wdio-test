@@ -1,5 +1,5 @@
-import { Widget } from './widget';
-import { ElementArrayFinder } from "../wdio";
+import {Widget} from './widget.js';
+import {ElementArrayFinder} from "../wdio/element-finder.js";
 
 export class MultipleComboBox extends Widget {
 

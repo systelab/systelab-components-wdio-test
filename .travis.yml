@@ -2,7 +2,7 @@ sudo: required
 dist: jammy
 language: node_js
 node_js:
-  - '18'
+  - '20.11.0'
 addons:
   apt:
     update: true
@@ -15,10 +15,12 @@ addons:
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
+  - npm i -g npm@8.19.4
+  - npm --version
 
 install:
   - npm install -g makeshift && makeshift -s @systelab-technologies -r https://registry.npmjs.org
-  - npm install
+  - npm ci
 
 script:
   - npm run build
@@ -27,7 +29,8 @@ deploy:
   skip_cleanup: true
   provider: npm
   email: aserra@werfen.com
-  edge: true
+  edge:
+    branch: v2.0.3-beta.5
   api_key: $NPM_TOKEN
   on:
     tags: true

@@ -1,8 +1,8 @@
 
 export enum LocatorType {
-    ElementSelector,
-    ArraySelector,
-    ArrayItem
+    ElementSelector = 'ElementSelector',
+    ArraySelector = 'ArraySelector',
+    ArrayItem = 'ArrayItem',
 }
 
 export interface Locator {

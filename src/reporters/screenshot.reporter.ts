@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import {AutomationEnvironment} from "../wdio/index.js";
 
 export class ScreenshotReporter {
     private static basePath = "./reports/screenshots";
@@ -12,8 +13,9 @@ export class ScreenshotReporter {
         this.specCount = 0;
     }
 
-    public static async afterTest(test: { description: string, fullName: string }, context: any,
-                                     status: { error: any, result: any, duration: any, passed: any, retries: any }): Promise<void> {
+    public static async afterTest(test: { description: string, fullName: string },
+                                  context: any = null,
+                                  status: { error: any, result: any, duration: any, passed: any, retries: any } | null = null): Promise<void> {
         this.specCount++;
         const suiteName = test.fullName.slice(0, -1 * (test.description.length)).trim();
         try {
@@ -24,7 +26,11 @@ export class ScreenshotReporter {
             const screenshotFilename = `${this.specCount.toString().padStart(2, "0")}-${test.description}`;
             const screenshotFilenameClean = this.getSanitizedFilename(screenshotFilename);
             const screenshotFilepath = `${screenshotFolderPath}/${screenshotFilenameClean}.png`;
-            await browser.saveScreenshot(screenshotFilepath);
+            if (AutomationEnvironment.hasWorkingBrowser()) {
+                await AutomationEnvironment.getWorkingBrowser().saveScreenshot(screenshotFilepath);
+            } else {
+                fs.writeFileSync(screenshotFilepath.replace('.png', '-[no-working-browser].png'), '');
+            }
         } catch(e) {
             console.log(e);
         }
