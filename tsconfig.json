@@ -19,7 +19,8 @@
         "types": [
             "node",
             "@wdio/globals/types",
-            "@wdio/jasmine-framework"
+            "@wdio/jasmine-framework",
+            "jasmine"
         ],
         "declaration": true,
         "outDir": "./lib"
