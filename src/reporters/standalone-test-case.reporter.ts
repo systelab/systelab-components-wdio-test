@@ -1,5 +1,3 @@
-import jasmine from "jasmine";
-
 import colors from "colors";
 import { TraceabilityUtility } from "../utils/traceability.util.js";
 
@@ -8,7 +6,6 @@ import JasmineStartedInfo = jasmine.JasmineStartedInfo;
 import JasmineDoneInfo = jasmine.JasmineDoneInfo;
 import SuiteResult = jasmine.SuiteResult;
 import SpecResult = jasmine.SpecResult;
-
 
 export class StandaloneTestCaseReporter implements CustomReporter {
     private indents = 0;
@@ -20,7 +17,6 @@ export class StandaloneTestCaseReporter implements CustomReporter {
     }
 
     public jasmineStarted(suiteInfo: JasmineStartedInfo): void {
-        // @ts-ignore
         (jasmine.getEnv() as any).testCaseReporter = this;
         console.log("");
     }
