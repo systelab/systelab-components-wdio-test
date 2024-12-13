@@ -1,6 +1,7 @@
 import Ajv from 'ajv';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { BasicElementRequest } from '../request/basic-element.request';
 import { ApplicationStartRequest } from '../request/application-start.request';
@@ -20,6 +21,7 @@ interface LoadedSchema {
 export class JSONSchemaValidator {
     private static ajv = new Ajv();
     private static loadedSchemas: LoadedSchema[] = [];
+    private static __dirname: string = path.dirname(fileURLToPath(import.meta.url));
 
     public static validateApplicationStartRequest(data: unknown): ApplicationStartRequest {
         this.validateData(data, 'application-start-request-schema.json');
@@ -75,7 +77,7 @@ export class JSONSchemaValidator {
             return loadedSchema;
         }
 
-        const schemaPath = path.resolve(__dirname, filename);
+        const schemaPath = path.resolve(this.__dirname, filename);
         const schemaFile: string = fs.readFileSync(schemaPath, 'utf-8');
         const schemaObject: any = JSON.parse(schemaFile);
         const compiledSchema = this.ajv.compile(schemaObject);

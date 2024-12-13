@@ -1,9 +1,9 @@
 import {Readable, Writable} from "node:stream";
 import {ChildProcessByStdio} from "child_process";
 
-const os = require('os');
-const path = require('path');
-const {spawn} = require('child_process');
+import os from "os";
+import path from "path";
+import {spawn} from "child_process";
 
 
 export class TauriDriverUtility {
@@ -12,6 +12,7 @@ export class TauriDriverUtility {
   
     public static start(): void {
       if (!this.tauriDriver) {
+        // @ts-ignore
         this.tauriDriver = spawn(path.resolve(os.homedir(), '.cargo', 'bin', 'tauri-driver'), [], {
           stdio: [null, process.stdout, process.stderr],
           cwd: 'bin/'
@@ -27,4 +28,3 @@ export class TauriDriverUtility {
     }
   
   }
-  
