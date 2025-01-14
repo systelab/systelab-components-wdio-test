@@ -13,7 +13,11 @@ export class ReportUtility {
 
     public static addLabel(label: string, value: string): void {
         allureReporter.addLabel(label, value);
-   }
+    }
+
+    public static addLink(url: string, name: string, type: string): void {
+        allureReporter.addLink(url, name, type);
+    }
 
     public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
         // @ts-ignore
@@ -23,7 +27,7 @@ export class ReportUtility {
                 testCaseReporter.onAssertStart(description);
             }
 
-            allureReporter.startStep(description);
+            allureReporter.startStep("Expectation: " + description);
             await expectationFunction();
             allureReporter.endStep(Status.PASSED);
 

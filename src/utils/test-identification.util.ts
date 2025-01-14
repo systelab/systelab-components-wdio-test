@@ -7,6 +7,7 @@ export class TestIdentification
 
     public static setTmsLink(tmsLink: string): void {
         ReportUtility.addLabel("tms", tmsLink);
+        ReportUtility.addLink("https://www.jamasoftware.com/", tmsLink, "tms");
     }
 
     public static setDescription(description: string): void {
