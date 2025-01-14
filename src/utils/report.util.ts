@@ -27,7 +27,7 @@ export class ReportUtility {
                 testCaseReporter.onAssertStart(description);
             }
 
-            allureReporter.startStep("Expectation: " + description);
+            allureReporter.startStep(description);
             await expectationFunction();
             allureReporter.endStep(Status.PASSED);
 
