@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://www.werfen.com/css-property-element-request-schema.json",
-  "title": "Schema for a request to get element css attribute/property on the application managed by WDIO REST API",
+  "title": "Schema for a request to get element CSS attribute/property on the application managed by WDIO REST API",
   "type": "object",
   "properties": {
     "locators": {
@@ -32,7 +32,7 @@
     },
     "name": {
       "type": "string",
-      "description": "Property name"
+      "description": "CSS property name"
     },
     "pseudoElement": {
       "type": "string",
