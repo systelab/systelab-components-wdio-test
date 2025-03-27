@@ -6,6 +6,7 @@ import {HttpStatus} from './http-status';
 import {ErrorHandlerAPI} from './error-handler.api';
 import {HTMLRequest} from './request/html.request';
 import {PropertyElementRequest} from './request/property-element.request';
+import {CSSPropertyElementRequest} from "./request/css-property-element-request";
 
 
 export class QueryAPI {
@@ -134,9 +135,9 @@ export class QueryAPI {
   public static async getCSSProperty(req: Request, res: Response): Promise<any> {
     try {
       AutomationEnvironment.setApplication(+req.params.id);
-      const requestBody: PropertyElementRequest = JSONSchemaValidator.validatePropertyRequest(req.body);
+      const requestBody: CSSPropertyElementRequest = JSONSchemaValidator.validateCSSPropertyRequest(req.body);
       const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
-      const property: string = await element.getCSSProperty(requestBody.name);
+      const property: string = await element.getCSSProperty(requestBody.name, requestBody.pseudoElement);
       return res.status(HttpStatus.OK).json({property}).send();
     } catch (err) {
       return ErrorHandlerAPI.handle(res, err);

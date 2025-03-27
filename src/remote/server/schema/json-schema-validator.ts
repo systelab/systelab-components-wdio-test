@@ -1,16 +1,18 @@
 import Ajv from 'ajv';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import {fileURLToPath} from 'url';
 
-import { BasicElementRequest } from '../request/basic-element.request';
-import { ApplicationStartRequest } from '../request/application-start.request';
-import { ApplicationNavigateRequest } from '../request/application-navigate.request';
-import { WindowSizeRequest } from '../request/window-size.request';
-import { ApplicationWriteTextRequest } from '../request/application-write-text.request';
-import { HTMLRequest } from '../request/html.request';
-import { PropertyElementRequest } from '../request/property-element.request';
-import { WriteElementRequest } from '../request/write-element.request';
+import {BasicElementRequest} from '../request/basic-element.request';
+import {ApplicationStartRequest} from '../request/application-start.request';
+import {ApplicationNavigateRequest} from '../request/application-navigate.request';
+import {WindowSizeRequest} from '../request/window-size.request';
+import {ApplicationWriteTextRequest} from '../request/application-write-text.request';
+import {HTMLRequest} from '../request/html.request';
+import {PropertyElementRequest} from '../request/property-element.request';
+import {WriteElementRequest} from '../request/write-element.request';
+import {CSSPropertyElementRequest} from "../request/css-property-element-request";
+import {ScrollElementRequest} from "../request/scroll-element.request";
 
 
 interface LoadedSchema {
@@ -53,6 +55,11 @@ export class JSONSchemaValidator {
         return data as HTMLRequest;
     }
 
+    public static validateCSSPropertyRequest(data: unknown): CSSPropertyElementRequest {
+        this.validateData(data, 'css-property-element-request-schema.json');
+        return data as CSSPropertyElementRequest;
+    }
+
     public static validatePropertyRequest(data: unknown): PropertyElementRequest {
         this.validateData(data, 'property-element-request-schema.json');
         return data as PropertyElementRequest;
@@ -61,6 +68,11 @@ export class JSONSchemaValidator {
     public static validateWriteRequest(data: unknown): WriteElementRequest {
         this.validateData(data, 'write-element-request-schema.json');
         return data as WriteElementRequest;
+    }
+
+    public static validateScrollRequest(data: unknown): ScrollElementRequest {
+        this.validateData(data, 'scroll-element-request-schema.json');
+        return data as ScrollElementRequest;
     }
 
     private static validateData(data: unknown, schemaFilename: string): void {
