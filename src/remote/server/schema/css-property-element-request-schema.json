@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://www.werfen.com/css-property-element-request-schema.json",
+  "title": "Schema for a request to get element CSS attribute/property on the application managed by WDIO REST API",
+  "type": "object",
+  "properties": {
+    "locators": {
+      "type": "array",
+      "description": "List of locators of element to be found",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["ElementSelector", "ArraySelector", "ArrayItem"],
+            "description": "Type of selector"
+          },
+          "selector": {
+            "type": "string",
+            "description": "Selector of element to be found. Only for ElementSelector and ArraySelector types."
+          },
+          "index": {
+            "type": "integer",
+            "description": "Index of element to be found. Only for ArrayItem type.",
+            "minimum": 0
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "CSS property name"
+    },
+    "pseudoElement": {
+      "type": "string",
+      "enum": ["::before", "::after"],
+      "description": "Pseudo element to get the property from"
+    }
+  },
+  "required": ["locators","name"],
+  "additionalProperties": false
+}

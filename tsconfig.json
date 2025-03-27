@@ -25,6 +25,10 @@
         "declaration": true,
         "outDir": "./lib"
     },
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifierResolution": "node"
+    },
     "include": [
         "src/**/*",
         "src/**/*.json"

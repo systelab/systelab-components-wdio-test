@@ -8,6 +8,7 @@ import {Constants} from "../constants.js";
 import {ElementFinderRemote} from "../remote/client/element-finder-remote.js";
 import {RemoteApplication} from "./application-manager-remote.js";
 
+export type PseudoElement = "::before" | "::after";
 
 export class ElementFinder {
   constructor(protected locator: Locator, protected parent: ElementFinder | ElementArrayFinder | null = null) {
@@ -168,11 +169,11 @@ export class ElementFinder {
     }
   }
 
-  public async getCSSProperty(name: string): Promise<string> {
+  public async getCSSProperty(name: string, pseudoElement?: PseudoElement): Promise<string> {
     if (AutomationEnvironment.isLocalMode()) {
-      return (await (await this.findElement()).getCSSProperty(name)).value as string;
+      return (await (await this.findElement()).getCSSProperty(name, pseudoElement)).value as string;
     } else {
-      return this.findRemoteElement().getCSSProperty(name);
+      return this.findRemoteElement().getCSSProperty(name, pseudoElement);
     }
   }
 
@@ -331,6 +332,15 @@ export class ElementFinder {
       }, element);
     } else {
       return this.findRemoteElement().tap();
+    }
+  }
+
+  public async scrollToElement(options: ScrollIntoViewOptions = { behavior: 'auto', block: 'center', inline: 'nearest' }): Promise<void> {
+    if (AutomationEnvironment.isLocalMode()) {
+      const element: WebdriverIO.Element = await this.findElement();
+      return element.scrollIntoView(options);
+    } else {
+      return this.findRemoteElement().scrollToElement(options);
     }
   }
 

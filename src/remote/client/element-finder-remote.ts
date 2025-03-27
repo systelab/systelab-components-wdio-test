@@ -1,5 +1,5 @@
 import fs from "fs";
-import {Locator, RemoteApplication} from "../../wdio/index.js";
+import {Locator, PseudoElement, RemoteApplication} from "../../wdio/index.js";
 import {HttpStatus} from "../server/http-status.js";
 
 
@@ -76,8 +76,8 @@ export class ElementFinderRemote {
     return body.attribute;
   }
 
-  public async getCSSProperty(name: string): Promise<string> {
-    const response = await this.executeEndpoint('POST', 'element/query/css-property', {locators: this.locators, name});
+  public async getCSSProperty(name: string, pseudoElement?: PseudoElement): Promise<string> {
+    const response = await this.executeEndpoint('POST', 'element/query/css-property', {locators: this.locators, name, pseudoElement});
     const body = await response.json();
     return body.property;
   }
@@ -126,6 +126,10 @@ export class ElementFinderRemote {
 
   public async tap(): Promise<void> {
     await this.executeEndpoint('POST', 'element/action/tap', {locators: this.locators});
+  }
+
+  public async scrollToElement(options: ScrollIntoViewOptions): Promise<void> {
+    await this.executeEndpoint('POST', 'element/action/scroll', {locators: this.locators, options});
   }
 
 

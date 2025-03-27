@@ -1,6 +1,6 @@
 {
   "name": "systelab-components-wdio-test",
-  "version": "8.0.4",
+  "version": "8.0.5",
   "license": "MIT",
   "type": "module",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build",
-    "start-remote-test-server": "npx ts-node --project tsconfig.json test/remote/server.ts",
+    "start-remote-test-server": "node --loader ts-node/esm test/remote/server.ts",
     "test-remote-server": "node -r ts-node/register -r tsconfig-paths/register node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=test/remote/remote-application-jasmine.json"
   },
   "repository": {
