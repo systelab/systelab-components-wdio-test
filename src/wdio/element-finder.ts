@@ -335,12 +335,12 @@ export class ElementFinder {
     }
   }
 
-  public async scrollToElement(options: ScrollIntoViewOptions = { behavior: 'auto', block: 'center', inline: 'nearest' }): Promise<void> {
+  public async scrollToElement(scrollOptions: ScrollIntoViewOptions = { behavior: 'auto', block: 'center', inline: 'nearest' }): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
-      return element.scrollIntoView(options);
+      return AutomationEnvironment.getWorkingBrowser().execute((el: any, options: ScrollIntoViewOptions) => el.scrollIntoView({ options }), element, scrollOptions);
     } else {
-      return this.findRemoteElement().scrollToElement(options);
+      return this.findRemoteElement().scrollToElement(scrollOptions);
     }
   }
 
