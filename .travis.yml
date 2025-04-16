@@ -15,8 +15,10 @@ addons:
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
+  - npm config fix
   - npm i -g npm@10.8.2 --verbose
   - npm --version
+
 
 install:
   - npm install -g makeshift && makeshift -s @systelab-technologies -r https://registry.npmjs.org --verbose
