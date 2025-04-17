@@ -10,6 +10,9 @@
     "NPM",
     "Systelab"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "private": false,
