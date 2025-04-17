@@ -15,8 +15,6 @@ addons:
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
-  - npm config fix
-  - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
   - npm i -g npm@10.8.2 --verbose
   - npm --version
 
@@ -31,8 +29,6 @@ deploy:
   skip_cleanup: true
   provider: npm
   email: aserra@werfen.com
-  edge:
-    branch: v2.0.3-beta.5
   api_key: $NPM_TOKEN
   on:
     tags: true
