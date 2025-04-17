@@ -25,11 +25,14 @@ install:
 script:
   - npm run build
 
+before_deploy:
+  - echo "//registry.npmjs.org/:_auth = $NPM_TOKEN" > ~/.npmrc
+  - npm config set registry https://registry.npmjs.org/
+
 deploy:
   skip_cleanup: true
   provider: npm
-  edge:
-    branch: v2.0.5.4
+  edge: true
   email: aserra@werfen.com
   api_key: $NPM_TOKEN
   access: public
