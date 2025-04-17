@@ -11,6 +11,9 @@ addons:
     packages:
       - dpkg
   chrome: stable
+env:
+  global:
+    - NPM_CONFIG_LOGLEVEL=verbose
 
 before_install:
   - export CHROME_BIN=chromium-browser
