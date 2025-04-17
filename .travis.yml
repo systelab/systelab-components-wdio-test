@@ -31,5 +31,6 @@ deploy:
   edge: true
   email: aserra@werfen.com
   api_key: $NPM_TOKEN
+  access: public
   on:
     tags: true
