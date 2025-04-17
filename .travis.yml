@@ -18,7 +18,7 @@ env:
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
-  - npm i -g npm@10.8.2 --verbose
+  - npm i -g npm@8.19.4 --verbose
   - npm --version
 
 install:
