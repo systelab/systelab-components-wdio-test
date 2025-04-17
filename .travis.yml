@@ -31,6 +31,7 @@ script:
 before_deploy:
   - echo "//registry.npmjs.org/:_auth = $NPM_TOKEN" > ~/.npmrc
   - npm config set registry https://registry.npmjs.org/
+  - npm view systelab-components-wdio-test
 
 deploy:
   skip_cleanup: true
