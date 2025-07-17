@@ -1,8 +1,8 @@
-import { RemoteOptions } from "webdriverio";
+import type { Capabilities } from "@wdio/types";
 import { BrowserType } from "../../../wdio";
 
 
 export interface ApplicationStartRequest {
     browserType: BrowserType;
-    options: RemoteOptions;
+    options: Capabilities.WebdriverIOConfig;
 }

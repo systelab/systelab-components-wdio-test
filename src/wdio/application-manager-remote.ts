@@ -1,4 +1,4 @@
-import { RemoteOptions } from "webdriverio";
+import type { Capabilities } from "@wdio/types";
 import { BrowserType } from "./automation-environment.js";
 import { ApplicationRemoteClient } from "../remote/client/application-remote-client.js";
 
@@ -19,7 +19,7 @@ export class RemoteApplicationManager {
     private static nextId = 1;
     private static applications: RemoteApplication[] = [];
 
-    public static async start(remoteHost: RemoteHostData, browserType: BrowserType, options: RemoteOptions): Promise<RemoteApplication> {
+    public static async start(remoteHost: RemoteHostData, browserType: BrowserType, options: Capabilities.WebdriverIOConfig): Promise<RemoteApplication> {
         const id = this.nextId;
         this.nextId += 1;
         const remoteId: number = await ApplicationRemoteClient.start(remoteHost, browserType, options);
