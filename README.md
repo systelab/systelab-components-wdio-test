@@ -97,6 +97,18 @@ it(`Should be able to do something`, async () => {
 	});
 ```
 
+### Versioning
+
+This project follows [Semantic Versioning](https://semver.org/).
+
+For a complete list of changes, bug fixes, and breaking changes, see the [CHANGELOG](./CHANGELOG.md).
+
+#### Latest Release
+- **v8.1.0** (2025-09-25):
+    - The `getOptionSelector` method in `src/widgets/combobox.ts` now returns the **first element** instead of the second.
+    - **BREAKING CHANGE**: E2E tests depending on the previous behavior need to be adapted.
+
+
 ### Allure Reporting
 
 In order to document test cases we suggest to use Allure.
@@ -119,6 +131,7 @@ await ReportUtility.addExpectedResult("Invalid username or password message is d
 	AssertionUtility.expectEqual(await loginPage.getMessagePopup().getTextMessage(), "Invalid username or password");
 });
 ```
+
 #### Traceability
 
 See [traceability](TRACEABILITY.md) page for details on how to add into Allure Reporting traceability of specs with test cases.
