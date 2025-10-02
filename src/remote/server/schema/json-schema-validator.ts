@@ -23,7 +23,7 @@ interface LoadedSchema {
 export class JSONSchemaValidator {
     private static ajv = new Ajv();
     private static loadedSchemas: LoadedSchema[] = [];
-    private static __dirname: string = path.dirname(fileURLToPath(import.meta.url));
+    private static __dirname: string = __dirname;
 
     public static validateApplicationStartRequest(data: unknown): ApplicationStartRequest {
         this.validateData(data, 'application-start-request-schema.json');
