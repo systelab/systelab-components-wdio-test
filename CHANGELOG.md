@@ -12,6 +12,11 @@ This project follows [Semantic Versioning](https://semver.org/).
 * Created a CommonJS-compatible build for projects that cannot yet consume ESM.
 * Functionality is identical to v8.1.0; only the module format was changed.
 
+### Notes
+
+* Versions with the `-cjs` suffix are **temporary builds**. They will only be published when a project still depends on CommonJS and cannot yet migrate to ESM.
+* For installation details, please refer to the [README](./README.md).
+
 ## [8.1.0] - 2025-09-25
 
 ### Changed

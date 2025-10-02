@@ -53,9 +53,9 @@ Call the super constructor with the tag name of the page component as a paramete
 
 ```typescript
 export class MainPage extends BasePage {
-	constructor() {
-		super('my-page-component-tag-name');
-	}
+  constructor() {
+    super('my-page-component-tag-name');
+  }
 }
 ```
 
@@ -66,7 +66,7 @@ For example:
 
 ```typescript
 public getAllergyGrid(): Grid {
-	return new Grid(this.current.byId('AllergyTable'));
+  return new Grid(this.current.byId('AllergyTable'));
 }
 ```
 Use the appropriate locator (i.e byId, byTagName, byCSS, ...) in order to get the right ElementFinder.
@@ -78,7 +78,7 @@ For example:
 
 ```typescript
 public getAllergyDetailDialog(): AllergyDetailDialog {
-	return new AllergyDetailDialog(Browser.byTagName('allergy-dialog'));
+  return new AllergyDetailDialog(Browser.byTagName('allergy-dialog'));
 }
 ```
 
@@ -86,9 +86,9 @@ And the class implementing the dialog will be something like:
 
 ```typescript
 export class AllergyDetailDialog extends Dialog {
-	public getEnableSwitch() {
-		return this.byId('AllergyEnableSwitch').byTagName('input');
-	}
+  public getEnableSwitch() {
+    return this.byId('AllergyEnableSwitch').byTagName('input');
+  }
 }
 ```
 
@@ -101,12 +101,56 @@ Example:
 
 ```typescript
 it(`Should be able to do something`, async () => {
-	const patientMaintenanceDialog = await mainPage.getPatientMaintenanceDialog();
-	await patientMaintenanceDialog.getButtonAdd().click();
-	const patientDialog = await patientMaintenanceDialog.getPatientDialog();
-	await patientDialog.getTabs().selectTab(1);
+  const patientMaintenanceDialog = await mainPage.getPatientMaintenanceDialog();
+  await patientMaintenanceDialog.getButtonAdd().click();
+  const patientDialog = await patientMaintenanceDialog.getPatientDialog();
+  await patientDialog.getTabs().selectTab(1);
 });
 ```
+
+---
+
+## Releasing CommonJS builds
+
+Starting from v8.1.0 the default distribution is **ESM**.
+
+In exceptional cases, when a project is not yet compatible with ESM for e2e tests, a **temporary CommonJS build** can be released.
+
+### Branch naming
+
+CommonJS releases must be created from a dedicated release branch following this naming convention:
+
+```
+release/<version>-cjs
+```
+
+Example:
+
+```
+release/8.1.0-cjs
+```
+
+### Steps to create a CommonJS release
+
+1. Create a release branch from the target tag (e.g. `v8.1.0`):
+
+   ```bash
+   git checkout v8.1.0
+   git checkout -b release/8.1.0-cjs
+   ```
+
+2. Apply the following changes:
+  - Update `tsconfig.json` to compile with `module: commonjs`.
+  - Remove `"type": "module"` from `package.json`.
+  - Update `package.json` version to `<version>-cjs.0` (e.g. `8.1.0-cjs.0`).
+
+3. Update `CHANGELOG.md` and `README.md` to include the new release notes.
+
+
+⚠️ **Note**: Only generate and publish CJS builds when required by a project.  
+This is a temporary solution until all projects migrate to ESM.
+
+---
 
 ### Versioning
 
@@ -136,7 +180,7 @@ With Allure, test case actions are documented through the `it` strings as in the
 
 ```typescript
 it(`Write a valid username and password in the login form`, async () => {
-	// Implement action here
+  // Implement action here
 });
 ```
 
@@ -147,10 +191,10 @@ Example:
 
 ```typescript
 await ReportUtility.addExpectedResult("Invalid username or password message is displayed", async () => {
-	AssertionUtility.expectEqual(
-		await loginPage.getMessagePopup().getTextMessage(),
-		"Invalid username or password"
-	);
+  AssertionUtility.expectEqual(
+          await loginPage.getMessagePopup().getTextMessage(),
+          "Invalid username or password"
+  );
 });
 ```
 
