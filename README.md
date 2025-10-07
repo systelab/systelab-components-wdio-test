@@ -107,8 +107,24 @@ it(`Should be able to do something`, async () => {
   await patientDialog.getTabs().selectTab(1);
 });
 ```
-
 ---
+
+## Library Branching Policy
+
+The main branch always targets the latest WDIO version (currently WDIO 9).
+
+When upgrading the library to a newer WDIO version, create a maintenance branch from main for the currently supported WDIO version before starting the migration.
+This ensures that bug fixes and patches can still be applied to the previous WDIO version.
+
+### Branching and Versioning Pattern
+
+| WDIO Version   | (Maintenance) Branch   |
+|----------------|------------------------|
+| **9 (latest)** | `main`                 |
+| **8**          | `8.1.x`, `8.0.x`       |
+| **7**          | `1.10.x` *(exception)* |
+
+
 
 ## Releasing CommonJS builds
 
@@ -159,6 +175,10 @@ This project follows [Semantic Versioning](https://semver.org/).
 For a complete list of changes, bug fixes, and breaking changes, see the [CHANGELOG](./CHANGELOG.md).
 
 #### Latest Releases
+
+* **v9.0.0** (2025-10-07):
+
+    * Upgraded the library to WebdriverIO v9 and updated all related dependencies to their latest compatible versions.
 
 * **v8.1.0-cjs.0** (2025-10-02):
 
