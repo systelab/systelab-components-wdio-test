@@ -4,8 +4,7 @@
     "**/*.spec.ts"
   ],
   "helpers": [
-    "remote-application-jasmine.setup.ts",
-    "../../node_modules/ts-node/register"
+    "remote-application-jasmine.setup.ts"
   ],
   "random": false,
   "seed": null,
@@ -18,9 +17,6 @@
     "seed": null,
     "specFilter": ""
   },
-  "require": [
-    "ts-node/register",
-    "tsconfig-paths/register"
-  ],
+  "require": [],
   "reporters": []
 }

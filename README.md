@@ -23,6 +23,12 @@ npm install systelab-components-wdio-test@8.1.0-cjs.0 --save
 
 ---
 
+## Requirements
+
+### WDIO 9
+
+* It requires a Node.js version higher than 16. In WDIO v9 documentation it is stated and recommended to use Node.js v20 or higher. 
+
 ## Working with the repo
 
 ```bash
@@ -176,7 +182,7 @@ For a complete list of changes, bug fixes, and breaking changes, see the [CHANGE
 
 #### Latest Releases
 
-* **v9.0.0** (2025-10-07):
+* **v9.0.0** (2025-10-08):
 
     * Upgraded the library to WebdriverIO v9 and updated all related dependencies to their latest compatible versions.
 
