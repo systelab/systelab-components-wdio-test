@@ -136,7 +136,7 @@ export class ElementFinder {
     if (AutomationEnvironment.isLocalMode()) {
       const browserType: BrowserType = AutomationEnvironment.getBrowserType();
       if (browserType === BrowserType.TauriApp || browserType === BrowserType.WebKitGTK) {
-        return (await this.findElement()).getHTML(false);
+        return (await this.findElement()).getHTML({includeSelectorTag: false});
       } else {
         return (await this.findElement()).getText();
       }
@@ -155,7 +155,7 @@ export class ElementFinder {
 
   public async getHTML(includeSelectorTag: boolean): Promise<string> {
     if (AutomationEnvironment.isLocalMode()) {
-      return (await this.findElement()).getHTML(includeSelectorTag);
+      return (await this.findElement()).getHTML({includeSelectorTag: includeSelectorTag});
     } else {
       return this.findRemoteElement().getHTML(includeSelectorTag);
     }
@@ -284,11 +284,11 @@ export class ElementFinder {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
       if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
-        return AutomationEnvironment.getWorkingBrowser().execute((element, newValue) => {
+        return AutomationEnvironment.getWorkingBrowser().execute((element: HTMLInputElement, newValue: string) => {
           element.value = newValue;
           element.dispatchEvent(new Event("input", {bubbles: true}));
           element.dispatchEvent(new KeyboardEvent("keyup", {bubbles: true}));
-        }, element as any, text);
+        }, element, text);
       } else {
         return element.setValue(text);
       }
@@ -338,7 +338,7 @@ export class ElementFinder {
   public async scrollToElement(scrollOptions: ScrollIntoViewOptions = { behavior: 'auto', block: 'center', inline: 'nearest' }): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
-      return AutomationEnvironment.getWorkingBrowser().execute((el: WebdriverIO.Element, options: ScrollIntoViewOptions) => el.scrollIntoView(options), element, scrollOptions);
+      return AutomationEnvironment.getWorkingBrowser().execute((el: HTMLElement, options: ScrollIntoViewOptions) => el.scrollIntoView(options), element, scrollOptions);
     } else {
       return this.findRemoteElement().scrollToElement(scrollOptions);
     }
@@ -413,14 +413,14 @@ export class ElementFinder {
     if (this.parent) {
       if (this.parent.getLocator().type == LocatorType.ElementSelector ||
         this.parent.getLocator().type == LocatorType.ArrayItem) {
-        return await (await (this.parent as ElementFinder).findElement()).$(this.locator.selector as string);
+        return (await (this.parent as ElementFinder).findElement()).$(this.locator.selector as string).getElement();
       } else if (this.parent.getLocator().type == LocatorType.ArraySelector) {
         return (await (this.parent as ElementArrayFinder).findElements())[this.locator.index as number];
       } else {
         throw 'Unsupported locator type for parent item: ' + this.parent.getLocator().type;
       }
     } else {
-      return AutomationEnvironment.getWorkingBrowser().$(this.locator.selector as string);
+      return AutomationEnvironment.getWorkingBrowser().$(this.locator.selector as string).getElement();
     }
   }
 
@@ -464,9 +464,9 @@ export class ElementArrayFinder {
 
   public async findElements(): Promise<ElementArray> {
     if (this.parent) {
-      return (await (await this.parent.findElement()).$$(this.locator.selector as string));
+      return (await this.parent.findElement()).$$(this.locator.selector as string).getElements();
     } else {
-      return AutomationEnvironment.getWorkingBrowser().$$(this.locator.selector as string);
+      return AutomationEnvironment.getWorkingBrowser().$$(this.locator.selector as string).getElements();
     }
   }
 

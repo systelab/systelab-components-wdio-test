@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [9.0.0] - 2025-10-08
+
+### Changed
+
+* Upgraded the library to WebdriverIO v9
+* Updated library related dependencies to their latest compatible versions
+
+### BREAKING CHANGES
+
+* The majority of the new features in v9 are enabled by the WebDriver Bidi capabilities now available in browsers. Upon upgrading to v9, all sessions will automatically use Bidi unless you explicitly disable it via the new wdio:enforceWebDriverClassic capability.
+* Others: some tests may require minor selector adjustments in very specific circumstances.
+
 ## [Unreleased]
 
 ## [8.1.0-cjs.0] - 2025-10-02

@@ -1,11 +1,12 @@
-import {RemoteOptions} from "webdriverio";
+
+import type { Capabilities } from "@wdio/types";
 import {BrowserType, RemoteApplication, RemoteHostData} from "../../wdio/index.js";
 import {HttpStatus} from "../server/http-status.js";
 
 
 export class ApplicationRemoteClient {
 
-  public static async start(host: RemoteHostData, browserType: BrowserType, options: RemoteOptions): Promise<number> {
+  public static async start(host: RemoteHostData, browserType: BrowserType, options: Capabilities.WebdriverIOConfig): Promise<number> {
     const response = await this.executeEndpoint(host, 'start', {browserType, options});
     const body = await response.json();
     return body.id;
