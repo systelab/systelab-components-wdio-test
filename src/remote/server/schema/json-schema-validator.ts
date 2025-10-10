@@ -13,6 +13,7 @@ import {PropertyElementRequest} from '../request/property-element.request';
 import {WriteElementRequest} from '../request/write-element.request';
 import {CSSPropertyElementRequest} from "../request/css-property-element-request";
 import {ScrollElementRequest} from "../request/scroll-element.request";
+import { LongPressElementRequest } from '../request/long-press-element.request';
 
 
 interface LoadedSchema {
@@ -73,6 +74,11 @@ export class JSONSchemaValidator {
     public static validateScrollRequest(data: unknown): ScrollElementRequest {
         this.validateData(data, 'scroll-element-request-schema.json');
         return data as ScrollElementRequest;
+    }
+
+    public static validateLongPressRequest(data: unknown): LongPressElementRequest {
+        this.validateData(data, 'long-press-request-schema.json');
+        return data as LongPressElementRequest;
     }
 
     private static validateData(data: unknown, schemaFilename: string): void {

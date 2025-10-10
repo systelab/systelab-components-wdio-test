@@ -107,7 +107,7 @@ class TestCaseReporter extends WDIOReporter
             console.log(colors.red(`${" ".repeat(8)}- ${failedExpectation.message}`));
 
             let stackMessage = "";
-            const stackLines = failedExpectation.stack.split(/\n/).splice(1);
+            const stackLines = failedExpectation?.stack?.split(/\n/).splice(1) ?? ['(no stack)'];
             for (const line of stackLines)
             {
                 stackMessage += (stackMessage.length > 0) ? "\n" : "";

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [9.0.1] - 2025-10-10
+
+### Changed
+
+* Added long press action to ElementFinder and ElementFinderRemote
+* Fixed html request endpoint remote rest API
+
 ## [9.0.0] - 2025-10-08
 
 ### Changed
