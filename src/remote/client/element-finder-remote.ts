@@ -132,6 +132,9 @@ export class ElementFinderRemote {
     await this.executeEndpoint('POST', 'element/action/scroll', {locators: this.locators, options});
   }
 
+  public async longPress(duration: number): Promise<void> {
+    await this.executeEndpoint('POST', 'element/action/long-press', {locators: this.locators, duration});
+  }
 
   // Condition waits
   public async waitToBePresent(timeout: number = 500): Promise<void> {
