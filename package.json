@@ -17,7 +17,8 @@
   "private": false,
   "files": [
     "lib",
-    "src/reporters/test-case.reporter.js"
+    "src/reporters/test-case.reporter.js",
+    "lib/reporters/test-case.reporter.js"
   ],
   "scripts": {
     "build": "tsc",
