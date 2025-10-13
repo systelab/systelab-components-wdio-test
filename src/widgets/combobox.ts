@@ -63,6 +63,6 @@ export class ComboBox extends Widget {
     }
 
     private getOptionSelector(optionIndex: number): ElementFinder {
-        return this.allByCSS(`[role='row'][row-index='` + optionIndex + `']`).get(1);
+        return this.allByCSS(`[role='row'][row-index='` + optionIndex + `']`).get(0);
     }
 }
