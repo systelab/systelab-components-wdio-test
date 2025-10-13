@@ -1,6 +1,6 @@
 {
   "name": "systelab-components-wdio-test",
-  "version": "8.1.0-cjs.0",
+  "version": "8.1.0-cjs.1",
   "license": "MIT",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
   "keywords": [
