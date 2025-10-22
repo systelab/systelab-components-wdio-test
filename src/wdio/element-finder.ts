@@ -1,16 +1,18 @@
-import {ElementArray} from "webdriverio";
+import { ElementArray } from "webdriverio";
 import * as tmp from "tmp";
 import fs from "fs";
 
-import {Locator, LocatorType} from "./locator.js";
-import {AutomationEnvironment, BrowserType} from "./automation-environment.js";
-import {Constants} from "../constants.js";
-import {ElementFinderRemote} from "../remote/client/element-finder-remote.js";
-import {RemoteApplication} from "./application-manager-remote.js";
+import { Locator, LocatorType } from "./locator.js";
+import { AutomationEnvironment, BrowserType } from "./automation-environment.js";
+import { Constants } from "../constants.js";
+import { ElementFinderRemote } from "../remote/client/element-finder-remote.js";
+import { RemoteApplication } from "./application-manager-remote.js";
 
 export type PseudoElement = "::before" | "::after";
 
 export class ElementFinder {
+  private DEFAULT_LONG_PRESS_DURATION = 2000;
+
   constructor(protected locator: Locator, protected parent: ElementFinder | ElementArrayFinder | null = null) {
   }
 
@@ -31,19 +33,19 @@ export class ElementFinder {
 
   // Search single element
   public byId(id: string): ElementFinder {
-    return new ElementFinder({type: LocatorType.ElementSelector, selector: `#${id}`}, this);
+    return new ElementFinder({ type: LocatorType.ElementSelector, selector: `#${id}` }, this);
   }
 
   public byTagName(tagName: string): ElementFinder {
-    return new ElementFinder({type: LocatorType.ElementSelector, selector: `<${tagName}>`}, this);
+    return new ElementFinder({ type: LocatorType.ElementSelector, selector: `<${tagName}>` }, this);
   }
 
   public byClassName(className: string): ElementFinder {
-    return new ElementFinder({type: LocatorType.ElementSelector, selector: `.${className}`}, this);
+    return new ElementFinder({ type: LocatorType.ElementSelector, selector: `.${className}` }, this);
   }
 
   public byCSS(cssExpression: string): ElementFinder {
-    return new ElementFinder({type: LocatorType.ElementSelector, selector: cssExpression}, this);
+    return new ElementFinder({ type: LocatorType.ElementSelector, selector: cssExpression }, this);
   }
 
   public byButtonText(text: string): ElementFinder {
@@ -51,7 +53,7 @@ export class ElementFinder {
   }
 
   public byElementText(tagName: string, text: string): ElementFinder {
-    return new ElementFinder({type: LocatorType.ElementSelector, selector: `${tagName}*=${text}`}, this);
+    return new ElementFinder({ type: LocatorType.ElementSelector, selector: `${tagName}*=${text}` }, this);
   }
 
   public bySystelabTestId(systelabTestId: string): ElementFinder {
@@ -64,15 +66,15 @@ export class ElementFinder {
 
   // Search list of elements
   public allByTagName(tagName: string): ElementArrayFinder {
-    return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `<${tagName}>`}, this);
+    return new ElementArrayFinder({ type: LocatorType.ArraySelector, selector: `<${tagName}>` }, this);
   }
 
   public allByClassName(className: string): ElementArrayFinder {
-    return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: `.${className}`}, this);
+    return new ElementArrayFinder({ type: LocatorType.ArraySelector, selector: `.${className}` }, this);
   }
 
   public allByCSS(cssExpression: string): ElementArrayFinder {
-    return new ElementArrayFinder({type: LocatorType.ArraySelector, selector: cssExpression}, this);
+    return new ElementArrayFinder({ type: LocatorType.ArraySelector, selector: cssExpression }, this);
   }
 
   public allBySystelabTestId(systelabTestId: string): ElementArrayFinder {
@@ -135,8 +137,8 @@ export class ElementFinder {
   public async getText(): Promise<string> {
     if (AutomationEnvironment.isLocalMode()) {
       const browserType: BrowserType = AutomationEnvironment.getBrowserType();
-      if (browserType === BrowserType.TauriApp || browserType === BrowserType.WebKitGTK) {
-        return (await this.findElement()).getHTML({includeSelectorTag: false});
+      if (browserType === BrowserType.TauriApp) {
+        return (await this.findElement()).getHTML({ includeSelectorTag: false });
       } else {
         return (await this.findElement()).getText();
       }
@@ -155,7 +157,7 @@ export class ElementFinder {
 
   public async getHTML(includeSelectorTag: boolean): Promise<string> {
     if (AutomationEnvironment.isLocalMode()) {
-      return (await this.findElement()).getHTML({includeSelectorTag: includeSelectorTag});
+      return (await this.findElement()).getHTML({ includeSelectorTag: includeSelectorTag });
     } else {
       return this.findRemoteElement().getHTML(includeSelectorTag);
     }
@@ -189,7 +191,7 @@ export class ElementFinder {
     if (AutomationEnvironment.isLocalMode()) {
       const position = await this.getPosition();
       const size = await this.getSize();
-      return {...position, ...size};
+      return { ...position, ...size };
     } else {
       return this.findRemoteElement().getBoundingRect();
     }
@@ -223,6 +225,20 @@ export class ElementFinder {
       }
     } else {
       return this.findRemoteElement().click();
+    }
+  }
+
+  public async rightClick(): Promise<void> {
+    if (AutomationEnvironment.isLocalMode()) {
+      const element: WebdriverIO.Element = await this.findElement();
+      await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'mouse' } })
+        .move({ origin: element, x: 0, y: 0 })
+        .down({ button: 'right' })
+        .up({ button: 'right' })
+        .perform();
+    }
+    else {
+      return this.findRemoteElement().rightClick();
     }
   }
 
@@ -286,8 +302,8 @@ export class ElementFinder {
       if (AutomationEnvironment.getBrowserType() === BrowserType.TauriApp) {
         return AutomationEnvironment.getWorkingBrowser().execute((element: HTMLInputElement, newValue: string) => {
           element.value = newValue;
-          element.dispatchEvent(new Event("input", {bubbles: true}));
-          element.dispatchEvent(new KeyboardEvent("keyup", {bubbles: true}));
+          element.dispatchEvent(new Event("input", { bubbles: true }));
+          element.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true }));
         }, element, text);
       } else {
         return element.setValue(text);
@@ -335,6 +351,28 @@ export class ElementFinder {
     }
   }
 
+  public async longPress(duration: number = this.DEFAULT_LONG_PRESS_DURATION): Promise<void> {
+    if (AutomationEnvironment.isLocalMode()) {
+      const element: WebdriverIO.Element = await this.findElement() as any;
+      if (AutomationEnvironment.isLocalMode()) {
+        const element: WebdriverIO.Element = await this.findElement();
+        if (AutomationEnvironment.getBrowserType() === BrowserType.Chrome) {
+          await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'touch' } })
+            .move({ origin: element, x: 0, y: 0 })
+            .down({ button: 0 })
+            .pause(duration)
+            .up({ button: 0 })
+            .perform();
+        } else {
+          // Workaround for browsers that do not support touch events
+          await this.rightClick();
+        }
+      } else {
+        return this.findRemoteElement().longPress(duration);
+      }
+    }
+  }
+
   public async scrollToElement(scrollOptions: ScrollIntoViewOptions = { behavior: 'auto', block: 'center', inline: 'nearest' }): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
@@ -344,11 +382,10 @@ export class ElementFinder {
     }
   }
 
-
   // Condition waits
   public async waitToBePresent(timeout: number = 500): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
-      await (await this.findElement()).waitForExist({timeout});
+      await (await this.findElement()).waitForExist({ timeout });
     } else {
       await this.findRemoteElement().waitToBePresent(timeout);
     }
@@ -356,7 +393,7 @@ export class ElementFinder {
 
   public async waitToBeDisplayed(timeout: number = 500): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
-      await (await this.findElement()).waitForDisplayed({timeout});
+      await (await this.findElement()).waitForDisplayed({ timeout });
     } else {
       await this.findRemoteElement().waitToBeDisplayed(timeout);
     }
@@ -364,7 +401,7 @@ export class ElementFinder {
 
   public async waitToBeClickable(timeout: number = 500): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
-      await (await this.findElement()).waitForClickable({timeout});
+      await (await this.findElement()).waitForClickable({ timeout });
     } else {
       await this.findRemoteElement().waitToBeClickable(timeout);
     }
@@ -372,7 +409,7 @@ export class ElementFinder {
 
   public async waitToBeEnabled(timeout: number = 500): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
-      await (await this.findElement()).waitForEnabled({timeout});
+      await (await this.findElement()).waitForEnabled({ timeout });
     } else {
       await this.findRemoteElement().waitToBeEnabled(timeout);
     }
@@ -380,7 +417,7 @@ export class ElementFinder {
 
   public async waitUntil(condition: () => boolean | Promise<boolean>, timeout: number = 5000): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
-      await (await this.findElement()).waitUntil(condition, {timeout});
+      await (await this.findElement()).waitUntil(condition, { timeout });
     } else {
       await this.findRemoteElement().waitUntil(condition, timeout);
     }
@@ -390,7 +427,7 @@ export class ElementFinder {
   // Screenshots
   public async takeScreenshot(): Promise<string> {
     if (AutomationEnvironment.isLocalMode()) {
-      const tempFilepath = tmp.tmpNameSync({postfix: '.png'});
+      const tempFilepath = tmp.tmpNameSync({ postfix: '.png' });
       const screenshotBuffer: Buffer = await (await this.findElement()).saveScreenshot(tempFilepath);
       fs.unlinkSync(tempFilepath);
       return screenshotBuffer.toString('base64');
@@ -451,7 +488,7 @@ export class ElementArrayFinder {
 
 
   public get(index: number): ElementFinder {
-    return new ElementFinder({type: LocatorType.ArrayItem, index}, this);
+    return new ElementFinder({ type: LocatorType.ArrayItem, index }, this);
   }
 
   public async count(): Promise<number> {

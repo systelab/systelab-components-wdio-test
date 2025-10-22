@@ -182,6 +182,10 @@ For a complete list of changes, bug fixes, and breaking changes, see the [CHANGE
 
 #### Latest Releases
 
+* **v9.1.0** (2025-10-22):
+
+    * Added long press and right click actions to ElementFinder and ElementFinderRemote
+
 * **v9.0.0** (2025-10-08):
 
     * Upgraded the library to WebdriverIO v9 and updated all related dependencies to their latest compatible versions.

@@ -1,12 +1,12 @@
-import {Router} from 'express';
-import {TauriDriverAPI} from './tauri-driver.api';
-import {ApplicationAPI} from './application.api';
-import {ActionAPI} from './action.api';
-import {QueryAPI} from './query.api';
-import {WindowAPI} from './window.api';
-import {KeyboardAPI} from './keyboard.api';
-import {ConditionWaitAPI} from './condition-wait.api';
-import {ScreenshotAPI} from './screenshot.api';
+import { Router } from 'express';
+import { TauriDriverAPI } from './tauri-driver.api';
+import { ApplicationAPI } from './application.api';
+import { ActionAPI } from './action.api';
+import { QueryAPI } from './query.api';
+import { WindowAPI } from './window.api';
+import { KeyboardAPI } from './keyboard.api';
+import { ConditionWaitAPI } from './condition-wait.api';
+import { ScreenshotAPI } from './screenshot.api';
 
 const wdioRouter: Router = Router();
 
@@ -56,11 +56,14 @@ wdioRouter.post('/applications/:id/element/query/count', QueryAPI.count);
 
 // Actions
 wdioRouter.post('/applications/:id/element/action/click', ActionAPI.click);
+wdioRouter.post('/applications/:id/element/action/right-click', ActionAPI.rightClick);
 wdioRouter.post('/applications/:id/element/action/move-to', ActionAPI.moveTo);
 wdioRouter.post('/applications/:id/element/action/clear', ActionAPI.clear);
 wdioRouter.post('/applications/:id/element/action/write', ActionAPI.write);
 wdioRouter.post('/applications/:id/element/action/tap', ActionAPI.tap);
+wdioRouter.post('/applications/:id/element/action/long-press', ActionAPI.longPress);
 wdioRouter.post('/applications/:id/element/action/scroll', ActionAPI.scroll);
+
 
 // Condition waits
 wdioRouter.post('/applications/:id/element/wait/present', ConditionWaitAPI.untilElementPresent);
