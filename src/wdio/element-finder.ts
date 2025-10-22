@@ -137,7 +137,7 @@ export class ElementFinder {
   public async getText(): Promise<string> {
     if (AutomationEnvironment.isLocalMode()) {
       const browserType: BrowserType = AutomationEnvironment.getBrowserType();
-      if (browserType === BrowserType.TauriApp || browserType === BrowserType.WebKitGTK) {
+      if (browserType === BrowserType.TauriApp) {
         return (await this.findElement()).getHTML({ includeSelectorTag: false });
       } else {
         return (await this.findElement()).getText();
@@ -225,6 +225,20 @@ export class ElementFinder {
       }
     } else {
       return this.findRemoteElement().click();
+    }
+  }
+
+  public async rightClick(): Promise<void> {
+    if (AutomationEnvironment.isLocalMode()) {
+      const element: WebdriverIO.Element = await this.findElement();
+      await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'mouse' } })
+        .move({ origin: element, x: 0, y: 0 })
+        .down({ button: 'right' })
+        .up({ button: 'right' })
+        .perform();
+    }
+    else {
+      return this.findRemoteElement().rightClick();
     }
   }
 
@@ -337,53 +351,34 @@ export class ElementFinder {
     }
   }
 
+  public async longPress(duration: number = this.DEFAULT_LONG_PRESS_DURATION): Promise<void> {
+    if (AutomationEnvironment.isLocalMode()) {
+      const element: WebdriverIO.Element = await this.findElement() as any;
+      if (AutomationEnvironment.isLocalMode()) {
+        const element: WebdriverIO.Element = await this.findElement();
+        if (AutomationEnvironment.getBrowserType() === BrowserType.Chrome) {
+          await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'touch' } })
+            .move({ origin: element, x: 0, y: 0 })
+            .down({ button: 0 })
+            .pause(duration)
+            .up({ button: 0 })
+            .perform();
+        } else {
+          // Workaround for browsers that do not support touch events
+          await this.rightClick();
+        }
+      } else {
+        return this.findRemoteElement().longPress(duration);
+      }
+    }
+  }
+
   public async scrollToElement(scrollOptions: ScrollIntoViewOptions = { behavior: 'auto', block: 'center', inline: 'nearest' }): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
       return AutomationEnvironment.getWorkingBrowser().execute((el: HTMLElement, options: ScrollIntoViewOptions) => el.scrollIntoView(options), element, scrollOptions);
     } else {
       return this.findRemoteElement().scrollToElement(scrollOptions);
-    }
-  }
-
-  public async longPress(duration: number = this.DEFAULT_LONG_PRESS_DURATION): Promise<void> {
-    if (AutomationEnvironment.isLocalMode()) {
-      const element: WebdriverIO.Element = await this.findElement() as any;
-      await AutomationEnvironment.getWorkingBrowser().execute((el, duration) => {
-        // Dispatch pointerdown
-        const pointerDown = new PointerEvent('pointerdown', {
-          bubbles: true,
-          cancelable: true,
-          pointerType: 'touch', // 'touch' to mimic a finger
-          isPrimary: true,
-          button: 0
-        });
-        el.dispatchEvent(pointerDown);
-
-        // Wait for long press duration, then dispatch pointerup
-        setTimeout(() => {
-          const pointerUp = new PointerEvent('pointerup', {
-            bubbles: true,
-            cancelable: true,
-            pointerType: 'touch',
-            isPrimary: true,
-            button: 0
-          });
-          el.dispatchEvent(pointerUp);
-        }, duration);
-      }, element, duration);
-
-      // await AutomationEnvironment.getWorkingBrowser().execute(`
-      //   const el = arguments[0]
-      //   const event = new MouseEvent('mousedown', { bubbles: true });
-      //   el.dispatchEvent(event);
-      //   setTimeout(() => {
-      //     const upEvent = new MouseEvent('mouseup', { bubbles: true });
-      //     el.dispatchEvent(upEvent);
-      //     }, 2000); // 2 seconds long press
-      //   `, element);
-    } else {
-      return this.findRemoteElement().longPress(duration);
     }
   }
 
