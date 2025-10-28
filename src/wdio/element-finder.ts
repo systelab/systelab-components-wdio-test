@@ -364,13 +364,12 @@ export class ElementFinder {
       if (AutomationEnvironment.isLocalMode()) {
         const element: WebdriverIO.Element = await this.findElement();
         if (AutomationEnvironment.getBrowserType() === BrowserType.Chrome) {
-          await AutomationEnvironment.getWorkingBrowser().execute(`
-            const touchStart = new TouchEvent('touchstart', { bubbles: true });
-            const touchEnd = new TouchEvent('touchend', { bubbles: true });
-            const el = arguments[0];
-            el.dispatchEvent(touchStart);
-            setTimeout(() => el.dispatchEvent(touchEnd), ${duration});
-            `, element);
+          await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'touch' } })
+            .move({ origin: element, x: 0, y: 0 })
+            .down({ button: 0 })
+            .pause(duration)
+            .up({ button: 0 })
+            .perform();
         } else {
           // Workaround for browsers that do not support touch events
           await this.rightClick();
