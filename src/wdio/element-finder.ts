@@ -231,11 +231,18 @@ export class ElementFinder {
   public async rightClick(): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
-      await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'mouse' } })
-        .move({ origin: element, x: 0, y: 0 })
-        .down({ button: 'right' })
-        .up({ button: 'right' })
-        .perform();
+      await AutomationEnvironment.getWorkingBrowser().execute((element) => {
+        const event = new MouseEvent('contextmenu', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          button: 2,
+          buttons: 2,
+          clientX: element.getBoundingClientRect().left + element.offsetWidth / 2,
+          clientY: element.getBoundingClientRect().top + element.offsetHeight / 2,
+        });
+        element.dispatchEvent(event);
+      }, element);
     }
     else {
       return this.findRemoteElement().rightClick();
@@ -357,12 +364,13 @@ export class ElementFinder {
       if (AutomationEnvironment.isLocalMode()) {
         const element: WebdriverIO.Element = await this.findElement();
         if (AutomationEnvironment.getBrowserType() === BrowserType.Chrome) {
-          await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'touch' } })
-            .move({ origin: element, x: 0, y: 0 })
-            .down({ button: 0 })
-            .pause(duration)
-            .up({ button: 0 })
-            .perform();
+          await AutomationEnvironment.getWorkingBrowser().execute(`
+            const touchStart = new TouchEvent('touchstart', { bubbles: true });
+            const touchEnd = new TouchEvent('touchend', { bubbles: true });
+            const el = arguments[0];
+            el.dispatchEvent(touchStart);
+            setTimeout(() => el.dispatchEvent(touchEnd), ${duration});
+            `, element);
         } else {
           // Workaround for browsers that do not support touch events
           await this.rightClick();

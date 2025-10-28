@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [9.1.1] - 2025-10-28
+
+### Changed
+
+* Update right click to use Javascript implementation to be compatible with WebKitGTK on Jenkins
+
 ## [9.1.0] - 2025-10-10
 
 ### Changed
