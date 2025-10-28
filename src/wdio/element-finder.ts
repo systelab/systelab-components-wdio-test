@@ -231,11 +231,18 @@ export class ElementFinder {
   public async rightClick(): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {
       const element: WebdriverIO.Element = await this.findElement();
-      await AutomationEnvironment.getWorkingBrowser().action('pointer', { parameters: { pointerType: 'mouse' } })
-        .move({ origin: element, x: 0, y: 0 })
-        .down({ button: 'right' })
-        .up({ button: 'right' })
-        .perform();
+      await AutomationEnvironment.getWorkingBrowser().execute((element) => {
+        const event = new MouseEvent('contextmenu', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          button: 2,
+          buttons: 2,
+          clientX: element.getBoundingClientRect().left + element.offsetWidth / 2,
+          clientY: element.getBoundingClientRect().top + element.offsetHeight / 2,
+        });
+        element.dispatchEvent(event);
+      }, element);
     }
     else {
       return this.findRemoteElement().rightClick();

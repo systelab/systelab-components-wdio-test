@@ -182,6 +182,10 @@ For a complete list of changes, bug fixes, and breaking changes, see the [CHANGE
 
 #### Latest Releases
 
+* **v9.1.1** (2025-10-28):
+
+    * Update right click to use Javascript implementation to be compatible with WebKitGTK on Jenkins
+
 * **v9.1.0** (2025-10-22):
 
     * Added long press and right click actions to ElementFinder and ElementFinderRemote
