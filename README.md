@@ -48,7 +48,7 @@ MAJOR.MINOR.PATCH
 All changes are documented in the [CHANGELOG](CHANGELOG.md).
 
 > **Branch 1.10.x**  
-> For this branch, a new patch version **1.18.0** has been released.  
+> For this branch, a new patch version **1.18.1** has been released.  
 > It includes a **fix in systelab comboboxes** that may be a **breaking change** for projects using `systelab-components` versions **prior to v20**.
 
 ---
@@ -153,6 +153,13 @@ See [SCREENSHOTS.md](SCREENSHOTS.md) page for details on utilities for screensho
 ---
 
 # CHANGELOG
+
+## [1.18.1] - 2025-11-12
+### Fixed
+- Fix applied to `systelab-components` multiple-combobox for compatibility with `WebDriverIO` test framework.
+
+### ?? Breaking Change
+- This fix may introduce **breaking behavior** for projects using `systelab-components` versions **prior to v20**.
 
 ## [1.18.0] - 2025-10-13
 ### Fixed
