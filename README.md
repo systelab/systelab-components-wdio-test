@@ -182,6 +182,11 @@ For a complete list of changes, bug fixes, and breaking changes, see the [CHANGE
 
 #### Latest Releases
 
+* **v9.1.2** (2025-11-12):
+
+    * Separate setFeature and setDescription in TestIdentification to improve Allure reporting
+    * Modify addExpectedResult in ReportUtility to set failed steps as failed in the generated allure-result.json
+
 * **v9.1.1** (2025-10-28):
 
     * Update right click to use Javascript implementation to be compatible with WebKitGTK on Jenkins
