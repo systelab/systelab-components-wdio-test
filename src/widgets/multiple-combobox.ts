@@ -27,7 +27,7 @@ export class MultipleComboBox extends Widget {
 
     public async selectOptionByText(text: string): Promise<void> {
         let index = -1;
-        let rows: ElementArrayFinder = this.allByCSS('.ag-cell-value');
+        let rows: ElementArrayFinder = this.allByCSS('.ag-row');
         const numberOfItems = await rows.count();
         for (let i = 0; i < numberOfItems; i++) {
             const cellText = await rows.get(i).getText();
