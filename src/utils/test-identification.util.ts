@@ -12,7 +12,10 @@ export class TestIdentification
 
     public static setDescription(description: string): void {
         ReportUtility.setDescription(description);
-        ReportUtility.setFeature(description);
+    }
+
+    public static setFeature(feature: string): void {
+        ReportUtility.setFeature(feature);
     }
 
     public static setAppVersion(appVersion: string): void {

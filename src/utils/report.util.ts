@@ -20,21 +20,36 @@ export class ReportUtility {
     }
 
     public static async addExpectedResult(description: string, expectationFunction: () => Promise<void>): Promise<void> {
-        // @ts-ignore
         const testCaseReporter = ((jasmine.getEnv() as any).testCaseReporter);
         try {
             if (testCaseReporter) {
                 testCaseReporter.onAssertStart(description);
             }
-
+            
             allureReporter.startStep(description);
+            
+            const initialFailedCount = (jasmine.getEnv() as any).currentJasmineSpec?.failedExpectations?.length || 0;
+            
             await expectationFunction();
-            allureReporter.endStep(Status.PASSED);
+            
+            const finalFailedCount = (jasmine.getEnv() as any).currentJasmineSpec?.failedExpectations?.length || 0;
+            const hasNewFailures = finalFailedCount > initialFailedCount;
 
-            if (testCaseReporter) {
-                testCaseReporter.onAssertEnd(description);
-            }
-        }
+            if (hasNewFailures) {
+                allureReporter.endStep(Status.FAILED);
+                
+                if (testCaseReporter) {
+                    testCaseReporter.onAssertEnd(description, true);
+                }
+    
+            } else {
+                allureReporter.endStep(Status.PASSED);
+                
+                if (testCaseReporter) {
+                    testCaseReporter.onAssertEnd(description, false);
+                }
+            } 
+        } 
         catch (error) {
             allureReporter.endStep(Status.FAILED);
             if (testCaseReporter) {
