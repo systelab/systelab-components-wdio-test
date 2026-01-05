@@ -15,6 +15,10 @@ export class TestIdentification
         ReportUtility.setFeature(description);
     }
 
+    public static setFeature(feature: string): void {
+        ReportUtility.setFeature(feature);
+    }
+
     public static setAppVersion(appVersion: string): void {
         this.appVersion = appVersion;
     }

@@ -160,6 +160,11 @@ For a complete list of changes, bug fixes, and breaking changes, see the [CHANGE
 
 #### Latest Releases
 
+* **v8.1.1** (2025-12-15):
+
+    * Separate setFeature and setDescription in TestIdentification to improve Allure reporting
+    * Modify addExpectedResult in ReportUtility to set failed steps as failed in the generated allure-result.json
+
 * **v8.1.0-cjs.0** (2025-10-02):
 
     * Compatibility build distributed as **CommonJS** for projects that cannot yet consume ESM.

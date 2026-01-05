@@ -5,6 +5,13 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [8.1.1] - 2025-12-15
+
+### Changed
+
+* Separate setFeature and setDescription in TestIdentification to improve Allure reporting
+* Modify addExpectedResult in ReportUtility to set failed steps as failed in the generated allure-result.json 
+
 ## [8.1.0-cjs.0] - 2025-10-02
 
 ### Changed
