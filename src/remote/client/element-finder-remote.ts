@@ -140,6 +140,10 @@ export class ElementFinderRemote {
     await this.executeEndpoint('POST', 'element/action/scroll', { locators: this.locators, options });
   }
 
+  public async uploadFile(name: string, content: string): Promise<void> {
+    await this.executeEndpoint('POST', 'element/action/upload-file', { locators: this.locators, name, content });
+  }
+
   // Condition waits
   public async waitToBePresent(timeout: number = 500): Promise<void> {
     await this.executeEndpoint('POST', 'element/wait/present', { locators: this.locators });

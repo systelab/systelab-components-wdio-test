@@ -63,6 +63,7 @@ wdioRouter.post('/applications/:id/element/action/write', ActionAPI.write);
 wdioRouter.post('/applications/:id/element/action/tap', ActionAPI.tap);
 wdioRouter.post('/applications/:id/element/action/long-press', ActionAPI.longPress);
 wdioRouter.post('/applications/:id/element/action/scroll', ActionAPI.scroll);
+wdioRouter.post('/applications/:id/element/action/upload-file', ActionAPI.uploadFile);
 
 
 // Condition waits

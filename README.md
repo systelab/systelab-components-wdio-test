@@ -182,32 +182,7 @@ For a complete list of changes, bug fixes, and breaking changes, see the [CHANGE
 
 #### Latest Releases
 
-* **v9.1.2** (2025-11-12):
-
-    * Separate setFeature and setDescription in TestIdentification to improve Allure reporting
-    * Modify addExpectedResult in ReportUtility to set failed steps as failed in the generated allure-result.json
-
-* **v9.1.1** (2025-10-28):
-
-    * Update right click to use Javascript implementation to be compatible with WebKitGTK on Jenkins
-
-* **v9.1.0** (2025-10-22):
-
-    * Added long press and right click actions to ElementFinder and ElementFinderRemote
-
-* **v9.0.0** (2025-10-08):
-
-    * Upgraded the library to WebdriverIO v9 and updated all related dependencies to their latest compatible versions.
-
-* **v8.1.0-cjs.0** (2025-10-02):
-
-    * Compatibility build distributed as **CommonJS** for projects that cannot yet consume ESM.
-    * Functionality is identical to v8.1.0, only the module format is different.
-
-* **v8.1.0** (2025-09-25):
-
-    * The `getOptionSelector` method in `src/widgets/combobox.ts` now returns the **first element** instead of the second.
-    * **BREAKING CHANGE**: E2E tests depending on the previous behavior need to be adapted.
+See [CHANGELOG](./CHANGELOG.md) for the full release history.
 
 ---
 

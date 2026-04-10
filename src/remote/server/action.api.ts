@@ -7,6 +7,7 @@ import { ErrorHandlerAPI } from './error-handler.api';
 import { WriteElementRequest } from './request/write-element.request';
 import { ScrollElementRequest } from "./request/scroll-element.request";
 import { LongPressElementRequest } from './request/long-press-element.request';
+import { UploadFileElementRequest } from './request/upload-file-element.request';
 
 
 export class ActionAPI {
@@ -100,6 +101,18 @@ export class ActionAPI {
             const requestBody: ScrollElementRequest = JSONSchemaValidator.validateScrollRequest(req.body);
             const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
             await element.scrollToElement(requestBody.options);
+            return res.status(HttpStatus.NO_CONTENT).send();
+        } catch (err) {
+            return ErrorHandlerAPI.handle(res, err);
+        }
+    }
+
+    public static async uploadFile(req: Request, res: Response): Promise<any> {
+        try {
+            AutomationEnvironment.setApplication(+req.params.id);
+            const requestBody: UploadFileElementRequest = JSONSchemaValidator.validateUploadFileRequest(req.body);
+            const element: ElementFinder = ElementFinderBuilder.build(requestBody.locators) as ElementFinder;
+            await element.uploadFile(requestBody.name, requestBody.content);
             return res.status(HttpStatus.NO_CONTENT).send();
         } catch (err) {
             return ErrorHandlerAPI.handle(res, err);

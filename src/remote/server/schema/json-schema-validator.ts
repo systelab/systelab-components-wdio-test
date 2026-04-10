@@ -14,6 +14,7 @@ import {WriteElementRequest} from '../request/write-element.request';
 import {CSSPropertyElementRequest} from "../request/css-property-element-request";
 import {ScrollElementRequest} from "../request/scroll-element.request";
 import { LongPressElementRequest } from '../request/long-press-element.request';
+import { UploadFileElementRequest } from '../request/upload-file-element.request';
 
 
 interface LoadedSchema {
@@ -79,6 +80,11 @@ export class JSONSchemaValidator {
     public static validateLongPressRequest(data: unknown): LongPressElementRequest {
         this.validateData(data, 'long-press-request-schema.json');
         return data as LongPressElementRequest;
+    }
+
+    public static validateUploadFileRequest(data: unknown): UploadFileElementRequest {
+        this.validateData(data, 'upload-file-request-schema.json');
+        return data as UploadFileElementRequest;
     }
 
     private static validateData(data: unknown, schemaFilename: string): void {
