@@ -389,6 +389,21 @@ export class ElementFinder {
     }
   }
 
+  public async uploadFile(name: string, content: string): Promise<void> {
+    if (AutomationEnvironment.isLocalMode()) {
+      const element: WebdriverIO.Element = await this.findElement();
+      await AutomationEnvironment.getWorkingBrowser().execute((element: HTMLInputElement, name: string, content: string) => {
+        const file = new File([content], name, { type: 'application/octet-stream' });
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        element.files = dt.files;
+        element.dispatchEvent(new Event('change', { bubbles: true }));
+      }, element, name, content);
+    } else {
+      return this.findRemoteElement().uploadFile(name, content);
+    }
+  }
+
   // Condition waits
   public async waitToBePresent(timeout: number = 500): Promise<void> {
     if (AutomationEnvironment.isLocalMode()) {

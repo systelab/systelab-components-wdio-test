@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [9.2.0] - 2026-04-10
+
+### Added
+
+* Added support for file upload interactions. It is now possible to programmatically upload a file for a specific element by providing the file name and the file content.
+
 ## [9.1.2] - 2025-11-12
 
 ### Changed

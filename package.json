@@ -1,6 +1,6 @@
 {
   "name": "systelab-components-wdio-test",
-  "version": "9.1.2",
+  "version": "9.2.0",
   "license": "MIT",
   "type": "module",
   "description": "Widgets to be use in the E2E Tests based in WDIO",
